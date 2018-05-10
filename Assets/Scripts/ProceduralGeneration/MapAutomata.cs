@@ -22,7 +22,9 @@ public class MapAutomata : MonoBehaviour {
     private int[,] terrainMap;
     public Vector2Int tilemapSize;
 
+    [HideInInspector]
     public Tilemap solidTilemap;
+    [HideInInspector]
     public Tilemap groundTilemap;
     public Tile topTile;
     public Tile botTile;
@@ -30,7 +32,7 @@ public class MapAutomata : MonoBehaviour {
     int width;
     int height;
 
-    public void Simulate(int nbOfIteration) {
+    public void GenerateMap() {
         ClearMap(false);
 
         width = tilemapSize.x;
@@ -41,16 +43,16 @@ public class MapAutomata : MonoBehaviour {
             InitPosition();
         }
 
-        for(int i = 0; i < nbOfIteration;i++) {
+        for(int i = 0; i < numberOfIteration;i++) {
             terrainMap = GenTilePos(terrainMap);
         }
 
         for(int x = 0; x < width; x++) {
             for(int y = 0; y < height;  y++) {
                 if(terrainMap[x, y] == 1) {
-                    solidTilemap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), topTile);
+                    solidTilemap.SetTile(new Vector3Int(x, y, 0), topTile);
                 } else {
-                    groundTilemap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botTile);
+                    groundTilemap.SetTile(new Vector3Int(x, y, 0), botTile);
                 }
             }
         }
@@ -115,7 +117,7 @@ public class MapAutomata : MonoBehaviour {
 	
 	void Update () {
         if(Input.GetMouseButtonDown(0)) {
-            Simulate(numberOfIteration);
+            GenerateMap();
         }
 
         if(Input.GetMouseButtonDown(1)) {

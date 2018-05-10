@@ -340,6 +340,58 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &636447345
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4196192251138606, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -2.2851863
+      objectReference: {fileID: 0}
+    - target: {fileID: 4196192251138606, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.60173184
+      objectReference: {fileID: 0}
+    - target: {fileID: 4196192251138606, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4196192251138606, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4196192251138606, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4196192251138606, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4196192251138606, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4196192251138606, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114217984943914178, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864,
+        type: 2}
+      propertyPath: solidTilemap
+      value: 
+      objectReference: {fileID: 2072066646}
+    - target: {fileID: 114217984943914178, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864,
+        type: 2}
+      propertyPath: groundTilemap
+      value: 
+      objectReference: {fileID: 292051056}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &1276356230
 Prefab:
   m_ObjectHideFlags: 0
@@ -413,7 +465,7 @@ MonoBehaviour:
   birthLimit: 4
   deathLimit: 3
   numberOfIteration: 7
-  tilemapSize: {x: 120, y: 120}
+  tilemapSize: {x: 50, y: 50}
   solidTilemap: {fileID: 2072066646}
   groundTilemap: {fileID: 292051056}
   topTile: {fileID: 11400000, guid: ba5bd530200a5a44696b0b415753edad, type: 2}
