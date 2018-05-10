@@ -11,8 +11,11 @@ public class LevelManager : MonoBehaviour {
     public Tilemap solidTilemap;
     public Tilemap groundTilemap;
 
+    public GameObject playerPrefab;
+
     // Use this for initialization
     void Start () {
+        //Get all object needed
         mapGenerator = FindObjectOfType<MapAutomata>();
         navigationGraph = FindObjectOfType<NavigationAI>();
 
@@ -21,8 +24,12 @@ public class LevelManager : MonoBehaviour {
 
         navigationGraph.solidTilemap = solidTilemap;
 
+        //First generation
         mapGenerator.GenerateMap();
         navigationGraph.GenerateNavigationGraph();
+
+        //Spawn player
+        Instantiate(playerPrefab, mapGenerator.GetPositionForSpawn(), Quaternion.identity);
 	}
 	
 	// Update is called once per frame

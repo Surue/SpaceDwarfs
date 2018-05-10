@@ -55,6 +55,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   solidTilemap: {fileID: 0}
   groundTilemap: {fileID: 0}
+  playerPrefab: {fileID: 1382962530495482, guid: fb14668622f1cfe46b856a89425869cd,
+    type: 2}
 --- !u!114 &114375099477542878
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -66,6 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a64a0bef2c96c546aba257db0d6d668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DebugMode: 1
   solidTilemap: {fileID: 0}
 --- !u!114 &114641151316666250
 MonoBehaviour:

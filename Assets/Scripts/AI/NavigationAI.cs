@@ -67,6 +67,12 @@ public class NavigationAI : MonoBehaviour {
         }
     }
 
+    public List<Vector2> GetPathTo(Transform target) {
+        List<Vector2> path = new List<Vector2>();
+
+        return path;
+    }
+
     private void OnDrawGizmos() {
         if(DebugMode) {
             if(graph != null) {

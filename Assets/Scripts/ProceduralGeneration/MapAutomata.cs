@@ -33,8 +33,6 @@ public class MapAutomata : MonoBehaviour {
     int height;
 
     public void GenerateMap() {
-        ClearMap(false);
-
         width = tilemapSize.x;
         height = tilemapSize.y;
 
@@ -106,22 +104,23 @@ public class MapAutomata : MonoBehaviour {
         }
     }
 
-    public void ClearMap(bool complete) {
+    public void ClearMap() {
         solidTilemap.ClearAllTiles();
         groundTilemap.ClearAllTiles();
 
-        if(complete) {
-            tilemapSize = new Vector2Int(0,0);
-        }
+        solidTilemap.size = new Vector3Int(0, 0, 0);
+        groundTilemap.size = new Vector3Int(0, 0, 0);
     }
-	
-	void Update () {
-        if(Input.GetMouseButtonDown(0)) {
-            GenerateMap();
+
+    public Vector3 GetPositionForSpawn() {
+        for(int x = 0;x < width;x++) {
+            for(int y = 0;y < height;y++) {
+                if(terrainMap[x,y] == 0) {
+                    return new Vector3(x + solidTilemap.cellSize.x / 2, y + solidTilemap.cellSize.y / 2, 0);
+                }
+            }
         }
 
-        if(Input.GetMouseButtonDown(1)) {
-            ClearMap(true);
-        }
-	}
+        return new Vector3(0, 0, 0);
+    }
 }
