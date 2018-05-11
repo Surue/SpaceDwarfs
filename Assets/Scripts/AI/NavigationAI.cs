@@ -48,6 +48,7 @@ public class NavigationAI : MonoBehaviour {
     public Node[,] graph;
 
     public void GenerateNavigationGraph() {
+
         //Get width and height of tilemap
         int width = solidTilemap.cellBounds.size.x;
         int height = solidTilemap.cellBounds.size.y;
@@ -55,25 +56,26 @@ public class NavigationAI : MonoBehaviour {
         //If graph does not existe -> instanciate it
         if(graph == null) {
             graph = new Node[width, height];
+            Debug.Log(solidTilemap.cellBounds);
             for(int x = 0;x < width;x++) {
                 for(int y = 0;y < height;y++) {
                     graph[x, y] = new Node();
                 }
             }
         }
-
+        
         //Go through tilemap to find free tile
-        for(int x = 0;x < width;x++) {
-            for(int y = 0;y < height;y++) {
+        for(int x = 0; x < width; x++) {
+            for(int y = 0; y < height; y++) {
                 if(graph[x, y].neighbors == null) {
                     graph[x, y].neighbors = new List<Node>();
-                    graph[x, y].position = new Vector2(x + solidTilemap.cellSize.x / 2.0f, y + solidTilemap.cellSize.y / 2.0f);
+                    graph[x, y].position = new Vector2(x + solidTilemap.cellSize.x / 2.0f + solidTilemap.cellBounds.x, y + solidTilemap.cellSize.y / 2.0f + solidTilemap.cellBounds.y);
                     graph[x, y].positionInt = new Vector2Int(x, y);
                 } else {
                     graph[x, y].neighbors.Clear();
                 }
 
-                if(!solidTilemap.HasTile(new Vector3Int(x, y, 0))) {
+                if(!solidTilemap.HasTile(new Vector3Int(x + solidTilemap.cellBounds.x, y + solidTilemap.cellBounds.y, 0))) {
                     graph[x, y].isActive = true;
                 } else {
                     graph[x, y].isActive = false;
@@ -120,7 +122,8 @@ public class NavigationAI : MonoBehaviour {
     }
 
     public Node GetClosestNode(Vector2 pos) {
-        return graph[(int)pos.x , (int)pos.y];
+        Debug.Log(pos + " => " + new Vector2Int((int)pos.x - solidTilemap.cellBounds.x, (int)pos.y - solidTilemap.cellBounds.y));
+        return graph[(int)pos.x - solidTilemap.cellBounds.x, (int)pos.y - solidTilemap.cellBounds.y];
     } 
 
     private void OnDrawGizmos() {

@@ -34,15 +34,17 @@ public class Movement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(Vector2.Distance(transform.position, path[index]) < 0.2f) {
-            index++;
+        if(path.Count != 0 && index != path.Count) {
+            if(Vector2.Distance(transform.position, path[index]) < 0.2f) {
+                index++;
+            }
+
+            Vector2 movement = path[index] - (Vector2)transform.position;
+
+            movement = movement.normalized;
+
+            body.velocity = movement * 4.5f;
         }
-
-        Vector2 movement = path[index] - (Vector2)transform.position;
-
-        movement = movement.normalized;
-
-        body.velocity = movement * 4.5f;
     }
 
     private void OnDrawGizmos() {

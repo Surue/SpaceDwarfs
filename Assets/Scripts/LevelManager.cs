@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class LevelManager : MonoBehaviour {
 
-    MapAutomata mapGenerator;
+    MapManager mapManager;
     NavigationAI navigationGraph;
 
     public Tilemap solidTilemap;
@@ -17,25 +17,32 @@ public class LevelManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         //Get all object needed
-        mapGenerator = FindObjectOfType<MapAutomata>();
+        mapManager = FindObjectOfType<MapManager>();
         navigationGraph = FindObjectOfType<NavigationAI>();
 
-        mapGenerator.solidTilemap = solidTilemap;
-        mapGenerator.groundTilemap = groundTilemap;
+        navigationGraph.solidTilemap = mapManager.solidTilemap;
 
-        navigationGraph.solidTilemap = solidTilemap;
+        StartCoroutine(WaitEndGeneration());
+	}
 
-        //First generation
-        mapGenerator.GenerateMap();
+    //Not Happy with that
+    IEnumerator WaitEndGeneration() {
+
+        while(mapManager.solidTilemap.size.x == 0) {
+            Debug.Log("ICI");
+            yield return new WaitForFixedUpdate();
+        }
+
         navigationGraph.GenerateNavigationGraph();
 
         //Spawn player
-        Instantiate(playerPrefab, mapGenerator.GetPositionForSpawn(), Quaternion.identity);
-        Instantiate(goblingPrefab, mapGenerator.GetPositionForSpawn(), Quaternion.identity);
-	}
+        if(!FindObjectOfType<PlayerController>()) //Used to not spawn player if already in the map
+            Instantiate(playerPrefab, mapManager.GetPositionForSpawn(), Quaternion.identity);
+        if(!FindObjectOfType<Movement>())
+            Instantiate(goblingPrefab, mapManager.GetPositionForSpawn(), Quaternion.identity);
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+    }
 }
