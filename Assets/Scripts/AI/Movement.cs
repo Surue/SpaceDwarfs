@@ -22,19 +22,20 @@ public class Movement : MonoBehaviour {
 
         aStar = FindObjectOfType<PathFinding>();
 
-        path = new List<Vector2>();
-        path = aStar.GetPathFromTo(transform, player.transform);
+        path = null;
 
-        if(path.Count == 0) {
-            Debug.Log("No path found");
-        } else {
-            Debug.Log("Path found");
-        }
+        StartCoroutine(Wait());
+    }
+
+    IEnumerator Wait() {
+        yield return new WaitForSeconds(1);
+
+        path = aStar.GetPathFromTo(transform, player.transform);
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if(path.Count != 0 && index != path.Count) {
+        if(path != null && index != path.Count) {
             if(Vector2.Distance(transform.position, path[index]) < 0.2f) {
                 index++;
             }
@@ -44,10 +45,11 @@ public class Movement : MonoBehaviour {
             movement = movement.normalized;
 
             body.velocity = movement * 4.5f;
-        }
+        } 
     }
 
     private void OnDrawGizmos() {
+        if(path != null)
         foreach(Vector2 pos in path) { 
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(new Vector3(pos.x, pos.y, 0), 0.1f);

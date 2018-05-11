@@ -22,14 +22,23 @@ public class LevelManager : MonoBehaviour {
 
         navigationGraph.solidTilemap = mapManager.solidTilemap;
 
-        StartCoroutine(WaitEndGeneration());
+        if(mapManager.solidTilemap.cellBounds.x == 0) {
+            StartCoroutine(WaitEndGeneration());
+        } else {
+            navigationGraph.GenerateNavigationGraph();
+
+            //Spawn player
+            if(!FindObjectOfType<PlayerController>()) //Used to not spawn player if already in the map
+                Instantiate(playerPrefab, mapManager.GetPositionForSpawn(), Quaternion.identity);
+            if(!FindObjectOfType<Movement>())
+                Instantiate(goblingPrefab, mapManager.GetPositionForSpawn(), Quaternion.identity);
+        }
 	}
 
     //Not Happy with that
     IEnumerator WaitEndGeneration() {
 
         while(mapManager.solidTilemap.size.x == 0) {
-            Debug.Log("ICI");
             yield return new WaitForFixedUpdate();
         }
 

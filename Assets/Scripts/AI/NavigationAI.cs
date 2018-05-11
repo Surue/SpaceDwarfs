@@ -56,7 +56,6 @@ public class NavigationAI : MonoBehaviour {
         //If graph does not existe -> instanciate it
         if(graph == null) {
             graph = new Node[width, height];
-            Debug.Log(solidTilemap.cellBounds);
             for(int x = 0;x < width;x++) {
                 for(int y = 0;y < height;y++) {
                     graph[x, y] = new Node();
@@ -122,7 +121,6 @@ public class NavigationAI : MonoBehaviour {
     }
 
     public Node GetClosestNode(Vector2 pos) {
-        Debug.Log(pos + " => " + new Vector2Int((int)pos.x - solidTilemap.cellBounds.x, (int)pos.y - solidTilemap.cellBounds.y));
         return graph[(int)pos.x - solidTilemap.cellBounds.x, (int)pos.y - solidTilemap.cellBounds.y];
     } 
 
@@ -130,6 +128,7 @@ public class NavigationAI : MonoBehaviour {
         if(DebugMode) {
             if(graph != null) {
                 foreach(Node node in graph) {
+                    if(node.isActive)
                         Gizmos.DrawWireSphere(new Vector3(node.position.x, node.position.y, 0), 0.1f);
 
                     foreach(Node neighbor in node.neighbors) {
