@@ -2,52 +2,80 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathFinding : MonoBehaviour {
+using System.Linq;
+
+public class PathFinding:MonoBehaviour {
 
     //public Transform target;
     NavigationAI navigationGraph;
 
-    List<Vector2> path;
-
-    Rigidbody2D body;
+    //List<NavigationAI.Node> openGraph;
 
 	// Use this for initialization
 	void Start () {
         navigationGraph = FindObjectOfType<NavigationAI>();
-        //target = FindObjectOfType<PlayerController>().transform;
-        body = GetComponent<Rigidbody2D>();
-
-        //navigationGraph.GetPathTo(target);
-        path = new List<Vector2>();
-        path.Insert(0, new Vector2(0, 0));
-        path.Insert(1, new Vector2(-10, 0));
-        path.Insert(2, new Vector2(-10, -10));
-        path.Insert(3, new Vector2(0, -10));
-
-        Debug.Log(path.Count);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-        //Debug.Log(path[0]);
-		if(Vector2.Distance(transform.position, path[0]) < 1) {
-            path.RemoveAt(0);
+
+    public List<Vector2> GetPathFromTo(Transform from, Transform target) {
+        NavigationAI.Node start = navigationGraph.GetClosestNode(from.position);
+        NavigationAI.Node end = navigationGraph.GetClosestNode(target.position);
+
+        //Get A* sorted list
+        Astar(start, end);
+
+        List<Vector2> path = new List<Vector2>();
+        path.Add(end.position);
+
+        BuildShortestPath(path, end);
+
+        path.Reverse();
+
+        return path;
+    }
+
+    void BuildShortestPath(List<Vector2> path, NavigationAI.Node node) {
+        if(node.parent == null) {
+            return;
         }
 
-        Vector2 movement;
+        path.Add(node.position);
+        BuildShortestPath(path, node.parent);
+    }
 
-        if(transform.position.x < path[0].x) {
-            movement.x = 1;
-        } else {
-            movement.x = -1;
+    void Astar(NavigationAI.Node start, NavigationAI.Node end) {
+        foreach(NavigationAI.Node node in navigationGraph.graph) {
+            node.Reset();
+            node.SetCost(Vector2.Distance(node.position, end.position));
         }
+        
+        //Make sure start position cost == 0
+        start.cost = 0;
 
-        if(transform.position.y < path[0].y) {
-            movement.y = 1;
-        } else {
-            movement.y = -1;
-        }
+        List<NavigationAI.Node> openGraph = new List<NavigationAI.Node>();
+        openGraph.Add(start);
 
-        body.velocity = movement * 4.5f;
+        do {
+            openGraph = openGraph.OrderBy(x => x.totalCost + x.cost).ToList();
+
+            NavigationAI.Node node = openGraph.First();
+            openGraph.Remove(node);
+
+            foreach(NavigationAI.Node childNode in node.neighbors.OrderBy(x => x.cost + x.totalCost)) {
+                
+                if(childNode.visited) continue;
+                if(childNode.totalCost == 0 || node.totalCost + childNode.cost < childNode.totalCost) {
+                    childNode.SetTotalCost(node.totalCost + childNode.cost);
+                    childNode.SetParent(node);
+                    if(!openGraph.Contains(childNode)) {
+                        openGraph.Add(childNode);
+                    }
+                }
+            }
+
+            node.visited = true;
+
+            if(node.position == end.position) return;
+
+        } while(openGraph.Count != 0);
     }
 }

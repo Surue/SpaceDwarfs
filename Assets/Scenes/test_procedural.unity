@@ -312,64 +312,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864, type: 2}
   m_IsPrefabParent: 0
---- !u!1001 &795700871
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4257288162865178, guid: 060ed9c5832aa504989ccc41ae33cc1e, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -7.69
-      objectReference: {fileID: 0}
-    - target: {fileID: 4257288162865178, guid: 060ed9c5832aa504989ccc41ae33cc1e, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -5.53
-      objectReference: {fileID: 0}
-    - target: {fileID: 4257288162865178, guid: 060ed9c5832aa504989ccc41ae33cc1e, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4257288162865178, guid: 060ed9c5832aa504989ccc41ae33cc1e, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4257288162865178, guid: 060ed9c5832aa504989ccc41ae33cc1e, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4257288162865178, guid: 060ed9c5832aa504989ccc41ae33cc1e, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4257288162865178, guid: 060ed9c5832aa504989ccc41ae33cc1e, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4257288162865178, guid: 060ed9c5832aa504989ccc41ae33cc1e, type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 060ed9c5832aa504989ccc41ae33cc1e, type: 2}
-  m_IsPrefabParent: 0
---- !u!1 &880365817 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1781114890441694, guid: 060ed9c5832aa504989ccc41ae33cc1e,
-    type: 2}
-  m_PrefabInternal: {fileID: 795700871}
---- !u!114 &880365818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 880365817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d0fc109cabd44346b0ecf259b0e8096, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2060661703
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,7 +340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialChance: 45
-  birthLimit: 4
+  birthLimit: 7
   deathLimit: 3
   numberOfIteration: 7
   tilemapSize: {x: 50, y: 50}

@@ -3,21 +3,49 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+using System.Linq;
+
 public class NavigationAI : MonoBehaviour {
 
-    struct Node {
+    public class Node {
         public Vector2 position;
-        public List<Node> neighbors;
+        public Vector2Int positionInt;
+
+        public List<Node> neighbors = null;
 
         public bool isActive;
+
+        //A* variables
+        public float cost;
+        public float totalCost;
+        public Node parent = null;
+        public bool visited = false;
+
+        public void SetTotalCost(float f) {
+            totalCost = f;
+        }
+
+        public void SetParent(Node p) {
+            parent = p;
+        }
+
+        public void SetCost(float f) {
+            cost = f;
+        }
+
+        public void Reset() {
+            visited = false;
+            cost = 0;
+            totalCost = 0;
+            parent = null;
+        }
     }
 
     public bool DebugMode = true;
 
     [HideInInspector]
     public Tilemap solidTilemap;
-
-    private Node[,] graph;
+    public Node[,] graph;
 
     public void GenerateNavigationGraph() {
         //Get width and height of tilemap
@@ -27,14 +55,20 @@ public class NavigationAI : MonoBehaviour {
         //If graph does not existe -> instanciate it
         if(graph == null) {
             graph = new Node[width, height];
+            for(int x = 0;x < width;x++) {
+                for(int y = 0;y < height;y++) {
+                    graph[x, y] = new Node();
+                }
+            }
         }
 
         //Go through tilemap to find free tile
-        for(int x = 0; x < width; x++) {
-            for(int y = 0; y < height; y++) {
+        for(int x = 0;x < width;x++) {
+            for(int y = 0;y < height;y++) {
                 if(graph[x, y].neighbors == null) {
                     graph[x, y].neighbors = new List<Node>();
                     graph[x, y].position = new Vector2(x + solidTilemap.cellSize.x / 2.0f, y + solidTilemap.cellSize.y / 2.0f);
+                    graph[x, y].positionInt = new Vector2Int(x, y);
                 } else {
                     graph[x, y].neighbors.Clear();
                 }
@@ -49,8 +83,8 @@ public class NavigationAI : MonoBehaviour {
 
         BoundsInt bounds = new BoundsInt(-1, -1, 0, 3, 3, 1);
 
-        for(int x = 0;x < width; x++) {
-            for(int y = 0;y < height; y++) {
+        for(int x = 0;x < width;x++) {
+            for(int y = 0;y < height;y++) {
                 if(graph[x, y].isActive) {
 
                     foreach(Vector3Int b in bounds.allPositionsWithin) {
@@ -58,28 +92,42 @@ public class NavigationAI : MonoBehaviour {
                         if(x + b.x >= 0 && x + b.x < width && y + b.y >= 0 && y + b.y < height) {
 
                             if(graph[x + b.x, y + b.y].isActive) {
-                                graph[x, y].neighbors.Add(graph[x + b.x, y + b.y]);
+                                if(b.x == 0 || b.y == 0) {
+                                    graph[x, y].neighbors.Add(graph[x + b.x, y + b.y]);
+                                } else {
+                                    if(graph[x, y + b.y].isActive && graph[x + b.x, y].isActive) {
+                                        graph[x, y].neighbors.Add(graph[x + b.x, y + b.y]);
+                                    }
+                                }
                             }
                         }
                     }
-                } 
+                }
             }
         }
     }
 
-    public List<Vector2> GetPathTo(Transform target) {
-        List<Vector2> path = new List<Vector2>();
+    public List<Node> GetGraph() {
+        List<Node> freeNode = new List<Node>();
 
-        return path;
+        foreach(Node node in graph) {
+            if(node.isActive) {
+                freeNode.Add(node);
+            }
+        }
+
+        return freeNode;
     }
+
+    public Node GetClosestNode(Vector2 pos) {
+        return graph[(int)pos.x , (int)pos.y];
+    } 
 
     private void OnDrawGizmos() {
         if(DebugMode) {
             if(graph != null) {
                 foreach(Node node in graph) {
-                    if(node.isActive) {
                         Gizmos.DrawWireSphere(new Vector3(node.position.x, node.position.y, 0), 0.1f);
-                    }
 
                     foreach(Node neighbor in node.neighbors) {
                         Gizmos.DrawLine(node.position, neighbor.position);

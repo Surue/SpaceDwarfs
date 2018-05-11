@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 114641151316666250}
   - component: {fileID: 114217984943914178}
   - component: {fileID: 114375099477542878}
+  - component: {fileID: 114879908977606144}
   m_Layer: 0
   m_Name: GameCore
   m_TagString: Untagged
@@ -57,6 +58,8 @@ MonoBehaviour:
   groundTilemap: {fileID: 0}
   playerPrefab: {fileID: 1382962530495482, guid: fb14668622f1cfe46b856a89425869cd,
     type: 2}
+  goblingPrefab: {fileID: 1781114890441694, guid: 060ed9c5832aa504989ccc41ae33cc1e,
+    type: 2}
 --- !u!114 &114375099477542878
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -79,5 +82,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4902a65fbdb445a45895844244ac29be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114879908977606144
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1904651168231480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d0fc109cabd44346b0ecf259b0e8096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour {
     public Tilemap groundTilemap;
 
     public GameObject playerPrefab;
+    public GameObject goblingPrefab;
 
     // Use this for initialization
     void Start () {
@@ -30,6 +31,7 @@ public class LevelManager : MonoBehaviour {
 
         //Spawn player
         Instantiate(playerPrefab, mapGenerator.GetPositionForSpawn(), Quaternion.identity);
+        Instantiate(goblingPrefab, mapGenerator.GetPositionForSpawn(), Quaternion.identity);
 	}
 	
 	// Update is called once per frame

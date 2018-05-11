@@ -29,6 +29,8 @@ public class MapAutomata : MonoBehaviour {
     public Tile topTile;
     public Tile botTile;
 
+    List<Vector2Int> freeSpace;
+
     int width;
     int height;
 
@@ -45,11 +47,14 @@ public class MapAutomata : MonoBehaviour {
             terrainMap = GenTilePos(terrainMap);
         }
 
+        freeSpace = new List<Vector2Int>();
+
         for(int x = 0; x < width; x++) {
             for(int y = 0; y < height;  y++) {
                 if(terrainMap[x, y] == 1) {
                     solidTilemap.SetTile(new Vector3Int(x, y, 0), topTile);
                 } else {
+                    freeSpace.Add(new Vector2Int(x, y));
                     groundTilemap.SetTile(new Vector3Int(x, y, 0), botTile);
                 }
             }
@@ -113,14 +118,8 @@ public class MapAutomata : MonoBehaviour {
     }
 
     public Vector3 GetPositionForSpawn() {
-        for(int x = 0;x < width;x++) {
-            for(int y = 0;y < height;y++) {
-                if(terrainMap[x,y] == 0) {
-                    return new Vector3(x + solidTilemap.cellSize.x / 2, y + solidTilemap.cellSize.y / 2, 0);
-                }
-            }
-        }
+        Vector2 pos = freeSpace[Random.Range(0, freeSpace.Capacity)];
 
-        return new Vector3(0, 0, 0);
+        return new Vector3(pos.x + solidTilemap.cellSize.x / 2.0f, pos.y + solidTilemap.cellSize.y / 2.0f);
     }
 }

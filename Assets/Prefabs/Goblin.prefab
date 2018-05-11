@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212925509901862258}
   - component: {fileID: 50453234412519128}
   - component: {fileID: 61760373088199238}
+  - component: {fileID: 114282013989975250}
   m_Layer: 0
   m_Name: Goblin
   m_TagString: Untagged
@@ -36,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1781114890441694}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.6578481, y: 4.181428, z: 0}
+  m_LocalPosition: {x: 37.661102, y: 23.457449, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -87,6 +88,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.9, y: 0.9}
   m_EdgeRadius: 0
+--- !u!114 &114282013989975250
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1781114890441694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abdd398d03b70774f9ee46f0d40eb415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212925509901862258
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -120,7 +132,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: b6b3ed2b0679d1c46a08b5b5b88e413e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
