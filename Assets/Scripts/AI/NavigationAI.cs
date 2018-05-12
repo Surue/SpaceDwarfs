@@ -7,13 +7,11 @@ using System.Linq;
 
 public class NavigationAI : MonoBehaviour {
 
-    public class Node {
+    public class Node{
         public Vector2 position;
         public Vector2Int positionInt;
 
         public List<Node> neighbors = null;
-
-        public bool isActive;
 
         //A* variables
         public float cost;
@@ -58,7 +56,7 @@ public class NavigationAI : MonoBehaviour {
             graph = new Node[width, height];
             for(int x = 0;x < width;x++) {
                 for(int y = 0;y < height;y++) {
-                    graph[x, y] = new Node();
+                    graph[x, y] = null;
                 }
             }
         }
@@ -66,18 +64,21 @@ public class NavigationAI : MonoBehaviour {
         //Go through tilemap to find free tile
         for(int x = 0; x < width; x++) {
             for(int y = 0; y < height; y++) {
-                if(graph[x, y].neighbors == null) {
-                    graph[x, y].neighbors = new List<Node>();
-                    graph[x, y].position = new Vector2(x + solidTilemap.cellSize.x / 2.0f + solidTilemap.cellBounds.x, y + solidTilemap.cellSize.y / 2.0f + solidTilemap.cellBounds.y);
-                    graph[x, y].positionInt = new Vector2Int(x, y);
-                } else {
-                    graph[x, y].neighbors.Clear();
-                }
 
                 if(!solidTilemap.HasTile(new Vector3Int(x + solidTilemap.cellBounds.x, y + solidTilemap.cellBounds.y, 0))) {
-                    graph[x, y].isActive = true;
+                    if(graph[x, y] == null) {
+                        graph[x, y] = new Node {
+                            neighbors = new List<Node>(),
+                            position = new Vector2(x + solidTilemap.cellSize.x / 2.0f + solidTilemap.cellBounds.x, y + solidTilemap.cellSize.y / 2.0f + solidTilemap.cellBounds.y),
+                            positionInt = new Vector2Int(x, y)
+                        };
+                    } else {
+                        graph[x, y].neighbors.Clear();
+                    }
                 } else {
-                    graph[x, y].isActive = false;
+                    if(graph[x, y] != null) {
+                        graph[x, y] = null;
+                    }
                 }
             }
         }
@@ -86,17 +87,17 @@ public class NavigationAI : MonoBehaviour {
 
         for(int x = 0;x < width;x++) {
             for(int y = 0;y < height;y++) {
-                if(graph[x, y].isActive) {
+                if(graph[x, y] != null) {
 
                     foreach(Vector3Int b in bounds.allPositionsWithin) {
                         if(b.x == 0 && b.y == 0) continue;
                         if(x + b.x >= 0 && x + b.x < width && y + b.y >= 0 && y + b.y < height) {
 
-                            if(graph[x + b.x, y + b.y].isActive) {
+                            if(graph[x + b.x, y + b.y] != null) {
                                 if(b.x == 0 || b.y == 0) {
                                     graph[x, y].neighbors.Add(graph[x + b.x, y + b.y]);
                                 } else {
-                                    if(graph[x, y + b.y].isActive && graph[x + b.x, y].isActive) {
+                                    if(graph[x, y + b.y] != null && graph[x + b.x, y] != null) {
                                         graph[x, y].neighbors.Add(graph[x + b.x, y + b.y]);
                                     }
                                 }
@@ -112,12 +113,22 @@ public class NavigationAI : MonoBehaviour {
         List<Node> freeNode = new List<Node>();
 
         foreach(Node node in graph) {
-            if(node.isActive) {
+            if(node != null)
                 freeNode.Add(node);
-            }
         }
 
         return freeNode;
+    }
+
+    public Node GetRandomPatrolsPoint() {
+
+        while(true) {
+            int width = solidTilemap.cellBounds.size.x;
+            int height = solidTilemap.cellBounds.size.y;
+            Node n = graph[Random.Range(0, width), Random.Range(0, height)];
+
+            if(n != null) return n;
+        }
     }
 
     public Node GetClosestNode(Vector2 pos) {
@@ -128,11 +139,12 @@ public class NavigationAI : MonoBehaviour {
         if(DebugMode) {
             if(graph != null) {
                 foreach(Node node in graph) {
-                    if(node.isActive)
+                    if(node != null) {
                         Gizmos.DrawWireSphere(new Vector3(node.position.x, node.position.y, 0), 0.1f);
 
-                    foreach(Node neighbor in node.neighbors) {
-                        Gizmos.DrawLine(node.position, neighbor.position);
+                        foreach(Node neighbor in node.neighbors) {
+                            Gizmos.DrawLine(node.position, neighbor.position);
+                        }
                     }
                 }
             }

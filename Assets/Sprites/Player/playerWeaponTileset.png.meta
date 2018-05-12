@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: dedcc9d25f860ff4e94088f4a0554536
-timeCreated: 1526123863
+timeCreated: 1526125752
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -86,10 +86,10 @@ TextureImporter:
       name: playerWeaponTileset_0
       rect:
         serializedVersion: 2
-        x: 15
-        y: 0
-        width: 36
-        height: 62
+        x: 0
+        y: 320
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -100,10 +100,10 @@ TextureImporter:
       name: playerWeaponTileset_1
       rect:
         serializedVersion: 2
-        x: 80
-        y: 13
-        width: 19
-        height: 19
+        x: 64
+        y: 320
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -114,10 +114,10 @@ TextureImporter:
       name: playerWeaponTileset_2
       rect:
         serializedVersion: 2
-        x: 222
-        y: 26
-        width: 7
-        height: 7
+        x: 128
+        y: 320
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,24 +128,10 @@ TextureImporter:
       name: playerWeaponTileset_3
       rect:
         serializedVersion: 2
-        x: 105
-        y: 16
-        width: 10
-        height: 4
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: playerWeaponTileset_4
-      rect:
-        serializedVersion: 2
-        x: 156
-        y: 15
-        width: 35
-        height: 10
+        x: 222
+        y: 346
+        width: 7
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

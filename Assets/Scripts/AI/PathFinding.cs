@@ -33,6 +33,28 @@ public class PathFinding:MonoBehaviour {
         return path;
     }
 
+    public List<Vector2> GetPathFromTo(Transform from, NavigationAI.Node target) {
+        NavigationAI.Node start = navigationGraph.GetClosestNode(from.position);
+        NavigationAI.Node end = target;
+
+        //Get A* sorted list
+        Astar(start, end);
+
+        List<Vector2> path = new List<Vector2>();
+        path.Add(end.position);
+
+        BuildShortestPath(path, end);
+
+        path.Reverse();
+
+        //No path founded
+        if(path.Count == 1) {
+            path = null;
+        }
+
+        return path;
+    }
+
     void BuildShortestPath(List<Vector2> path, NavigationAI.Node node) {
         if(node.parent == null) {
             return;
@@ -43,7 +65,7 @@ public class PathFinding:MonoBehaviour {
     }
 
     void Astar(NavigationAI.Node start, NavigationAI.Node end) {
-        foreach(NavigationAI.Node node in navigationGraph.graph) {
+        foreach(NavigationAI.Node node in navigationGraph.GetGraph()) {
             node.Reset();
             node.SetCost(Vector2.Distance(node.position, end.position));
         }

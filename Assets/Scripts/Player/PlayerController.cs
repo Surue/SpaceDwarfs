@@ -10,12 +10,26 @@ public class PlayerController : MonoBehaviour {
 
     Vector2 moveVelocity;
 
-    Camera mainCamera; 
+    Camera mainCamera;
 
-	// Use this for initialization
-	void Start () {
+    //Animation
+    Animator animatorController;
+    [SerializeField]
+    SpriteRenderer hands;
+
+    //Gun
+    GunController gun;
+
+    bool lookingRight = true;
+
+    // Use this for initialization
+    void Start () {
         body = GetComponent<Rigidbody2D>();
         mainCamera = FindObjectOfType<Camera>();
+
+        animatorController = GetComponentInChildren<Animator>();
+
+        gun = GetComponentInChildren<GunController>();
 	}
 
     void FixedUpdate() {
@@ -25,5 +39,26 @@ public class PlayerController : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         moveVelocity = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * speed;
+
+        Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
+        Vector3 lookPos = Camera.main.ScreenToWorldPoint(mousePos);
+
+        if(lookPos.x > transform.position.x && !lookingRight) {
+            animatorController.SetBool("lookingRight", true);
+            lookingRight = true;
+            hands.flipX = false;
+            gun.FlipSprite();
+        } else if (lookPos.x < transform.position.x && lookingRight) {
+            animatorController.SetBool("lookingRight", false);
+            lookingRight = false;
+            hands.flipX = true;
+            gun.FlipSprite();
+        }
+    }
+
+    void ManageHandsAnimation() {
+        if(lookingRight) {
+
+        }
     }
 }

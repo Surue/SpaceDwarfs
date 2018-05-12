@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 6f1bfe1454febdc429e2a8ce16b40eae
-timeCreated: 1526120869
+timeCreated: 1526126659
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -12,6 +12,12 @@ TextureImporter:
     21300010: playerTileset_5
     21300012: playerTileset_6
     21300014: playerTileset_7
+    21300016: playerTileset_8
+    21300018: playerTileset_9
+    21300020: playerTileset_10
+    21300022: playerTileset_11
+    21300024: playerTileset_12
+    21300026: playerTileset_13
   externalObjects: {}
   serializedVersion: 4
   mipmaps:

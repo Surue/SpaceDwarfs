@@ -30,8 +30,6 @@ public class LevelManager : MonoBehaviour {
             //Spawn player
             if(!FindObjectOfType<PlayerController>()) //Used to not spawn player if already in the map
                 Instantiate(playerPrefab, mapManager.GetPositionForSpawn(), Quaternion.identity);
-            if(!FindObjectOfType<Movement>())
-                Instantiate(goblingPrefab, mapManager.GetPositionForSpawn(), Quaternion.identity);
         }
 	}
 
