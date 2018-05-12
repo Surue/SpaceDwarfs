@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     public float speed = 5;
+    public float life = 100;
 
     Rigidbody2D body;
 
@@ -16,11 +17,10 @@ public class PlayerController : MonoBehaviour {
     Animator animatorController;
     [SerializeField]
     SpriteRenderer hands;
+    bool lookingRight = true;
 
     //Gun
     GunController gun;
-
-    bool lookingRight = true;
 
     // Use this for initialization
     void Start () {
@@ -59,6 +59,14 @@ public class PlayerController : MonoBehaviour {
     void ManageHandsAnimation() {
         if(lookingRight) {
 
+        }
+    }
+
+    public void TakeDamage(float d) {
+        life -= d;
+
+        if(life < 0) {
+            Debug.Log("You die");
         }
     }
 }

@@ -1,39 +1,41 @@
 fileFormatVersion: 2
-guid: 532fadb85c6597144b7ff188dc31be6b
-timeCreated: 1526143625
+guid: 76abadd3346a7864492bc303950bca0b
+timeCreated: 1526146793
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: crawler_0
-    21300002: crawler_1
-    21300004: crawler_2
-    21300006: crawler_3
-    21300008: crawler_4
-    21300010: crawler_5
-    21300012: crawler_6
-    21300014: crawler_7
-    21300016: crawler_8
-    21300018: crawler_9
-    21300020: crawler_10
-    21300022: crawler_11
-    21300024: crawler_12
-    21300026: crawler_13
-    21300028: crawler_14
-    21300030: crawler_15
-    21300032: crawler_16
-    21300034: crawler_17
-    21300036: crawler_18
-    21300038: crawler_19
-    21300040: crawler_20
-    21300042: crawler_21
-    21300044: crawler_22
-    21300046: crawler_23
-    21300048: crawler_24
-    21300050: crawler_25
-    21300052: crawler_26
-    21300054: crawler_27
-    21300056: crawler_28
-    21300058: crawler_29
+    21300000: bloodSplashTileset_0
+    21300002: bloodSplashTileset_1
+    21300004: bloodSplashTileset_2
+    21300006: bloodSplashTileset_3
+    21300008: bloodSplashTileset_4
+    21300010: bloodSplashTileset_5
+    21300012: bloodSplashTileset_6
+    21300014: bloodSplashTileset_7
+    21300016: bloodSplashTileset_8
+    21300018: bloodSplashTileset_9
+    21300020: bloodSplashTileset_10
+    21300022: bloodSplashTileset_11
+    21300024: bloodSplashTileset_12
+    21300026: bloodSplashTileset_13
+    21300028: bloodSplashTileset_14
+    21300030: bloodSplashTileset_15
+    21300032: bloodSplashTileset_16
+    21300034: bloodSplashTileset_17
+    21300036: bloodSplashTileset_18
+    21300038: bloodSplashTileset_19
+    21300040: bloodSplashTileset_20
+    21300042: bloodSplashTileset_21
+    21300044: bloodSplashTileset_22
+    21300046: bloodSplashTileset_23
+    21300048: bloodSplashTileset_24
+    21300050: bloodSplashTileset_25
+    21300052: bloodSplashTileset_26
+    21300054: bloodSplashTileset_27
+    21300056: bloodSplashTileset_28
+    21300058: bloodSplashTileset_29
+    21300060: bloodSplashTileset_30
+    21300062: bloodSplashTileset_31
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -61,7 +63,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: -1
     aniso: -1
     mipBias: -1
     wrapU: 1
@@ -90,7 +92,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -99,7 +101,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -108,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: crawler_0
+      name: bloodSplashTileset_0
       rect:
         serializedVersion: 2
         x: 0
@@ -122,7 +124,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_1
+      name: bloodSplashTileset_1
       rect:
         serializedVersion: 2
         x: 64
@@ -136,7 +138,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_2
+      name: bloodSplashTileset_2
       rect:
         serializedVersion: 2
         x: 128
@@ -150,7 +152,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_3
+      name: bloodSplashTileset_3
       rect:
         serializedVersion: 2
         x: 192
@@ -164,7 +166,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_4
+      name: bloodSplashTileset_4
       rect:
         serializedVersion: 2
         x: 256
@@ -178,7 +180,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_5
+      name: bloodSplashTileset_5
       rect:
         serializedVersion: 2
         x: 320
@@ -192,7 +194,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_6
+      name: bloodSplashTileset_6
       rect:
         serializedVersion: 2
         x: 384
@@ -206,7 +208,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_7
+      name: bloodSplashTileset_7
       rect:
         serializedVersion: 2
         x: 448
@@ -220,7 +222,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_8
+      name: bloodSplashTileset_8
       rect:
         serializedVersion: 2
         x: 0
@@ -234,7 +236,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_9
+      name: bloodSplashTileset_9
       rect:
         serializedVersion: 2
         x: 64
@@ -248,7 +250,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_10
+      name: bloodSplashTileset_10
       rect:
         serializedVersion: 2
         x: 128
@@ -262,7 +264,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_11
+      name: bloodSplashTileset_11
       rect:
         serializedVersion: 2
         x: 192
@@ -276,7 +278,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_12
+      name: bloodSplashTileset_12
       rect:
         serializedVersion: 2
         x: 256
@@ -290,7 +292,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_13
+      name: bloodSplashTileset_13
       rect:
         serializedVersion: 2
         x: 320
@@ -304,7 +306,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_14
+      name: bloodSplashTileset_14
       rect:
         serializedVersion: 2
         x: 384
@@ -318,7 +320,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_15
+      name: bloodSplashTileset_15
       rect:
         serializedVersion: 2
         x: 448
@@ -332,7 +334,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_16
+      name: bloodSplashTileset_16
       rect:
         serializedVersion: 2
         x: 0
@@ -346,7 +348,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_17
+      name: bloodSplashTileset_17
       rect:
         serializedVersion: 2
         x: 64
@@ -360,7 +362,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_18
+      name: bloodSplashTileset_18
       rect:
         serializedVersion: 2
         x: 128
@@ -374,7 +376,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_19
+      name: bloodSplashTileset_19
       rect:
         serializedVersion: 2
         x: 192
@@ -388,7 +390,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_20
+      name: bloodSplashTileset_20
       rect:
         serializedVersion: 2
         x: 256
@@ -402,7 +404,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_21
+      name: bloodSplashTileset_21
       rect:
         serializedVersion: 2
         x: 320
@@ -416,7 +418,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_22
+      name: bloodSplashTileset_22
       rect:
         serializedVersion: 2
         x: 384
@@ -430,7 +432,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_23
+      name: bloodSplashTileset_23
       rect:
         serializedVersion: 2
         x: 448
@@ -444,7 +446,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_24
+      name: bloodSplashTileset_24
       rect:
         serializedVersion: 2
         x: 0
@@ -458,7 +460,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_25
+      name: bloodSplashTileset_25
       rect:
         serializedVersion: 2
         x: 64
@@ -472,7 +474,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_26
+      name: bloodSplashTileset_26
       rect:
         serializedVersion: 2
         x: 128
@@ -486,7 +488,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_27
+      name: bloodSplashTileset_27
       rect:
         serializedVersion: 2
         x: 192
@@ -500,7 +502,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_28
+      name: bloodSplashTileset_28
       rect:
         serializedVersion: 2
         x: 256
@@ -514,10 +516,38 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: crawler_29
+      name: bloodSplashTileset_29
       rect:
         serializedVersion: 2
         x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bloodSplashTileset_30
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bloodSplashTileset_31
+      rect:
+        serializedVersion: 2
+        x: 448
         y: 0
         width: 64
         height: 64

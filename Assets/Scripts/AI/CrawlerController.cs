@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CrawlerController : MonoBehaviour {
 
+    float life = 50;
+
     CircleCollider2D zoneDetection;
 
     Rigidbody2D body;
@@ -14,6 +16,9 @@ public class CrawlerController : MonoBehaviour {
     List<Vector2> path;
 
     Transform target;
+
+    [SerializeField]
+    GameObject bloodSplasherPrefab;
 
     enum State {
         IDLE,
@@ -131,11 +136,43 @@ public class CrawlerController : MonoBehaviour {
         return false;
     }
 
+    public float TakeDamage(float d) {
+        if(life - d < 0) {
+            Destroy(this);
+            return Mathf.Abs(life-d);
+        }
+
+        life -= d;
+
+        return 0;
+    }
+
     private void OnDrawGizmos() {
         if(path != null)
             foreach(Vector2 pos in path) {
                 Gizmos.color = Color.blue;
                 Gizmos.DrawWireSphere(new Vector3(pos.x, pos.y, 0), 0.1f);
             }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if(collision.gameObject.GetComponent<Bullet>()) {
+
+            Instantiate(bloodSplasherPrefab, collision.transform.position, Quaternion.identity);
+
+            Bullet bullet = collision.gameObject.GetComponent<Bullet>();
+
+            float diff = Mathf.Abs(life - bullet.energy);
+
+            life -= bullet.energy;
+
+            bullet.energy -= diff;
+
+            if(life <= 0) {
+                Destroy(gameObject);
+            } else {
+                Debug.Log(life);
+            }
+        }
     }
 }
