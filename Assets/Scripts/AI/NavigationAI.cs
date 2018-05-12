@@ -35,7 +35,7 @@ public class NavigationAI : MonoBehaviour {
 
         public void Reset() {
             visited = false;
-            cost = 0;
+            cost = 1;
             totalCost = 0;
             parent = null;
         }

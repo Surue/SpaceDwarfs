@@ -60,21 +60,23 @@ public class PathFinding:MonoBehaviour {
             NavigationAI.Node node = openGraph.First();
             openGraph.Remove(node);
 
+            
+
             foreach(NavigationAI.Node childNode in node.neighbors.OrderBy(x => x.cost + x.totalCost)) {
-                
+                Debug.Log(childNode.cost +" "+childNode.totalCost);
+                float newCost = node.totalCost + Vector2.Distance(node.position, childNode.position);
                 if(childNode.visited) continue;
-                if(childNode.totalCost == 0 || node.totalCost + childNode.cost < childNode.totalCost) {
-                    childNode.SetTotalCost(node.totalCost + childNode.cost);
+                //if childNode.totalCost = 0 => childNode == end OR if cost is smaller than previous one
+                if(childNode.totalCost == 0 || newCost < childNode.totalCost) {
+                    childNode.SetTotalCost(newCost);
                     childNode.SetParent(node);
                     if(!openGraph.Contains(childNode)) {
                         openGraph.Add(childNode);
                     }
                 }
             }
-
-            node.visited = true;
-
             if(node.position == end.position) return;
+            node.visited = true;
 
         } while(openGraph.Count != 0);
     }
