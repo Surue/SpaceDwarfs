@@ -17,8 +17,15 @@ public class CrawlerController : MonoBehaviour {
 
     Transform target;
 
+    Animator animator;
+
     [SerializeField]
     GameObject bloodSplasherPrefab;
+
+    bool lookingRight = true;
+
+    float attackTime = 1.2f;
+    float timer = 0;
 
     enum State {
         IDLE,
@@ -33,6 +40,7 @@ public class CrawlerController : MonoBehaviour {
 	void Start () {
         zoneDetection = GetComponent<CircleCollider2D>();
         body = GetComponent<Rigidbody2D>();
+        animator = GetComponentInChildren<Animator>();
 
         graph = FindObjectOfType<NavigationAI>();
         aStart = FindObjectOfType<PathFinding>();
@@ -87,12 +95,28 @@ public class CrawlerController : MonoBehaviour {
                 break;
 
             case State.ATTACKING:
-                Debug.Log("ATTACK MOTHERFUCKER");
+                body.velocity = Vector2.zero;
+
+                timer -= Time.deltaTime;
+
+                if(timer < 0) {
+                    state = State.IDLE;
+
+                    Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1);
+
+                    foreach(Collider2D collider in colliders) {
+                        if(collider.GetComponent<PlayerController>()) {
+                            collider.GetComponent<PlayerController>().TakeDamage(10);
+                        }
+                    }
+                }
                 break;
 
             case State.MOVE_TOWARDS_PLAYER:
                 if(Vector2.Distance(transform.position, target.position) < 0.75f) {
                     state = State.ATTACKING;
+                    animator.SetTrigger("attack");
+                    timer = attackTime;
                     break;
                 }
 
@@ -109,6 +133,18 @@ public class CrawlerController : MonoBehaviour {
                 body.velocity = movement * 2.5f;
                 break;
         }
+
+        if(lookingRight && body.velocity.x < 0) {
+            animator.SetBool("lookingRight", false);
+            lookingRight = false;
+        }
+
+        if(!lookingRight && body.velocity.x > 0) {
+            animator.SetBool("lookingRight", true);
+            lookingRight = true;
+        }
+
+        animator.SetFloat("speed", body.velocity.x);
 	}
 
     bool CheckPlayerPresence() {
@@ -170,8 +206,6 @@ public class CrawlerController : MonoBehaviour {
 
             if(life <= 0) {
                 Destroy(gameObject);
-            } else {
-                Debug.Log(life);
             }
         }
     }

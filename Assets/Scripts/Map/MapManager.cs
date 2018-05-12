@@ -13,6 +13,8 @@ public class MapManager : MonoBehaviour {
 
     List<Vector2Int> emptyTiles;
 
+    CompositeCollider2D colliderSolideTilemap;
+
     // Use this for initialization
     void Start () {
 		//Check if need to generate map

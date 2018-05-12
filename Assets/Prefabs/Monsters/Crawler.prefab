@@ -54,7 +54,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1932950884486632}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.25, y: 5.86, z: 0}
+  m_LocalPosition: {x: -2.41, y: 8.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4852171773028854}
@@ -68,7 +68,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1343398311748372}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.31, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4353797263526468}
@@ -108,7 +108,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 5.02
+  m_Radius: 6.39
 --- !u!61 &61857382006873854
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -121,7 +121,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.36}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -132,8 +132,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.71, y: 0.37}
-  m_EdgeRadius: 0
+  m_Size: {x: 0.64, y: 0.25}
+  m_EdgeRadius: 0.01
 --- !u!95 &95823831352193750
 Animator:
   serializedVersion: 3
@@ -162,6 +162,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c76205afee1a9e94d91c2450d07907fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bloodSplasherPrefab: {fileID: 1996263932058318, guid: 2c5026862ea3fcc4cb72877e46690201,
+    type: 2}
 --- !u!212 &212412971287340424
 SpriteRenderer:
   m_ObjectHideFlags: 1
