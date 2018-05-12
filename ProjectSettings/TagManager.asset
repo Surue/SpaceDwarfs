@@ -41,3 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: TilemapGround
+    uniqueID: 1187663185
+    locked: 0
+  - name: TilemapSolid
+    uniqueID: 3206879761
+    locked: 0
+  - name: Monster
+    uniqueID: 1808756615
+    locked: 0
+  - name: Player
+    uniqueID: 2557142151
+    locked: 0

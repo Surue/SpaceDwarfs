@@ -1,10 +1,14 @@
 fileFormatVersion: 2
-guid: 8830109883d257a45ac15555b41c91b8
-timeCreated: 1525983164
+guid: dedcc9d25f860ff4e94088f4a0554536
+timeCreated: 1526123863
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Player_0
+    21300000: playerWeaponTileset_0
+    21300002: playerWeaponTileset_1
+    21300004: playerWeaponTileset_2
+    21300006: playerWeaponTileset_3
+    21300008: playerWeaponTileset_4
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -47,7 +51,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 64
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -79,13 +83,69 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_0
+      name: playerWeaponTileset_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 15
         y: 0
-        width: 32
-        height: 32
+        width: 36
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: playerWeaponTileset_1
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 13
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: playerWeaponTileset_2
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 26
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: playerWeaponTileset_3
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 16
+        width: 10
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: playerWeaponTileset_4
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 15
+        width: 35
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
