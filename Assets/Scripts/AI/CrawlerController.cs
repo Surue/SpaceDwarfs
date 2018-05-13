@@ -27,6 +27,8 @@ public class CrawlerController : MonoBehaviour {
     float attackTime = 1.2f;
     float timer = 0;
 
+    List<Vector2> lastsPosition;
+
     enum State {
         IDLE,
         MOVING,
@@ -67,6 +69,7 @@ public class CrawlerController : MonoBehaviour {
                         
                 } else {
                     state = State.MOVING;
+                    lastsPosition = new List<Vector2>();
                 }
                 
                 break;
@@ -78,7 +81,7 @@ public class CrawlerController : MonoBehaviour {
                     break;
                 }
 
-                if(Vector2.Distance(transform.position, path[0]) < 0.2f) {
+                if(Vector2.Distance(transform.position, path[0]) < 0.1f) {
                     path.RemoveAt(0);
 
                     if(path.Count == 0) {
@@ -92,6 +95,23 @@ public class CrawlerController : MonoBehaviour {
                 movement = movement.normalized;
 
                 body.velocity = movement * 2.5f;
+
+                lastsPosition.Add(transform.position);
+
+                if(lastsPosition.Count > 10) {
+                    Vector2 pos = lastsPosition[lastsPosition.Count - 1];
+                    bool notMoving = true;
+                    for(int i = 1; i < 10;i++) {
+                        if(pos != lastsPosition[lastsPosition.Count - 1 - i]) {
+                            notMoving = false;
+                            continue;
+                        }
+                    }
+
+                    if(notMoving) {
+                        state = State.IDLE;
+                    }
+                }
                 break;
 
             case State.ATTACKING:
@@ -200,12 +220,39 @@ public class CrawlerController : MonoBehaviour {
 
             float diff = Mathf.Abs(life - bullet.energy);
 
-            life -= bullet.energy;
+            if(bullet.energy > 0) {
+                life -= bullet.energy;
+            }
 
             bullet.energy -= diff;
 
             if(life <= 0) {
                 Destroy(gameObject);
+            } else {
+                Debug.Log(life);
+            }
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision) {
+        if(collision.gameObject.GetComponent<Bullet>()) {
+
+            Instantiate(bloodSplasherPrefab, collision.transform.position, Quaternion.identity);
+
+            Bullet bullet = collision.gameObject.GetComponent<Bullet>();
+
+            float diff = Mathf.Abs(life - bullet.energy);
+
+            if(bullet.energy > 0) {
+                life -= bullet.energy;
+            }
+
+            bullet.energy -= diff;
+
+            if(life <= 0) {
+                Destroy(gameObject);
+            } else {
+                Debug.Log(life);
             }
         }
     }
