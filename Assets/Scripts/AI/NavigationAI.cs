@@ -132,7 +132,24 @@ public class NavigationAI : MonoBehaviour {
     }
 
     public Node GetClosestNode(Vector2 pos) {
-        return graph[(int)pos.x - solidTilemap.cellBounds.x, (int)pos.y - solidTilemap.cellBounds.y];
+
+        int x = (int)pos.x - solidTilemap.cellBounds.x;
+        int y = (int)pos.y - solidTilemap.cellBounds.y;
+
+
+        Node n = graph[x, y];
+
+        if(n != null) return n;
+
+        BoundsInt bounds = new BoundsInt(-1, -1, 0, 3, 3, 1);
+
+        foreach(Vector3Int b in bounds.allPositionsWithin) {
+            if(graph[x + b.x, y + b.y] != null) {
+                n =  graph[x + b.x, y + b.y];
+            }
+        }
+
+        return n;
     } 
 
     private void OnDrawGizmos() {

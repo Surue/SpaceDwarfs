@@ -20,9 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4196192251138606}
   - component: {fileID: 114641151316666250}
-  - component: {fileID: 114217984943914178}
   - component: {fileID: 114375099477542878}
   - component: {fileID: 114879908977606144}
+  - component: {fileID: 114398017622646028}
   m_Layer: 0
   m_Name: GameCore
   m_TagString: Untagged
@@ -43,23 +43,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114217984943914178
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1904651168231480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21951218443113942b8a0d48542ddba3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  solidTilemap: {fileID: 0}
-  groundTilemap: {fileID: 0}
-  playerPrefab: {fileID: 1382962530495482, guid: fb14668622f1cfe46b856a89425869cd,
-    type: 2}
-  goblingPrefab: {fileID: 1781114890441694, guid: 060ed9c5832aa504989ccc41ae33cc1e,
-    type: 2}
 --- !u!114 &114375099477542878
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -73,6 +56,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DebugMode: 1
   solidTilemap: {fileID: 0}
+--- !u!114 &114398017622646028
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1904651168231480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8aa343ceedb4eb4e9c756c3d7ad8ada, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114641151316666250
 MonoBehaviour:
   m_ObjectHideFlags: 1

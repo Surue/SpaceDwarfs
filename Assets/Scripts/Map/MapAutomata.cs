@@ -18,7 +18,6 @@ public class MapAutomata : MonoBehaviour {
     [Range(1, 10)]
     public int numberOfIteration;
 
-    private int count = 0;
     private int[,] terrainMap;
     public Vector2Int tilemapSize;
     

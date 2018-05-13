@@ -176,8 +176,6 @@ public class CrawlerController : MonoBehaviour {
         for(int i = 0; i < count; i++) {
             if(colliders[i].tag == "Player") {
 
-                Collider2D[] selfColliders = GetComponents<Collider2D>();
-
                 RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, colliders[i].transform.position - transform.position, Mathf.Infinity, ~(1 << LayerMask.NameToLayer("Monster")));
                 Debug.DrawRay(transform.position, colliders[i].transform.position - transform.position);
                 if(hitPlayer.collider.tag != "Player") {
@@ -228,8 +226,6 @@ public class CrawlerController : MonoBehaviour {
 
             if(life <= 0) {
                 Destroy(gameObject);
-            } else {
-                Debug.Log(life);
             }
         }
     }

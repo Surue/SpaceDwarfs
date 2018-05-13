@@ -46,7 +46,7 @@ public class GunController : MonoBehaviour {
 
         if(Input.GetButton("Fire1")) {
             if(delay <= 0) {
-                CameraShakeInstance c = CameraShake.Instance.ShakeOnce(2, 2, 0.1f, 0.1f);
+                CameraShake.Instance.ShakeOnce(2, 2, 0.1f, 0.1f);
                 var bullet = (GameObject)Instantiate(ammunition, transform.position + (lookPos.normalized * 0.55f) + new Vector3(0, -0.1f ,0), Quaternion.identity);
                 bullet.GetComponent<Rigidbody2D>().velocity = lookPos.normalized * 5.75f;
                 delay = delayBetweenShots;
@@ -54,11 +54,12 @@ public class GunController : MonoBehaviour {
         }
     }
 
-    public void FlipSprite() {
-        if(spriteRenderer.sprite == spriteRight) {
-            spriteRenderer.sprite = spriteLeft;
-        } else {
+    public void FlipSprite(bool flip) {
+
+        if(!flip) {
             spriteRenderer.sprite = spriteRight;
+        } else {
+            spriteRenderer.sprite = spriteLeft;
         }
     }
 }

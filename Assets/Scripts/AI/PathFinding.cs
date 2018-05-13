@@ -75,7 +75,6 @@ public class PathFinding:MonoBehaviour {
 
         List<NavigationAI.Node> openGraph = new List<NavigationAI.Node>();
         openGraph.Add(start);
-        int count = 0;
 
         do {
             openGraph = openGraph.OrderBy(x => x.totalCost + x.cost).ToList();

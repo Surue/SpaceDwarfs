@@ -1,17 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
     public float speed = 5;
+    [Header("Health")]
     public float life = 100;
+    float initialLife;
+    Image lifeBar;
 
     Rigidbody2D body;
 
     Vector2 moveVelocity;
-
-    Camera mainCamera;
 
     //Animation
     Animator animatorController;
@@ -25,11 +27,14 @@ public class PlayerController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         body = GetComponent<Rigidbody2D>();
-        mainCamera = FindObjectOfType<Camera>();
 
         animatorController = GetComponentInChildren<Animator>();
 
         gun = GetComponentInChildren<GunController>();
+
+        lifeBar = GameObject.Find("lifeBar").GetComponent<Image>();
+
+        initialLife = life;
 	}
 
     void FixedUpdate() {
@@ -47,12 +52,12 @@ public class PlayerController : MonoBehaviour {
             animatorController.SetBool("lookingRight", true);
             lookingRight = true;
             hands.flipX = false;
-            gun.FlipSprite();
+            gun.FlipSprite(false);
         } else if (lookPos.x < transform.position.x && lookingRight) {
             animatorController.SetBool("lookingRight", false);
             lookingRight = false;
             hands.flipX = true;
-            gun.FlipSprite();
+            gun.FlipSprite(true);
         }
     }
 
@@ -64,9 +69,13 @@ public class PlayerController : MonoBehaviour {
 
     public void TakeDamage(float d) {
         life -= d;
-
+        UpdateLifeBar();
         if(life < 0) {
-            Debug.Log("You die");
+            GameManager.Instance.PlayerDeath();
         }
+    }
+
+    void UpdateLifeBar() {
+        lifeBar.fillAmount = 1 / (initialLife / life);
     }
 }

@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 20598805417815068}
   - component: {fileID: 124339909451481970}
   - component: {fileID: 81163177141223030}
+  - component: {fileID: 114681024220186678}
   m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -132,7 +133,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1382962530495482}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.7611728, y: -2.6200738, z: 0}
+  m_LocalPosition: {x: 6.033984, y: -5.1953006, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4572787743077008}
@@ -282,6 +283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  life: 100
   hands: {fileID: 212713133722925448}
 --- !u!114 &114465383715447520
 MonoBehaviour:
@@ -294,10 +296,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 688fc06e3299f5c4cbd464300d4966e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRight: {fileID: 21300002, guid: dedcc9d25f860ff4e94088f4a0554536, type: 3}
-  spriteLeft: {fileID: 21300004, guid: dedcc9d25f860ff4e94088f4a0554536, type: 3}
+  spriteRight: {fileID: 21300004, guid: dedcc9d25f860ff4e94088f4a0554536, type: 3}
+  spriteLeft: {fileID: 21300006, guid: dedcc9d25f860ff4e94088f4a0554536, type: 3}
   hands: {fileID: 212713133722925448}
   ammunition: {fileID: 1704994280838652, guid: 0de9fd99cc17e18478ad4a63c53736bc, type: 2}
+--- !u!114 &114681024220186678
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1456147748730730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c60beb2292ddcc45898384814f6e006, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultPosInfluence: {x: 0.15, y: 0.15, z: 0.15}
+  DefaultRotInfluence: {x: 1, y: 1, z: 1}
 --- !u!124 &124339909451481970
 Behaviour:
   m_ObjectHideFlags: 1
