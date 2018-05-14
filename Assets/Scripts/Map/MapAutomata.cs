@@ -4,6 +4,24 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEditor;
 
+using System.Linq;
+
+public class MapRegion {
+    public MapRegion(List<Vector2Int> tiles, bool spawnMonster, bool spawnPlayer, bool spawnNest) {
+        this.tiles = tiles;
+        canSpawnMonster = spawnMonster;
+        canSpawnPlayer = spawnPlayer;
+        canSpawnNest = spawnNest;
+    }
+
+    public List<Vector2Int> tiles;
+
+    //Rules
+    bool canSpawnMonster;
+    bool canSpawnPlayer;
+    bool canSpawnNest;
+}
+
 public class MapAutomata : MonoBehaviour {
 
     [Range(0, 100)]
@@ -19,27 +37,73 @@ public class MapAutomata : MonoBehaviour {
     public int numberOfIteration;
 
     private int[,] terrainMap;
+    
     public Vector2Int tilemapSize;
     
     public Tile topTile;
     public Tile botTile;
+    public Tile debugTile;
 
     int width;
     int height;
+
+    public Tilemap debugTilemap;
 
     public void GenerateMap(Tilemap solidTilemap, Tilemap groundTilemap) {
         width = tilemapSize.x;
         height = tilemapSize.y;
 
+        //Initial repartition of tile
         if(terrainMap == null) {
             terrainMap = new int[width, height];
             InitPosition();
         }
 
+        //Use automata algo to create cave
         for(int i = 0; i < numberOfIteration;i++) {
             terrainMap = GenTilePos(terrainMap);
         }
 
+        //Assure a passe between all big region
+
+        //Create spawn point region
+        //Select spawnPoint
+        int rule_SpawnWidthFromEdge = 5;
+        int rule_SpawnHeightFromEdge = 5;
+        
+        List<Vector2Int> possibleSpawnPoint = new List<Vector2Int>();
+
+        for(int x = 0;x < width;x++) {
+            for(int y = 0;y < height;y++) {
+                if((x >= 0 && x < -1 + rule_SpawnWidthFromEdge) || (x > width - rule_SpawnWidthFromEdge && x < width)) {
+                    if(terrainMap[x, y] == 0) {
+                        possibleSpawnPoint.Add(new Vector2Int(x, y));
+                    } 
+                } else if((y >= 0 && y < -1 + rule_SpawnHeightFromEdge) || (y > height - rule_SpawnHeightFromEdge && x < height)) {
+                    if(terrainMap[x, y] == 0) {
+                        possibleSpawnPoint.Add(new Vector2Int(x, y));
+                    }
+                }
+            }
+        }
+
+        Vector2Int spawnPosition = possibleSpawnPoint[Random.Range(0, possibleSpawnPoint.Count)];
+
+        MapRegion spawnRegion = GenerateMapRegionForSpawn(spawnPosition);
+
+        if(debugTilemap != null) {
+            foreach(Vector2Int tile in spawnRegion.tiles) {
+                debugTilemap.SetTile(new Vector3Int(tile.x, tile.y, 0), debugTile);
+            }
+        }
+
+        //Create all other region
+
+        //Fill region with treasure
+
+        //Fill solide tile with treasure
+
+        //Associate visual tile
         for(int x = 0; x < width; x++) {
             for(int y = 0; y < height;  y++) {
                 if(terrainMap[x, y] == 1) {
@@ -49,6 +113,43 @@ public class MapAutomata : MonoBehaviour {
                 }
             }
         }
+    }
+
+    MapRegion GenerateMapRegionForSpawn(Vector2Int spawnTile) {
+        List<Vector2Int> tiles = new List<Vector2Int>();
+
+        List<Vector2Int> tilesToCheck = new List<Vector2Int>();
+
+        tilesToCheck.Add(spawnTile);
+
+        //Heuristic, resté dans le coin ou le bords
+        BoundsInt bounds = new BoundsInt(-1, -1, 0, 3, 3, 1);
+
+        while(tilesToCheck.Count > 0 && tiles.Count < 30) {
+            tilesToCheck.OrderBy(x => Vector2.Distance(x, spawnTile));
+            
+            Vector2Int tile = tilesToCheck.First();
+
+            tilesToCheck.Remove(tile);
+
+            if(terrainMap[tile.x, tile.y] == 0) {
+                tiles.Add(tile);
+
+                foreach(Vector3Int b in bounds.allPositionsWithin) {
+                    if(b.x == 0 && b.y == 0) continue;
+                    if(tile.x + b.x >= 0 && spawnTile.x + b.x < width && spawnTile.y + b.y >= 0 && spawnTile.y + b.y < height) {
+                        if(!tilesToCheck.Contains(new Vector2Int(tile.x + b.x, tile.y + b.y)) && !tiles.Contains(new Vector2Int(tile.x + b.x, tile.y + b.y)))
+                        tilesToCheck.Add(new Vector2Int(tile.x + b.x, tile.y + b.y));
+                    } 
+                }
+
+            }
+        }
+
+        Debug.Log(tiles.Count);
+
+
+        return new MapRegion(tiles, false, true, false);
     }
 
     public int [,] GenTilePos(int[,] previousMap) {

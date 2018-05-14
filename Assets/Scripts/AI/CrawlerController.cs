@@ -247,8 +247,6 @@ public class CrawlerController : MonoBehaviour {
 
             if(life <= 0) {
                 Destroy(gameObject);
-            } else {
-                Debug.Log(life);
             }
         }
     }

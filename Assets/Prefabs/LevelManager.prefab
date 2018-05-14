@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4491640228672160}
   - component: {fileID: 114062758954686084}
+  - component: {fileID: 114621955502261048}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -55,6 +56,18 @@ MonoBehaviour:
   groundTilemap: {fileID: 0}
   playerPrefab: {fileID: 1382962530495482, guid: fb14668622f1cfe46b856a89425869cd,
     type: 2}
-  goblingPrefab: {fileID: 1932950884486632, guid: 060ed9c5832aa504989ccc41ae33cc1e,
-    type: 2}
   timeBeforeEvacText: {fileID: 0}
+  state: 0
+--- !u!114 &114621955502261048
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1092160751731136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a87bc74871131a94c84b5d92fb78495e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crawlerPrefab: {fileID: 1932950884486632, guid: 060ed9c5832aa504989ccc41ae33cc1e,
+    type: 2}
