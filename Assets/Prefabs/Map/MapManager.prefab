@@ -59,7 +59,23 @@ MonoBehaviour:
   tilemapSize: {x: 50, y: 50}
   topTile: {fileID: 11400000, guid: ba5bd530200a5a44696b0b415753edad, type: 2}
   botTile: {fileID: 11400000, guid: cd7c6aeaf1ab8a0489a0d79bd58e0529, type: 2}
-  debugTile: {fileID: 11400000, guid: 4c27376f278010d4d8dac4e6be668627, type: 2}
+  debugTiles:
+  - {fileID: 11400000, guid: 9df36baa68088284587247d5a34c3f90, type: 2}
+  - {fileID: 11400000, guid: b90cd5303f93c2546bda5006f72e0a3b, type: 2}
+  - {fileID: 11400000, guid: 309dd593b2ec8ae4ba83b2209cf65577, type: 2}
+  - {fileID: 11400000, guid: e5024da18193563459f8c168cdcea0c0, type: 2}
+  - {fileID: 11400000, guid: 1cde109bd2b80a54687600b2bd7c1080, type: 2}
+  - {fileID: 11400000, guid: 8b14baf46a813e1459c32b5ec49097f4, type: 2}
+  - {fileID: 11400000, guid: be0c8b7c2d7c08a40a623fa4bb0d453a, type: 2}
+  - {fileID: 11400000, guid: 16343a9efdc8f3d48b268dab73b51a8d, type: 2}
+  - {fileID: 11400000, guid: 24356f1faf3dbe14a9c46fbb13cb28a8, type: 2}
+  - {fileID: 11400000, guid: d8f90ee4d6ceb664487f48bae3e65b60, type: 2}
+  - {fileID: 11400000, guid: ac22ce4a50b13374e967d4a90a089380, type: 2}
+  - {fileID: 11400000, guid: 97c980708c5710f4eb690a80eb8f7783, type: 2}
+  - {fileID: 11400000, guid: abaa190198c465243bccd6956f016741, type: 2}
+  - {fileID: 11400000, guid: fb7495a16af31a847900217674b40edb, type: 2}
+  - {fileID: 11400000, guid: 4c27376f278010d4d8dac4e6be668627, type: 2}
+  - {fileID: 11400000, guid: 518817c5fcadb6842afb30be105a4a17, type: 2}
   debugTilemap: {fileID: 0}
 --- !u!114 &114622845642960226
 MonoBehaviour:
