@@ -6,33 +6,6 @@ using UnityEditor;
 
 using System.Linq;
 
-public class MapRegion {
-    public MapRegion(List<Vector2Int> tiles) {
-        this.tiles = tiles;
-
-        centerOfRegion = tiles[Random.Range(0, tiles.Count)];
-        
-    }
-
-    public MapRegion(List<Vector2Int> tiles, bool spawnMonster, bool spawnPlayer, bool spawnNest) {
-        this.tiles = tiles;
-        canSpawnMonster = spawnMonster;
-        canSpawnPlayer = spawnPlayer;
-        canSpawnNest = spawnNest;
-
-
-        centerOfRegion = tiles[Random.Range(0, tiles.Count)];
-    }
-
-    public List<Vector2Int> tiles;
-    public Vector2Int centerOfRegion = new Vector2Int(0, 0);
-
-    //Rules
-    bool canSpawnMonster;
-    bool canSpawnPlayer;
-    bool canSpawnNest;
-}
-
 public class MapAutomata:MonoBehaviour {
 
     [Range(0, 100)]
@@ -77,19 +50,8 @@ public class MapAutomata:MonoBehaviour {
             terrainMap = GenTilePos(terrainMap);
         }
 
-        //Assure a passe between all big region
-        //Associate visual tile
-        for(int x = 0;x < width;x++) {
-            for(int y = 0;y < height;y++) {
-                if(terrainMap[x, y] == 1) {
-                    solidTilemap.SetTile(new Vector3Int(x, y, 0), topTile);
-                } else {
-                    groundTilemap.SetTile(new Vector3Int(x, y, 0), botTile);
-                }
-            }
-        }
-
-        FindAllBiggestRegion(solidTilemap);
+        //Assure a way between all big region
+        DigBetweenRegions(solidTilemap);
 
         //Create spawn point region
         //Select spawnPoint
@@ -113,8 +75,6 @@ public class MapAutomata:MonoBehaviour {
         }
 
         Vector2Int spawnPosition = possibleSpawnPoint[Random.Range(0, possibleSpawnPoint.Count)];
-
-        //MapRegion spawnRegion = GenerateMapRegionForSpawn(spawnPosition);
 
         //if(debugTilemap != null) {
         //    foreach(Vector2Int tile in spawnRegion.tiles) {
@@ -140,8 +100,10 @@ public class MapAutomata:MonoBehaviour {
         }
     }
 
-    void FindAllBiggestRegion(Tilemap solidTilemap) {
+    void DigBetweenRegions(Tilemap solidTilemap) {
         int rule_minimumRegionSize = 20;
+
+        #region Get all region 
 
         List<MapRegion> mapRegion = new List<MapRegion>();
 
@@ -188,10 +150,14 @@ public class MapAutomata:MonoBehaviour {
             mapRegion.Add(new MapRegion(tilesForRegion));
         }
 
+        #endregion
+
+        #region keep smalest region and get the bigger one
+
         //Keep smalest region
 
         for(int i = 0;i < mapRegion.Count;i++) {
-            if(mapRegion[i].tiles.Count < rule_minimumRegionSize) {
+            if(mapRegion[i].listTiles.Count < rule_minimumRegionSize) {
                 ClosedRegion.Add(mapRegion[i]);
                 mapRegion.Remove(mapRegion[i]);
                 i--;
@@ -199,26 +165,25 @@ public class MapAutomata:MonoBehaviour {
         }
 
         //Dig from all area to each other
-        DigFromAllRegionFromBiggestOne(mapRegion, solidTilemap);
-    }
-
-    void DigFromAllRegionFromBiggestOne(List<MapRegion> regionsToLink, Tilemap solidTilemap) {
-
         //Get the biggest region
         MapRegion biggestRegion = null;
 
         int maxTile = 0;
 
-        foreach(MapRegion region in regionsToLink) {
-            if(region.tiles.Count > maxTile) {
-                maxTile = region.tiles.Count;
+        foreach(MapRegion region in mapRegion) {
+            if(region.listTiles.Count > maxTile) {
+                maxTile = region.listTiles.Count;
                 biggestRegion = region;
             }
         }
-       
+
+        #endregion
+
+        #region Get all path from biggest region and dig from them
+
         //Order all other by closest from centerOfRegion
-        regionsToLink.Remove(biggestRegion);
-        regionsToLink.OrderBy(x => Vector2.Distance(x.centerOfRegion, biggestRegion.centerOfRegion));
+        mapRegion.Remove(biggestRegion);
+        mapRegion.OrderBy(x => Vector2.Distance(x.centerOfRegion, biggestRegion.centerOfRegion));
 
         NavigationAI navigationGraph = FindObjectOfType<NavigationAI>();
 
@@ -227,10 +192,10 @@ public class MapAutomata:MonoBehaviour {
         int count = 0;
 
         //Dig from center to all region 
-        while(regionsToLink.Count > 0) {
+        while(mapRegion.Count > 0) {
             List<List<Vector2Int>> paths = new List<List<Vector2Int>>();
 
-            foreach(MapRegion region in regionsToLink) {
+            foreach(MapRegion region in mapRegion) {
                 navigationGraph.GenerateNavigationGraph();
                 List<Vector2Int> path = new List<Vector2Int>();
 
@@ -249,8 +214,8 @@ public class MapAutomata:MonoBehaviour {
 
             float minPath = Mathf.Infinity;
             int index = 0;
-            
-            for(int i = 0; i < regionsToLink.Count;i++) {
+
+            for(int i = 0;i < mapRegion.Count;i++) {
                 if(paths[i].Count < minPath) {
                     minPath = paths[i].Count;
                     index = i;
@@ -258,7 +223,7 @@ public class MapAutomata:MonoBehaviour {
             }
 
             List<Vector2Int> minimumPath = paths[index];
-            regionsToLink.RemoveAt(index);
+            mapRegion.RemoveAt(index);
 
             foreach(Vector2Int node in minimumPath) {
                 terrainMap[node.x, node.y] = 0;
@@ -276,39 +241,8 @@ public class MapAutomata:MonoBehaviour {
             count++;
             navigationGraph.solidTilemap = solidTilemap;
         }
-    }
 
-    MapRegion GenerateMapRegionForSpawn(Vector2Int spawnTile) {
-        List<Vector2Int> tiles = new List<Vector2Int>();
-
-        List<Vector2Int> tilesToCheck = new List<Vector2Int>();
-
-        tilesToCheck.Add(spawnTile);
-        
-        BoundsInt bounds = new BoundsInt(-1, -1, 0, 3, 3, 1);
-
-        while(tilesToCheck.Count > 0 && tiles.Count < 30) {
-            tilesToCheck.OrderBy(x => Vector2.Distance(x, spawnTile));
-            
-            Vector2Int tile = tilesToCheck.First();
-
-            tilesToCheck.Remove(tile);
-
-            if(terrainMap[tile.x, tile.y] == 0) {
-                tiles.Add(tile);
-
-                foreach(Vector3Int b in bounds.allPositionsWithin) {
-                    if(b.x == 0 && b.y == 0) continue;
-                    if(tile.x + b.x >= 0 && spawnTile.x + b.x < width && spawnTile.y + b.y >= 0 && spawnTile.y + b.y < height) {
-                        if(!tilesToCheck.Contains(new Vector2Int(tile.x + b.x, tile.y + b.y)) && !tiles.Contains(new Vector2Int(tile.x + b.x, tile.y + b.y)))
-                        tilesToCheck.Add(new Vector2Int(tile.x + b.x, tile.y + b.y));
-                    } 
-                }
-
-            }
-        }
-
-        return new MapRegion(tiles, false, true, false);
+        #endregion
     }
 
     public int [,] GenTilePos(int[,] previousMap) {
