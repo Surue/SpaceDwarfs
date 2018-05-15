@@ -8,7 +8,7 @@ using System.Linq;
 public class NavigationAI : MonoBehaviour {
 
     public class Node{
-        public static float COST_NODE_SOLID = 100;
+        public static float COST_NODE_SOLID = 1000;
 
         public Vector2 position;
         public Vector2Int positionInt;
@@ -74,28 +74,20 @@ public class NavigationAI : MonoBehaviour {
             for(int y = 0; y < height; y++) {
 
                 if(!solidTilemap.HasTile(new Vector3Int(x + solidTilemap.cellBounds.x, y + solidTilemap.cellBounds.y, 0))) {
-                    if(graph[x, y] == null) {
-                        graph[x, y] = new Node {
-                            tileCost = 1,
-                            neighbors = new List<Node>(),
-                            position = new Vector2(x + solidTilemap.cellSize.x / 2.0f + solidTilemap.cellBounds.x, y + solidTilemap.cellSize.y / 2.0f + solidTilemap.cellBounds.y),
-                            positionInt = new Vector2Int(x, y)
-                        };
-                    } else {
-                        graph[x, y].neighbors.Clear();
-                    }
+                    graph[x, y] = new Node {
+                        tileCost = 1,
+                        neighbors = new List<Node>(),
+                        position = new Vector2(x + solidTilemap.cellSize.x / 2.0f + solidTilemap.cellBounds.x, y + solidTilemap.cellSize.y / 2.0f + solidTilemap.cellBounds.y),
+                        positionInt = new Vector2Int(x, y)
+                    };
                 } else {
-                    if(graph[x, y] == null) {
-                        graph[x, y] = new Node {
-                            tileCost = Node.COST_NODE_SOLID,
-                            neighbors = new List<Node>(),
-                            position = new Vector2(x + solidTilemap.cellSize.x / 2.0f + solidTilemap.cellBounds.x, y + solidTilemap.cellSize.y / 2.0f + solidTilemap.cellBounds.y),
-                            positionInt = new Vector2Int(x, y),
-                            isSolid = true
-                        };
-                    } else {
-                        graph[x, y].neighbors.Clear();
-                    }
+                    graph[x, y] = new Node {
+                        tileCost = Node.COST_NODE_SOLID,
+                        neighbors = new List<Node>(),
+                        position = new Vector2(x + solidTilemap.cellSize.x / 2.0f + solidTilemap.cellBounds.x, y + solidTilemap.cellSize.y / 2.0f + solidTilemap.cellBounds.y),
+                        positionInt = new Vector2Int(x, y),
+                        isSolid = true
+                    };
                 }
             }
         }

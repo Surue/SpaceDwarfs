@@ -10,14 +10,8 @@ public class MapRegion {
     public MapRegion(List<Vector2Int> tiles) {
         this.tiles = tiles;
 
-        float count = 0;
-
-        foreach(Vector2Int tile in tiles) {
-            count++;
-            centerOfRegion += (Vector2)tile;
-        }
-
-        centerOfRegion /= count;
+        centerOfRegion = tiles[Random.Range(0, tiles.Count)];
+        
     }
 
     public MapRegion(List<Vector2Int> tiles, bool spawnMonster, bool spawnPlayer, bool spawnNest) {
@@ -26,18 +20,12 @@ public class MapRegion {
         canSpawnPlayer = spawnPlayer;
         canSpawnNest = spawnNest;
 
-        float count = 0;
 
-        foreach(Vector2Int tile in tiles) {
-            count++;
-            centerOfRegion += (Vector2)tile;
-        }
-
-        centerOfRegion /= count;
+        centerOfRegion = tiles[Random.Range(0, tiles.Count)];
     }
 
     public List<Vector2Int> tiles;
-    public Vector2 centerOfRegion = new Vector2(0, 0);
+    public Vector2Int centerOfRegion = new Vector2Int(0, 0);
 
     //Rules
     bool canSpawnMonster;
@@ -101,7 +89,7 @@ public class MapAutomata:MonoBehaviour {
             }
         }
 
-        LinkAllRgionBigEnough();
+        LinkAllRgionBigEnough(solidTilemap);
 
         //Create spawn point region
         //Select spawnPoint
@@ -152,7 +140,7 @@ public class MapAutomata:MonoBehaviour {
         }
     }
 
-    void LinkAllRgionBigEnough() {
+    void LinkAllRgionBigEnough(Tilemap solidTilemap) {
         int rule_minimumRegionSize = 20;
 
         List<MapRegion> mapRegion = new List<MapRegion>();
@@ -200,8 +188,6 @@ public class MapAutomata:MonoBehaviour {
             mapRegion.Add(new MapRegion(tilesForRegion));
         }
 
-        Debug.Log(mapRegion.Count);
-
         //Keep smalest region
 
         for(int i = 0;i < mapRegion.Count;i++) {
@@ -213,10 +199,10 @@ public class MapAutomata:MonoBehaviour {
         }
 
         //Dig from all area to each other
-        DigFromAllRegionFromBiggestOne(mapRegion);
+        DigFromAllRegionFromBiggestOne(mapRegion, solidTilemap);
     }
 
-    void DigFromAllRegionFromBiggestOne(List<MapRegion> regionsToLink) {
+    void DigFromAllRegionFromBiggestOne(List<MapRegion> regionsToLink, Tilemap solidTilemap) {
 
         //Get the biggest region
         MapRegion biggestRegion = null;
@@ -239,20 +225,54 @@ public class MapAutomata:MonoBehaviour {
         PathFinding aStart = FindObjectOfType<PathFinding>();
 
         //Dig from center to all region 
-        foreach(MapRegion region in regionsToLink) {
-            navigationGraph.GenerateNavigationGraph();
-            List<Vector2> path = new List<Vector2>();
+        while(regionsToLink.Count > 0) {
+            List<List<Vector2>> paths = new List<List<Vector2>>();
 
-            path = aStart.GetPathFromTo(biggestRegion.centerOfRegion, region.centerOfRegion, true);
+            foreach(MapRegion region in regionsToLink) {
+                navigationGraph.GenerateNavigationGraph();
+                List<Vector2> path = new List<Vector2>();
 
-            Debug.Log(path.Count);
+                path = aStart.GetPathFromTo(biggestRegion.centerOfRegion, region.centerOfRegion, true);
 
-            foreach(Vector2 node in path) {
-                if(terrainMap[Mathf.FloorToInt(node.x), Mathf.FloorToInt(node.y)] == 1) {
-                    terrainMap[Mathf.FloorToInt(node.x), Mathf.FloorToInt(node.y)] = 0;
+                for(int i = 0;i < path.Count;i++) {
+                    if(terrainMap[Mathf.FloorToInt(path[i].x), Mathf.FloorToInt(path[i].y)] == 0) {
+                        path.Remove(new Vector2(path[i].x, path[i].y));
+                    }
+                }
+
+                paths.Add(path);
+
+            }
+
+            float minPath = Mathf.Infinity;
+            int index = 0;
+            
+            for(int i = 0; i < regionsToLink.Count;i++) {
+                Debug.Log("count = " + paths[i].Count);
+                if(paths[i].Count < minPath) {
+                    minPath = paths[i].Count;
+                    index = i;
                 }
             }
 
+            List<Vector2> minimumPath = paths[index];
+            regionsToLink.RemoveAt(index);
+            Debug.Log("Selected path length  = " + minimumPath.Count);   
+            foreach(Vector2 node in minimumPath) {
+                terrainMap[Mathf.FloorToInt(node.x), Mathf.FloorToInt(node.y)] = 0;
+            }
+
+            solidTilemap.ClearAllTiles();
+
+            for(int x = 0;x < width;x++) {
+                for(int y = 0;y < height;y++) {
+                    if(terrainMap[x, y] == 1) {
+                        solidTilemap.SetTile(new Vector3Int(x, y, 0), topTile);
+                    }
+                }
+            }
+
+            navigationGraph.solidTilemap = solidTilemap;
         }
 
         if(debugTilemap != null) {
