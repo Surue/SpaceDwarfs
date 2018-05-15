@@ -18,14 +18,18 @@ public class GunController : MonoBehaviour {
 
     SpriteRenderer spriteRenderer;
 
+    PlayerController player;
+
 	// Use this for initialization
 	void Start () {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = spriteRight;
+        player = transform.parent.parent.GetComponent<PlayerController>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if(player.state == PlayerController.State.BLOCKED) return;
         //Gets mouse position, you can define Z to be in the position you want the weapon to be in
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
         Vector3 lookPos = Camera.main.ScreenToWorldPoint(mousePos);

@@ -93,7 +93,6 @@ public class PathFinding:MonoBehaviour {
     void Astar(NavigationAI.Node start, NavigationAI.Node end, bool canDig = false) {
         if(canDig) {
             foreach(NavigationAI.Node node in navigationGraph.graph) {
-                Debug.Log("ICI");
                 node.Reset();
                 node.SetCost(Vector2.Distance(node.position, end.position));
             }

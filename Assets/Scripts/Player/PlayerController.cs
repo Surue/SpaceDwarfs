@@ -24,6 +24,13 @@ public class PlayerController : MonoBehaviour {
     //Gun
     GunController gun;
 
+    public enum State {
+        BLOCKED,
+        NOT_BLOCKED
+    }
+
+    public State state = State.BLOCKED;
+
     // Use this for initialization
     void Start () {
         body = GetComponent<Rigidbody2D>();
@@ -43,6 +50,8 @@ public class PlayerController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        if(state == State.BLOCKED) return;
+
         moveVelocity = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * speed;
 
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);

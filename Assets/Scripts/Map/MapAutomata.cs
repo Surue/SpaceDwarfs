@@ -89,7 +89,7 @@ public class MapAutomata:MonoBehaviour {
             }
         }
 
-        LinkAllRgionBigEnough(solidTilemap);
+        FindAllBiggestRegion(solidTilemap);
 
         //Create spawn point region
         //Select spawnPoint
@@ -140,7 +140,7 @@ public class MapAutomata:MonoBehaviour {
         }
     }
 
-    void LinkAllRgionBigEnough(Tilemap solidTilemap) {
+    void FindAllBiggestRegion(Tilemap solidTilemap) {
         int rule_minimumRegionSize = 20;
 
         List<MapRegion> mapRegion = new List<MapRegion>();
@@ -251,7 +251,6 @@ public class MapAutomata:MonoBehaviour {
             int index = 0;
             
             for(int i = 0; i < regionsToLink.Count;i++) {
-                Debug.Log("count = " + paths[i].Count);
                 if(paths[i].Count < minPath) {
                     minPath = paths[i].Count;
                     index = i;
@@ -260,10 +259,9 @@ public class MapAutomata:MonoBehaviour {
 
             List<Vector2Int> minimumPath = paths[index];
             regionsToLink.RemoveAt(index);
-            Debug.Log("Selected path length  = " + minimumPath.Count);   
+
             foreach(Vector2Int node in minimumPath) {
                 terrainMap[node.x, node.y] = 0;
-                debugTilemap.SetTile(new Vector3Int(node.x, node.y, 0), debugTiles[count+1]);
             }
 
             solidTilemap.ClearAllTiles();
@@ -277,12 +275,6 @@ public class MapAutomata:MonoBehaviour {
             }
             count++;
             navigationGraph.solidTilemap = solidTilemap;
-        }
-
-        if(debugTilemap != null) {
-            foreach(Vector2Int tile in biggestRegion.tiles) {
-                debugTilemap.SetTile(new Vector3Int(tile.x, tile.y, 0), debugTiles[0]);
-            }
         }
     }
 

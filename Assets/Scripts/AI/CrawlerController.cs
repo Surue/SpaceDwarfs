@@ -24,7 +24,7 @@ public class CrawlerController : MonoBehaviour {
 
     bool lookingRight = true;
 
-    float attackTime = 1.2f;
+    float attackTime = 0.8f;
     float timer = 0;
 
     List<Vector2> lastsPosition;

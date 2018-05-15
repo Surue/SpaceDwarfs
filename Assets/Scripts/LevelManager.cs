@@ -70,6 +70,7 @@ public class LevelManager:MonoBehaviour {
                 } else {
                     state = State.WAIT_FOR_EVACUATION;
                     FindObjectOfType<PlayerController>().enabled = true; //TO CHANGE
+                    FindObjectOfType<PlayerController>().state = PlayerController.State.NOT_BLOCKED; //TO CHANGE
                     navigationGraph.GenerateNavigationGraph();
                     StartCoroutine(ClockAnimation());
                 }
