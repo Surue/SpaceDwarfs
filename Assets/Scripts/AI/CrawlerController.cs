@@ -64,7 +64,7 @@ public class CrawlerController : MonoBehaviour {
                 //Find new points to patrol
                 NavigationAI.Node node = graph.GetRandomPatrolsPoint();
                 path = null;
-                path = aStart.GetPathFromTo(transform, node);
+                path = aStart.GetPathFromTo(transform, node, false);
                 if(path == null) {
                         
                 } else {

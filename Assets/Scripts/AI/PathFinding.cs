@@ -33,12 +33,29 @@ public class PathFinding:MonoBehaviour {
         return path;
     }
 
-    public List<Vector2> GetPathFromTo(Transform from, NavigationAI.Node target) {
+    public List<Vector2> GetPathFromTo(Vector2 from, Vector2 target, bool canDig = false) {
+        NavigationAI.Node start = navigationGraph.graph[Mathf.RoundToInt(from.x), Mathf.RoundToInt(from.y)];
+        NavigationAI.Node end = navigationGraph.graph[Mathf.RoundToInt(target.x), Mathf.RoundToInt(target.y)];
+        
+        //Get A* sorted list
+        Astar(start, end, canDig);
+
+        List<Vector2> path = new List<Vector2>();
+        path.Add(end.position);
+
+        BuildShortestPath(path, end);
+
+        path.Reverse();
+
+        return path;
+    }
+
+    public List<Vector2> GetPathFromTo(Transform from, NavigationAI.Node target, bool canDig = false) {
         NavigationAI.Node start = navigationGraph.GetClosestNode(from.position);
         NavigationAI.Node end = target;
 
         //Get A* sorted list
-        Astar(start, end);
+        Astar(start, end, canDig);
 
         List<Vector2> path = new List<Vector2>();
         path.Add(end.position);
@@ -64,11 +81,19 @@ public class PathFinding:MonoBehaviour {
         BuildShortestPath(path, node.parent);
     }
 
-    void Astar(NavigationAI.Node start, NavigationAI.Node end) {
-        foreach(NavigationAI.Node node in navigationGraph.GetGraph()) {
-            node.Reset();
-            node.SetCost(Vector2.Distance(node.position, end.position));
+    void Astar(NavigationAI.Node start, NavigationAI.Node end, bool canDig = false) {
+        if(canDig) {
+            foreach(NavigationAI.Node node in navigationGraph.graph) {
+                node.Reset();
+                node.SetCost(Vector2.Distance(node.position, end.position));
+            }
+        } else {
+            foreach(NavigationAI.Node node in navigationGraph.GetGraphOnlyFreeTile()) {
+                node.Reset();
+                node.SetCost(Vector2.Distance(node.position, end.position));
+            }
         }
+
         
         //Make sure start position cost == 0
         start.totalCost = 0;
@@ -90,11 +115,19 @@ public class PathFinding:MonoBehaviour {
                     childNode.SetTotalCost(newCost);
                     childNode.SetParent(node);
                     if(!openGraph.Contains(childNode)) {
-                        openGraph.Add(childNode);
+                        if(!canDig && !childNode.isSolid) {
+                            openGraph.Add(childNode);
+                        }
+
+                        if(canDig) {
+                            openGraph.Add(childNode);
+                        }
                     }
                 }
             }
-            if(node.position == end.position) return;
+            if(node.position == end.position) {
+                return;
+            }
             node.visited = true;
 
         } while(openGraph.Count != 0);

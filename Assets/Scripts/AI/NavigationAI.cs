@@ -8,16 +8,20 @@ using System.Linq;
 public class NavigationAI : MonoBehaviour {
 
     public class Node{
+        public static float COST_NODE_SOLID = 100;
+
         public Vector2 position;
         public Vector2Int positionInt;
 
         public List<Node> neighbors = null;
 
         //A* variables
+        public float tileCost;
         public float cost;
         public float totalCost;
         public Node parent = null;
         public bool visited = false;
+        public bool isSolid = false;
 
         public void SetTotalCost(float f) {
             totalCost = f;
@@ -28,12 +32,12 @@ public class NavigationAI : MonoBehaviour {
         }
 
         public void SetCost(float f) {
-            cost = f;
+            cost += f;
         }
 
         public void Reset() {
             visited = false;
-            cost = 1;
+            cost = tileCost;
             totalCost = 0;
             parent = null;
         }
@@ -41,11 +45,15 @@ public class NavigationAI : MonoBehaviour {
 
     public bool DebugMode = true;
 
+    public bool isGenerated = false;
+
     [HideInInspector]
     public Tilemap solidTilemap;
     public Node[,] graph;
 
     public void GenerateNavigationGraph() {
+
+        isGenerated = false;
 
         //Get width and height of tilemap
         int width = solidTilemap.cellBounds.size.x;
@@ -68,6 +76,7 @@ public class NavigationAI : MonoBehaviour {
                 if(!solidTilemap.HasTile(new Vector3Int(x + solidTilemap.cellBounds.x, y + solidTilemap.cellBounds.y, 0))) {
                     if(graph[x, y] == null) {
                         graph[x, y] = new Node {
+                            tileCost = 1,
                             neighbors = new List<Node>(),
                             position = new Vector2(x + solidTilemap.cellSize.x / 2.0f + solidTilemap.cellBounds.x, y + solidTilemap.cellSize.y / 2.0f + solidTilemap.cellBounds.y),
                             positionInt = new Vector2Int(x, y)
@@ -76,8 +85,16 @@ public class NavigationAI : MonoBehaviour {
                         graph[x, y].neighbors.Clear();
                     }
                 } else {
-                    if(graph[x, y] != null) {
-                        graph[x, y] = null;
+                    if(graph[x, y] == null) {
+                        graph[x, y] = new Node {
+                            tileCost = Node.COST_NODE_SOLID,
+                            neighbors = new List<Node>(),
+                            position = new Vector2(x + solidTilemap.cellSize.x / 2.0f + solidTilemap.cellBounds.x, y + solidTilemap.cellSize.y / 2.0f + solidTilemap.cellBounds.y),
+                            positionInt = new Vector2Int(x, y),
+                            isSolid = true
+                        };
+                    } else {
+                        graph[x, y].neighbors.Clear();
                     }
                 }
             }
@@ -94,12 +111,15 @@ public class NavigationAI : MonoBehaviour {
                         if(x + b.x >= 0 && x + b.x < width && y + b.y >= 0 && y + b.y < height) {
 
                             if(graph[x + b.x, y + b.y] != null) {
-                                if(b.x == 0 || b.y == 0) {
+                                if(x == 50 && y == 50) continue;
+
+                                if(b.x == 0 || b.y == 0) { //On ajoute automatiquement la croix
                                     graph[x, y].neighbors.Add(graph[x + b.x, y + b.y]);
-                                } else {
-                                    if(graph[x, y + b.y] != null && graph[x + b.x, y] != null) {
-                                        graph[x, y].neighbors.Add(graph[x + b.x, y + b.y]);
-                                    }
+                                } else { //Si on est en diagonale
+                                    //Entre bloc solid il est impossible de voyager de manière diagonale
+                                    if(graph[x + b.x, y].isSolid || graph[x, y + b.y].isSolid) continue;
+
+                                    graph[x, y].neighbors.Add(graph[x + b.x, y + b.y]);
                                 }
                             }
                         }
@@ -107,13 +127,15 @@ public class NavigationAI : MonoBehaviour {
                 }
             }
         }
+
+        isGenerated = true;
     }
 
-    public List<Node> GetGraph() {
+    public List<Node> GetGraphOnlyFreeTile() {
         List<Node> freeNode = new List<Node>();
 
         foreach(Node node in graph) {
-            if(node != null)
+            if(!node.isSolid)
                 freeNode.Add(node);
         }
 
@@ -127,7 +149,7 @@ public class NavigationAI : MonoBehaviour {
             int height = solidTilemap.cellBounds.size.y;
             Node n = graph[Random.Range(0, width), Random.Range(0, height)];
 
-            if(n != null) return n;
+            if(!n.isSolid) return n;
         }
     }
 
@@ -136,15 +158,14 @@ public class NavigationAI : MonoBehaviour {
         int x = (int)pos.x - solidTilemap.cellBounds.x;
         int y = (int)pos.y - solidTilemap.cellBounds.y;
 
-
         Node n = graph[x, y];
 
-        if(n != null) return n;
+        if(!n.isSolid) return n;
 
         BoundsInt bounds = new BoundsInt(-1, -1, 0, 3, 3, 1);
 
         foreach(Vector3Int b in bounds.allPositionsWithin) {
-            if(graph[x + b.x, y + b.y] != null) {
+            if(!graph[x + b.x, y + b.y].isSolid) {
                 n =  graph[x + b.x, y + b.y];
             }
         }
