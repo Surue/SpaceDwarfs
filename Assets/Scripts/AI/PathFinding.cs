@@ -33,15 +33,15 @@ public class PathFinding:MonoBehaviour {
         return path;
     }
 
-    public List<Vector2> GetPathFromTo(Vector2 from, Vector2 target, bool canDig = false) {
-        NavigationAI.Node start = navigationGraph.graph[Mathf.RoundToInt(from.x), Mathf.RoundToInt(from.y)];
-        NavigationAI.Node end = navigationGraph.graph[Mathf.RoundToInt(target.x), Mathf.RoundToInt(target.y)];
+    public List<Vector2Int> GetPathFromTo(Vector2Int from, Vector2Int target, bool canDig = false) {
+        NavigationAI.Node start = navigationGraph.graph[from.x, from.y];
+        NavigationAI.Node end = navigationGraph.graph[target.x, target.y];
         
         //Get A* sorted list
         Astar(start, end, canDig);
 
-        List<Vector2> path = new List<Vector2>();
-        path.Add(end.position);
+        List<Vector2Int> path = new List<Vector2Int>();
+        path.Add(end.positionInt);
 
         BuildShortestPath(path, end);
 
@@ -72,6 +72,15 @@ public class PathFinding:MonoBehaviour {
         return path;
     }
 
+    void BuildShortestPath(List<Vector2Int> path, NavigationAI.Node node) {
+        if(node.parent == null) {
+            return;
+        }
+
+        path.Add(node.positionInt);
+        BuildShortestPath(path, node.parent);
+    }
+
     void BuildShortestPath(List<Vector2> path, NavigationAI.Node node) {
         if(node.parent == null) {
             return;
@@ -84,6 +93,7 @@ public class PathFinding:MonoBehaviour {
     void Astar(NavigationAI.Node start, NavigationAI.Node end, bool canDig = false) {
         if(canDig) {
             foreach(NavigationAI.Node node in navigationGraph.graph) {
+                Debug.Log("ICI");
                 node.Reset();
                 node.SetCost(Vector2.Distance(node.position, end.position));
             }
@@ -108,7 +118,7 @@ public class PathFinding:MonoBehaviour {
             openGraph.Remove(node);
 
             foreach(NavigationAI.Node childNode in node.neighbors.OrderBy(x => x.cost + x.totalCost)) {
-                float newCost = node.totalCost + Vector2.Distance(node.position, childNode.position);
+                float newCost = node.totalCost + Vector2.Distance(node.position, childNode.position) + childNode.cost;
                 if(childNode.visited) continue;
                 //if childNode.totalCost = 0 => childNode == end OR if cost is smaller than previous one
                 if(childNode.totalCost == 0 || newCost < childNode.totalCost) {

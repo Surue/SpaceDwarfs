@@ -224,19 +224,22 @@ public class MapAutomata:MonoBehaviour {
 
         PathFinding aStart = FindObjectOfType<PathFinding>();
 
+        int count = 0;
+
         //Dig from center to all region 
         while(regionsToLink.Count > 0) {
-            List<List<Vector2>> paths = new List<List<Vector2>>();
+            List<List<Vector2Int>> paths = new List<List<Vector2Int>>();
 
             foreach(MapRegion region in regionsToLink) {
                 navigationGraph.GenerateNavigationGraph();
-                List<Vector2> path = new List<Vector2>();
+                List<Vector2Int> path = new List<Vector2Int>();
 
                 path = aStart.GetPathFromTo(biggestRegion.centerOfRegion, region.centerOfRegion, true);
 
                 for(int i = 0;i < path.Count;i++) {
-                    if(terrainMap[Mathf.FloorToInt(path[i].x), Mathf.FloorToInt(path[i].y)] == 0) {
-                        path.Remove(new Vector2(path[i].x, path[i].y));
+                    if(terrainMap[path[i].x, path[i].y] == 0) {
+                        path.Remove(new Vector2Int(path[i].x, path[i].y));
+                        i--;
                     }
                 }
 
@@ -255,11 +258,12 @@ public class MapAutomata:MonoBehaviour {
                 }
             }
 
-            List<Vector2> minimumPath = paths[index];
+            List<Vector2Int> minimumPath = paths[index];
             regionsToLink.RemoveAt(index);
             Debug.Log("Selected path length  = " + minimumPath.Count);   
-            foreach(Vector2 node in minimumPath) {
-                terrainMap[Mathf.FloorToInt(node.x), Mathf.FloorToInt(node.y)] = 0;
+            foreach(Vector2Int node in minimumPath) {
+                terrainMap[node.x, node.y] = 0;
+                debugTilemap.SetTile(new Vector3Int(node.x, node.y, 0), debugTiles[count+1]);
             }
 
             solidTilemap.ClearAllTiles();
@@ -271,7 +275,7 @@ public class MapAutomata:MonoBehaviour {
                     }
                 }
             }
-
+            count++;
             navigationGraph.solidTilemap = solidTilemap;
         }
 
