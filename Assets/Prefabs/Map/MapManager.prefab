@@ -59,6 +59,7 @@ MonoBehaviour:
   rule_numberOfIteration: 7
   rule_maximumTileForClosedRegion: 20
   rule_minimumTileForRegion: 75
+  rule_maximumTileToBefusionned: 10
   tilemapSize: {x: 50, y: 50}
   topTile: {fileID: 11400000, guid: ba5bd530200a5a44696b0b415753edad, type: 2}
   botTile: {fileID: 11400000, guid: cd7c6aeaf1ab8a0489a0d79bd58e0529, type: 2}

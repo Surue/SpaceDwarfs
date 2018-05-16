@@ -23,25 +23,51 @@ public class MapController : MonoBehaviour {
 	void Update () {
 	}
 
+    public void SetTiles(MapTile[,] mapTiles) {
+        int width = mapTiles.GetLength(0);
+        int height = mapTiles.GetLength(1);
+
+        tiles = new MapTile[width, height];
+
+        for(int x = 0; x < width;x++) {
+            for(int y = 0; y < height; y++) {
+                tiles[x, y] = new MapTile(mapTiles[x, y]);
+            }
+        }
+    }
+
+    public void ClearRegions() {
+        regions.Clear();
+    }
+
+    public void AddRegion(MapRegion region) {
+        regions.Add(new MapRegion(region));
+    }
+
+    public Vector2 GetMonsterSpawnPosition() {
+        Vector2 spawnPosition = new Vector2();
+
+        List<MapRegion> possibleRegion = new List<MapRegion>();
+
+        foreach(MapRegion region in regions) {
+            if(region.canSpawnMonster) {
+                possibleRegion.Add(region);
+            }
+        }
+
+        spawnPosition = possibleRegion[Random.Range(0, possibleRegion.Count)].GetRandomPoint();
+
+        return spawnPosition;
+    }
+
     public Vector2 GetPlayerSpawnPosition() {
         Vector2 spawnPosition = new Vector2();
 
         foreach(MapRegion region in regions) {
-            if(region.type == MapRegion.TypeRegion.PLAYER_SPAWN) {
+            if(region.canSpawnPlayer) {
                 spawnPosition = region.GetRandomPoint();
             }
         }
-
-        //TO REMOVE
-        List<MapTile> freeTile = new List<MapTile>();
-
-        foreach(MapTile t in tiles) {
-            if(!t.isSolid) {
-                freeTile.Add(t);
-            }
-        }
-
-        spawnPosition = freeTile[Random.Range(0, freeTile.Count)].position;
 
         return spawnPosition;
     }
@@ -69,6 +95,14 @@ public class MapTile {
         cost = c;
         tile = t;
         score = s;
+    }
+
+    public MapTile(MapTile t) {
+        position = t.position;
+        isSolid = t.isSolid;
+        cost = t.cost;
+        tile = t.tile;
+        score = t.score;
     }
 }
 
@@ -107,6 +141,14 @@ public class MapRegion {
         SetType(type);
     }
 
+    public MapRegion(MapRegion r) {
+        tiles = r.tiles;
+
+        centerOfRegion = tiles[Random.Range(0, tiles.Count)].position;
+
+        SetType(r.type);
+    }
+
     #endregion
 
     #region Public methods
@@ -143,6 +185,12 @@ public class MapRegion {
 
     public Vector2Int GetRandomPoint() {
         return tiles[Random.Range(0, tiles.Count)].position;
+    }
+
+    public void Fusion(MapRegion region) {
+        foreach(MapTile t in region.tiles) {
+            tiles.Add(new MapTile(t));
+        }
     }
 
     #endregion

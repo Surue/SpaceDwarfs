@@ -67,7 +67,7 @@ public class MonsterManager : MonoBehaviour {
                 }
 
                 if(activeMonstersList.Count < minMonsterForSearching) {
-                    activeMonstersList.Add(Instantiate(crawlerPrefab, mapController.GetPlayerSpawnPosition(), Quaternion.identity)); //TO CHANGE
+                    activeMonstersList.Add(Instantiate(crawlerPrefab, mapController.GetMonsterSpawnPosition(), Quaternion.identity)); //TO CHANGE
                 }
                 break;
 

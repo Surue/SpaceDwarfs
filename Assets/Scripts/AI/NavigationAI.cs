@@ -157,8 +157,10 @@ public class NavigationAI : MonoBehaviour {
         BoundsInt bounds = new BoundsInt(-1, -1, 0, 3, 3, 1);
 
         foreach(Vector3Int b in bounds.allPositionsWithin) {
-            if(!graph[x + b.x, y + b.y].isSolid) {
-                n =  graph[x + b.x, y + b.y];
+            if(pos.x + b.x >= 0 && pos.x + b.x < graph.GetLength(0) && pos.y + b.y >= 0 && pos.y + b.y < graph.GetLength(1)) {
+                if(!graph[x + b.x, y + b.y].isSolid) {
+                    n = graph[x + b.x, y + b.y];
+                }
             }
         }
 

@@ -54,8 +54,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a64a0bef2c96c546aba257db0d6d668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugMode: 1
-  solidTilemap: {fileID: 0}
+  DebugMode: 0
+  isGenerated: 0
 --- !u!114 &114398017622646028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8aa343ceedb4eb4e9c756c3d7ad8ada, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelFinished: 0
 --- !u!114 &114641151316666250
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -534,6 +534,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
+        type: 2}
+      propertyPath: debugTilemap
+      value: 
+      objectReference: {fileID: 59912087}
     - target: {fileID: 114622845642960226, guid: aee41a6de6d93944da228532c7e82d06,
         type: 2}
       propertyPath: solidTilemap
@@ -544,31 +549,6 @@ Prefab:
       propertyPath: groundTilemap
       value: 
       objectReference: {fileID: 1340641925}
-    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
-        type: 2}
-      propertyPath: debugTilemap
-      value: 
-      objectReference: {fileID: 59912087}
-    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
-        type: 2}
-      propertyPath: rule_initialChance
-      value: 45
-      objectReference: {fileID: 0}
-    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
-        type: 2}
-      propertyPath: rule_birthLimit
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
-        type: 2}
-      propertyPath: rule_deathLimit
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
-        type: 2}
-      propertyPath: rule_numberOfIteration
-      value: 7
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aee41a6de6d93944da228532c7e82d06, type: 2}
   m_IsPrefabParent: 0
@@ -610,16 +590,6 @@ Prefab:
     - target: {fileID: 4196192251138606, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864, type: 2}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398017622646028, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864,
-        type: 2}
-      propertyPath: levelFinished
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114375099477542878, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864,
-        type: 2}
-      propertyPath: DebugMode
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864, type: 2}

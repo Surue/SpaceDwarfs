@@ -22,6 +22,7 @@ public class MapManager : MonoBehaviour {
         IDLE,
         GENERATING_MAP,
         DIGGING_TUNNEL,
+        REGION_GENERATION,
         REGION_ASSOCIATION,
         ADD_ORE,
         ADD_TREASURE,
@@ -34,21 +35,7 @@ public class MapManager : MonoBehaviour {
     bool stepStarted = false;
 
     void Start () {
-		////Check if need to generate map
-  //      if(solidTilemap.cellBounds.x == 0){
-  //          mapGenerator.GenerateMap(solidTilemap, groundTilemap);
-  //      }
 
-  //      //Find empty tile (use for spawn)
-  //      emptyTiles = new List<Vector2Int>();
-
-  //      for(int x = 0;x < solidTilemap.cellBounds.size.x; x++) {
-  //          for(int y = 0;y < solidTilemap.cellBounds.size.y; y++) {
-  //              if(!solidTilemap.HasTile(new Vector3Int(x, y, 0))) {
-  //                  emptyTiles.Add(new Vector2Int(x, y));
-  //              }
-  //          }
-  //      }
     }
 	
 	// Update is called once per frame
@@ -65,7 +52,7 @@ public class MapManager : MonoBehaviour {
 
                     if(!mapGenerator.isGenerating) {
                         if(solidTilemap.cellBounds.x == 0) {
-                            mapController.tiles = mapGenerator.GenerateMap(mapController.tiles);
+                            StartCoroutine(mapGenerator.GenerateMap(mapController.tiles));
                         }
                     }
                 }
@@ -79,7 +66,19 @@ public class MapManager : MonoBehaviour {
             case Step.DIGGING_TUNNEL:
                 if(!stepStarted) {
                     stepStarted = true;
-                    mapController.tiles = mapGenerator.DigBetweenRegions(mapController.tiles);
+                    StartCoroutine(mapGenerator.DigBetweenRegions(mapController.tiles));
+                }
+
+                if(!mapGenerator.isGenerating) {
+                    stepStarted = false;
+                    step = Step.REGION_GENERATION;
+                }
+                break;
+
+            case Step.REGION_GENERATION:
+                if(!stepStarted) {
+                    stepStarted = true;
+                    StartCoroutine(mapGenerator.GetRegions(mapController.tiles));
                 }
 
                 if(!mapGenerator.isGenerating) {
@@ -91,7 +90,7 @@ public class MapManager : MonoBehaviour {
             case Step.REGION_ASSOCIATION:
                 if(!stepStarted) {
                     stepStarted = true;
-                    mapController.regions = mapGenerator.GetRegions(mapController.tiles);
+                    StartCoroutine(mapGenerator.AssociateRegions(mapController.tiles, mapController.regions));
                 }
 
                 if(!mapGenerator.isGenerating) {

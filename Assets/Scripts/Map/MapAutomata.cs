@@ -26,6 +26,9 @@ public class MapAutomata : MonoBehaviour {
     [Range(1, 500)]
     public int rule_minimumTileForRegion;
 
+    [Range(1, 50)]
+    public int rule_maximumTileToBefusionned;
+
     private int[,] terrainMap;
 
     public Vector2Int tilemapSize;
@@ -41,7 +44,7 @@ public class MapAutomata : MonoBehaviour {
 
     public bool isGenerating = false;
 
-    public MapTile[,] GenerateMap(MapTile[,] mapTiles) {
+    public IEnumerator GenerateMap(MapTile[,] mapTiles) {
         isGenerating = true;
 
         width = tilemapSize.x;
@@ -59,16 +62,18 @@ public class MapAutomata : MonoBehaviour {
 
         for(int i = 0; i < rule_numberOfIteration;i++) {
             mapTiles = GenTilePos(mapTiles);
+            yield return null;
         }
 
-        //foreach(MapTile t in mapTiles) {
-        //    if(t.isSolid) {
-        //        debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[0]);
-        //    }
-        //}
+        foreach(MapTile t in mapTiles) {
+            if(t.isSolid) {
+                debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[0]);
+            }
+        }
 
         isGenerating = false;
-        return mapTiles;
+
+        GetComponent<MapController>().SetTiles(mapTiles);
     }
 
     MapTile[,] GenTilePos(MapTile[,] previousMap) {
@@ -117,7 +122,7 @@ public class MapAutomata : MonoBehaviour {
         return newMap;
     }
 
-    public MapTile[,] DigBetweenRegions(MapTile[,] mapTiles) {
+    public IEnumerator DigBetweenRegions(MapTile[,] mapTiles) {
         isGenerating = true;
         
         //Get all region defined by solid tile
@@ -153,13 +158,11 @@ public class MapAutomata : MonoBehaviour {
 
         //Order all other by closest from centerOfRegion
         mapRegion.Remove(biggestRegion);
-        mapRegion.OrderBy(x => Vector2.Distance(x.centerOfRegion, biggestRegion.centerOfRegion));
+        mapRegion = mapRegion.OrderBy(x => Vector2.Distance(x.centerOfRegion, biggestRegion.centerOfRegion)).ToList();
 
         NavigationAI navigationGraph = FindObjectOfType<NavigationAI>();
 
         PathFinding aStart = FindObjectOfType<PathFinding>();
-
-        int count = 0;
 
         //Dig from center to all region 
         while(mapRegion.Count > 0) {
@@ -179,7 +182,7 @@ public class MapAutomata : MonoBehaviour {
                 }
 
                 paths.Add(path);
-
+                yield return null;
             }
 
             float minPath = Mathf.Infinity;
@@ -199,22 +202,26 @@ public class MapAutomata : MonoBehaviour {
                 debugTilemap.SetTile(new Vector3Int(node.x, node.y, 0), debugTiles[1]);
                 mapTiles[node.x, node.y].isSolid = false;
             }
-            
-            count++;
+
+            yield return null;
         }
 
         #endregion
         isGenerating = false;
-        return mapTiles;
+
+        GetComponent<MapController>().SetTiles(mapTiles);
     }
 
-    public List<MapRegion> GetRegions(MapTile[,] mapTiles) {
+    public IEnumerator GetRegions(MapTile[,] mapTiles) {
         isGenerating = true;
 
         List<MapRegion> regions = new List<MapRegion>();
 
         //Get all region defined by solid tile
         List<MapRegion> mainRegion = GetRegionBySolidTile(mapTiles);
+        yield return null;
+
+        #region Keep closed region
 
         //Keep closed one
         for(int i = 0; i < mainRegion.Count; i++) {
@@ -231,7 +238,11 @@ public class MapAutomata : MonoBehaviour {
                 i--;
             }
         }
-        
+
+        #endregion
+
+        #region Find sub region 
+
         //In the remeaning regions for create sub regions of a maximum size
         while(mainRegion[0].tiles.Count > 0) {
             BoundsInt bounds = new BoundsInt(-1, -1, 0, 3, 3, 1);
@@ -247,7 +258,7 @@ public class MapAutomata : MonoBehaviour {
 
             while(tilesForNewRegion.Count < rule_minimumTileForRegion && tilesToCheck.Count > 0) {
 
-                tilesToCheck.OrderBy(x => Vector2Int.Distance(x.position, t.position));
+                tilesToCheck = tilesToCheck.OrderBy(x => Vector2Int.Distance(x.position, t.position)).ToList();
 
                 MapTile currentTile = tilesToCheck[0];
 
@@ -272,19 +283,205 @@ public class MapAutomata : MonoBehaviour {
                 tilesForNewRegion.Add(currentTile);
             }
 
-            Tile d = debugTiles[Random.Range(0, debugTiles.Count)];  
+            yield return null;
 
             regions.Add(new MapRegion(tilesForNewRegion, MapRegion.TypeRegion.NORMAL));
         }
 
-        for(int i = 0; i < regions.Count;i++) {
-            foreach(MapTile t in regions[i].tiles) {
-                debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[i%debugTiles.Count]);
+        #endregion
+
+        foreach(MapRegion region in regions) {
+            GetComponent<MapController>().AddRegion(region);
+        }
+
+        isGenerating = false;
+    }
+
+    public IEnumerator AssociateRegions(MapTile[,] mapTile, List<MapRegion> previousRegions) {
+        isGenerating = true;
+        List<MapRegion> regionTooSmall = new List<MapRegion>();
+        List<MapRegion> regions = new List<MapRegion>();
+
+        foreach(MapRegion region in previousRegions) {
+            regions.Add(new MapRegion(region));
+        }
+
+        #region Get region that need to be fussioned
+
+        //On récupère les régions plus petite que le nombre minimum et qui ne sont pas fermée
+        for(int i = 0;i < regions.Count;i++) {
+            MapRegion region = regions[i];
+
+            if(region.tiles.Count < rule_maximumTileToBefusionned && region.type != MapRegion.TypeRegion.CLOSED) {
+                regionTooSmall.Add(region);
+                regions.Remove(region);
+                i--;
+            }
+        }
+
+        #endregion
+
+        #region Fussion all region with bigger one
+
+        BoundsInt bounds = new BoundsInt(-1, -1, 0, 3, 3, 1);
+
+        //On parcourt la lsite des régions trop petite pour les fussionner aux région voisines
+        foreach(MapRegion region in regionTooSmall) {
+            List<MapTile> tilesToCheck = new List<MapTile>();
+
+            foreach(MapTile t in region.tiles) {
+                tilesToCheck.Add(t);
+            }
+
+            for(int i = 0;i < tilesToCheck.Count;i++) {
+                MapTile currentTile = tilesToCheck[i];
+
+                foreach(Vector3Int b in bounds.allPositionsWithin) {
+                    if(b.x == 0 && b.y == 0) continue;
+                    if(currentTile.position.x + b.x >= 0 && currentTile.position.x + b.x < width && currentTile.position.y + b.y >= 0 && currentTile.position.y + b.y < height) { //Is in the map
+                        MapTile testTile = mapTile[currentTile.position.x + b.x, currentTile.position.y + b.y];
+
+                        foreach(MapRegion r in regions) {
+                            if(r.tiles.Contains(testTile)) {
+                                r.Fusion(region);
+                                i = tilesToCheck.Count;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            yield return null;
+        }
+
+        #endregion
+
+        #region Associate regions to type of regions
+
+        int corner = Random.Range(0, 3);
+        //for the spawn area we use a region in a corner
+        Vector2Int closestPoint = new Vector2Int(0,0);
+        switch(corner) {
+            case 0: //top left
+                closestPoint = new Vector2Int(0, mapTile.GetLength(1) - 1);
+                break;
+
+            case 1: //top right
+                closestPoint = new Vector2Int(mapTile.GetLength(0) - 1, mapTile.GetLength(1) - 1);
+                break;
+
+            case 2: // bottom right
+                closestPoint = new Vector2Int(mapTile.GetLength(0) - 1, 0);
+                break;
+
+            case 3: // bottom left
+                break;
+        }
+        
+
+        bool regionFound = false;
+
+        List<MapTile> possibleTile = new List<MapTile>();
+
+        for(int x = 0;x < mapTile.GetLength(0);x++) {
+            for(int y = 0;y < mapTile.GetLength(1);y++) {
+                possibleTile.Add(mapTile[x, y]);
+            }
+        }
+
+        possibleTile = possibleTile.OrderBy(x => Vector2Int.Distance(x.position, closestPoint)).ToList();
+        
+        while(!regionFound) {
+            MapTile currentTile = possibleTile.First();
+            possibleTile.Remove(currentTile);
+
+            if(!currentTile.isSolid) {
+                foreach(MapRegion region in regions) {
+                    if(region.tiles.Contains(currentTile) && region.type != MapRegion.TypeRegion.CLOSED) {
+                        region.SetType(MapRegion.TypeRegion.PLAYER_SPAWN);
+                        regionFound = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        //for the nest region we use some regions in the opposite corner
+        switch(corner) {
+            case 0: //top left for player => bottom right
+                closestPoint = new Vector2Int(mapTile.GetLength(0) - 1, 0);
+                break;
+
+            case 1: //top right for player => bottom left
+                closestPoint = new Vector2Int(0, 0);
+                break;
+
+            case 2: // bottom right for player => top left
+                closestPoint = new Vector2Int(0, mapTile.GetLength(1) - 1);
+                break;
+
+            case 3: // bottom left for player => top right
+                closestPoint = new Vector2Int(mapTile.GetLength(0) - 1, mapTile.GetLength(1) - 1);
+                break;
+        }
+
+        int regionToFoundForNest = 3; // TO CHANGE
+
+        possibleTile = new List<MapTile>();
+
+        for(int x = 0; x < mapTile.GetLength(0);x++) {
+            for(int y = 0; y < mapTile.GetLength(1);y++) {
+                possibleTile.Add(mapTile[x, y]);
+            }
+        }
+
+        possibleTile = possibleTile.OrderBy(x => Vector2Int.Distance(x.position, closestPoint)).ToList();
+
+        while(regionToFoundForNest > 0) {
+            MapTile currentTile = possibleTile.First();
+            possibleTile.Remove(currentTile);
+
+            if(!currentTile.isSolid) { 
+                foreach(MapRegion region in regions) {
+                    if(region.tiles.Contains(currentTile) && region.type == MapRegion.TypeRegion.NORMAL) {
+                        region.SetType(MapRegion.TypeRegion.NEST);
+                        regionToFoundForNest--;
+                        break;
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        GetComponent<MapController>().ClearRegions();
+        
+        foreach(MapRegion region in regions) {
+            GetComponent<MapController>().AddRegion(region);
+        }
+
+        for(int i = 0;i < regions.Count;i++) {
+            if(regions[i].type == MapRegion.TypeRegion.PLAYER_SPAWN) {
+                foreach(MapTile t in regions[i].tiles) {
+                    debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[1]);
+                }
+            }
+
+            if(regions[i].type == MapRegion.TypeRegion.NEST) {
+                foreach(MapTile t in regions[i].tiles) {
+                    debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[13]);
+                }
+            }
+
+            if(regions[i].type == MapRegion.TypeRegion.NORMAL) {
+                foreach(MapTile t in regions[i].tiles) {
+                    debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[7]);
+                }
             }
         }
 
         isGenerating = false;
-        return regions;
     }
 
     List<MapRegion> GetRegionBySolidTile(MapTile[,] mapTiles) {
