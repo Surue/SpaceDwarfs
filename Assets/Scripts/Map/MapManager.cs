@@ -95,6 +95,19 @@ public class MapManager : MonoBehaviour {
 
                 if(!mapGenerator.isGenerating) {
                     stepStarted = false;
+                    step = Step.ASSOCIATE_TILES;
+                }
+                break;
+
+            case Step.ASSOCIATE_TILES:
+                if(!stepStarted) {
+                    stepStarted = true;
+                    StartCoroutine(mapGenerator.AssociateTiles(mapController.tiles));
+                }
+
+                if(!mapGenerator.isGenerating) {
+                    mapController.DrawAll();
+                    stepStarted = false;
                     step = Step.FINISH;
                 }
                 break;

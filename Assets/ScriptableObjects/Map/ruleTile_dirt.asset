@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: ruleTile_dirt
+  m_EditorClassIdentifier: Assembly-CSharp::Rule_TileFree
+  tile: {fileID: 11400000, guid: cd7c6aeaf1ab8a0489a0d79bd58e0529, type: 2}
+  rules: 000000000000000000

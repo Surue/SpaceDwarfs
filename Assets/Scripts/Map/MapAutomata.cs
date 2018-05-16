@@ -37,6 +37,9 @@ public class MapAutomata : MonoBehaviour {
     public Tile botTile;
     public List<Tile> debugTiles;
 
+    public List<Rule_TileSolid> rulesForTilesSolid;
+    public List<Rule_TileFree> rulesForTilesFree;
+
     int width;
     int height;
 
@@ -65,11 +68,11 @@ public class MapAutomata : MonoBehaviour {
             yield return null;
         }
 
-        foreach(MapTile t in mapTiles) {
-            if(t.isSolid) {
-                debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[0]);
-            }
-        }
+        //foreach(MapTile t in mapTiles) {
+        //    if(t.isSolid) {
+        //        debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[0]);
+        //    }
+        //}
 
         isGenerating = false;
 
@@ -461,25 +464,69 @@ public class MapAutomata : MonoBehaviour {
             GetComponent<MapController>().AddRegion(region);
         }
 
-        for(int i = 0;i < regions.Count;i++) {
-            if(regions[i].type == MapRegion.TypeRegion.PLAYER_SPAWN) {
-                foreach(MapTile t in regions[i].tiles) {
-                    debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[1]);
+        //for(int i = 0;i < regions.Count;i++) {
+        //    if(regions[i].type == MapRegion.TypeRegion.PLAYER_SPAWN) {
+        //        foreach(MapTile t in regions[i].tiles) {
+        //            debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[1]);
+        //        }
+        //    }
+
+        //    if(regions[i].type == MapRegion.TypeRegion.NEST) {
+        //        foreach(MapTile t in regions[i].tiles) {
+        //            debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[13]);
+        //        }
+        //    }
+
+        //    if(regions[i].type == MapRegion.TypeRegion.NORMAL) {
+        //        foreach(MapTile t in regions[i].tiles) {
+        //            debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[7]);
+        //        }
+        //    }
+        //}
+
+        isGenerating = false;
+    }
+
+    public IEnumerator AssociateTiles(MapTile[,] mapTile) {
+        isGenerating = true;
+        Debug.Log("Associate tiles");
+        foreach(MapTile tile in mapTile) {
+            tile.tile = debugTiles[0];
+
+            foreach(Rule_TileFree rule in rulesForTilesFree) {
+                if(rule.IsThisTile(tile, mapTile)) {
+                    tile.tile = rule.tile;
+                    break;
                 }
             }
 
-            if(regions[i].type == MapRegion.TypeRegion.NEST) {
-                foreach(MapTile t in regions[i].tiles) {
-                    debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[13]);
+            foreach(Rule_TileSolid rule in rulesForTilesSolid) {
+                if(rule.IsThisTile(tile, mapTile)) {
+                    tile.tile = rule.tile;
+                    break;
                 }
             }
 
-            if(regions[i].type == MapRegion.TypeRegion.NORMAL) {
-                foreach(MapTile t in regions[i].tiles) {
-                    debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[7]);
-                }
+            //if(rulesForTilesFree[0].IsThisTile(tile, mapTile)) {
+            //    tile.tile = rulesForTilesFree[0].tile;
+            //}
+
+            //if(rulesForTilesSolid[0].IsThisTile(tile, mapTile)) {
+            //    tile.tile = rulesForTilesSolid[0].tile;
+            //}
+
+            //if(rulesForTilesSolid[1].IsThisTile(tile, mapTile)) {
+            //    tile.tile = rulesForTilesSolid[1].tile;
+            //}
+
+            if(tile.isSolid) {
+                debugTilemap.SetTile(new Vector3Int(tile.position.x, tile.position.y, 0), debugTiles[0]);
+            } else {
+                debugTilemap.SetTile(new Vector3Int(tile.position.x, tile.position.y, 0), debugTiles[1]);
             }
         }
+
+        yield return null;
 
         isGenerating = false;
     }

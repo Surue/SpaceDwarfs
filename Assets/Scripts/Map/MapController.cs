@@ -12,6 +12,9 @@ public class MapController : MonoBehaviour {
 
     PlayerController player;
 
+    [SerializeField]
+    Tilemap solidTilemap;
+
 	// Use this for initialization
 	void Start () {
         regions = new List<MapRegion>();
@@ -33,6 +36,12 @@ public class MapController : MonoBehaviour {
             for(int y = 0; y < height; y++) {
                 tiles[x, y] = new MapTile(mapTiles[x, y]);
             }
+        }
+    }
+
+    public void DrawAll() {
+        foreach(MapTile tile in tiles) {
+            solidTilemap.SetTile(new Vector3Int(tile.position.x, tile.position.y, 0), tile.tile);
         }
     }
 
@@ -69,7 +78,7 @@ public class MapController : MonoBehaviour {
             }
         }
 
-        return spawnPosition;
+        return spawnPosition + new Vector2(0.5f, 0.5f);
     }
 }
 
@@ -79,7 +88,7 @@ public class MapTile {
 
     float cost;
 
-    Tile tile;
+    public Tile tile;
 
     int score;
 
@@ -88,13 +97,6 @@ public class MapTile {
     public MapTile(Vector2Int pos, bool solid) {
         position = pos;
         isSolid = solid;
-    }
-
-    public MapTile(Vector2Int pos, float c, Tile t, int s = 0) {
-        position = pos;
-        cost = c;
-        tile = t;
-        score = s;
     }
 
     public MapTile(MapTile t) {

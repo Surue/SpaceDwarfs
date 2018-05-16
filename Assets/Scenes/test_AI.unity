@@ -16533,6 +16533,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
+        type: 2}
+      propertyPath: rulesForTiles.Array.size
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4568594353253378, guid: aee41a6de6d93944da228532c7e82d06, type: 2}
       propertyPath: m_LocalPosition.x
       value: -2.2851863
@@ -16575,6 +16580,66 @@ Prefab:
       propertyPath: groundTilemap
       value: 
       objectReference: {fileID: 370615437}
+    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
+        type: 2}
+      propertyPath: rulesForTiles.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 34f08370dc45e54409fb748c1463e224,
+        type: 2}
+    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
+        type: 2}
+      propertyPath: rulesForTiles.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: c24c71822f7bbcc469647ffb1c657952,
+        type: 2}
+    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
+        type: 2}
+      propertyPath: rulesForTiles.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: b8d80a64dbf22c44f80a0e4efbd1613a,
+        type: 2}
+    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
+        type: 2}
+      propertyPath: rulesForTiles.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0efc3bc5c8301d84a9ac24642c7d5a6d,
+        type: 2}
+    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
+        type: 2}
+      propertyPath: rulesForTiles.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1e1db43e12720104aaddbdcd6fdd3ffd,
+        type: 2}
+    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
+        type: 2}
+      propertyPath: rulesForTiles.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: 201b418b96786b94fbcf7b7367923cef,
+        type: 2}
+    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
+        type: 2}
+      propertyPath: rulesForTiles.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0f690cdf799387a41b6b4a14a15e7f75,
+        type: 2}
+    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
+        type: 2}
+      propertyPath: rulesForTiles.Array.data[7]
+      value: 
+      objectReference: {fileID: 11400000, guid: b2ab15acf3230a24e946e82bd57fc77a,
+        type: 2}
+    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
+        type: 2}
+      propertyPath: rulesForTiles.Array.data[8]
+      value: 
+      objectReference: {fileID: 11400000, guid: d913a121a2f7a9d40b645422b7b36e14,
+        type: 2}
+    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
+        type: 2}
+      propertyPath: rulesForTiles.Array.data[9]
+      value: 
+      objectReference: {fileID: 11400000, guid: a467403d5c0d9fe4db61e46ff416fc5d,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aee41a6de6d93944da228532c7e82d06, type: 2}
   m_IsPrefabParent: 0
@@ -16617,6 +16682,71 @@ Transform:
   m_Children:
   - {fileID: 171490932}
   - {fileID: 370615435}
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &790673207
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 790673209}
+  - component: {fileID: 790673208}
+  m_Layer: 0
+  m_Name: Point light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!108 &790673208
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 790673207}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 2
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 100
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 4
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 100
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!4 &790673209
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 790673207}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.01, y: -2.16, z: -8.71}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
