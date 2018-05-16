@@ -14,7 +14,7 @@ public class MonsterManager : MonoBehaviour {
 
     List<GameObject> activeMonstersList;
 
-    MapManager mapManager;
+    MapController mapController;
 
     int levelFinised;
 
@@ -46,7 +46,7 @@ public class MonsterManager : MonoBehaviour {
 
         minMonsterForSearching = difficultyLevel + 4;
 
-        mapManager = FindObjectOfType<MapManager>();
+        mapController = FindObjectOfType<MapController>();
     }
 	
 	// Update is called once per frame
@@ -67,7 +67,7 @@ public class MonsterManager : MonoBehaviour {
                 }
 
                 if(activeMonstersList.Count < minMonsterForSearching) {
-                    activeMonstersList.Add(Instantiate(crawlerPrefab, mapManager.GetPositionForSpawn(), Quaternion.identity));
+                    activeMonstersList.Add(Instantiate(crawlerPrefab, mapController.GetPlayerSpawnPosition(), Quaternion.identity)); //TO CHANGE
                 }
                 break;
 

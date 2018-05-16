@@ -47,17 +47,17 @@ public class NavigationAI : MonoBehaviour {
 
     public bool isGenerated = false;
 
-    [HideInInspector]
-    public Tilemap solidTilemap;
     public Node[,] graph;
 
-    public void GenerateNavigationGraph() {
+    float cellSize = 1;
+
+    public void GenerateNavigationGraph(MapTile[,] mapTiles) {
 
         isGenerated = false;
 
         //Get width and height of tilemap
-        int width = solidTilemap.cellBounds.size.x;
-        int height = solidTilemap.cellBounds.size.y;
+        int width = mapTiles.GetLength(0); 
+        int height = mapTiles.GetLength(1);
 
         //If graph does not existe -> instanciate it
         if(graph == null) {
@@ -73,18 +73,18 @@ public class NavigationAI : MonoBehaviour {
         for(int x = 0; x < width; x++) {
             for(int y = 0; y < height; y++) {
 
-                if(!solidTilemap.HasTile(new Vector3Int(x + solidTilemap.cellBounds.x, y + solidTilemap.cellBounds.y, 0))) {
+                if(!mapTiles[x,y].isSolid) {
                     graph[x, y] = new Node {
                         tileCost = 1,
                         neighbors = new List<Node>(),
-                        position = new Vector2(x + solidTilemap.cellSize.x / 2.0f + solidTilemap.cellBounds.x, y + solidTilemap.cellSize.y / 2.0f + solidTilemap.cellBounds.y),
+                        position = new Vector2(x + cellSize / 2.0f, y + cellSize / 2.0f),
                         positionInt = new Vector2Int(x, y)
                     };
                 } else {
                     graph[x, y] = new Node {
                         tileCost = Node.COST_NODE_SOLID,
                         neighbors = new List<Node>(),
-                        position = new Vector2(x + solidTilemap.cellSize.x / 2.0f + solidTilemap.cellBounds.x, y + solidTilemap.cellSize.y / 2.0f + solidTilemap.cellBounds.y),
+                        position = new Vector2(x + cellSize / 2.0f, y + cellSize / 2.0f),
                         positionInt = new Vector2Int(x, y),
                         isSolid = true
                     };
@@ -137,8 +137,8 @@ public class NavigationAI : MonoBehaviour {
     public Node GetRandomPatrolsPoint() {
 
         while(true) {
-            int width = solidTilemap.cellBounds.size.x;
-            int height = solidTilemap.cellBounds.size.y;
+            int width = graph.GetLength(0);
+            int height = graph.GetLength(1);
             Node n = graph[Random.Range(0, width), Random.Range(0, height)];
 
             if(!n.isSolid) return n;
@@ -147,8 +147,8 @@ public class NavigationAI : MonoBehaviour {
 
     public Node GetClosestNode(Vector2 pos) {
 
-        int x = (int)pos.x - solidTilemap.cellBounds.x;
-        int y = (int)pos.y - solidTilemap.cellBounds.y;
+        int x = (int)pos.x;
+        int y = (int)pos.y;
 
         Node n = graph[x, y];
 

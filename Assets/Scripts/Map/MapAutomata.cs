@@ -6,19 +6,25 @@ using UnityEditor;
 
 using System.Linq;
 
-public class MapAutomata:MonoBehaviour {
+public class MapAutomata : MonoBehaviour {
 
     [Range(0, 100)]
-    public int initialChance;
+    public int rule_initialChance;
 
     [Range(1, 8)]
-    public int birthLimit;
+    public int rule_birthLimit;
 
     [Range(1, 8)]
-    public int deathLimit;
+    public int rule_deathLimit;
 
     [Range(1, 10)]
-    public int numberOfIteration;
+    public int rule_numberOfIteration;
+
+    [Range(1, 50)]
+    public int rule_maximumTileForClosedRegion;
+
+    [Range(1, 500)]
+    public int rule_minimumTileForRegion;
 
     private int[,] terrainMap;
 
@@ -33,132 +39,96 @@ public class MapAutomata:MonoBehaviour {
 
     public Tilemap debugTilemap;
 
-    public List<MapRegion> ClosedRegion = new List<MapRegion>();
+    public bool isGenerating = false;
 
-    public void GenerateMap(Tilemap solidTilemap, Tilemap groundTilemap) {
+    public MapTile[,] GenerateMap(MapTile[,] mapTiles) {
+        isGenerating = true;
+
         width = tilemapSize.x;
         height = tilemapSize.y;
 
-        //Initial repartition of tile
-        if(terrainMap == null) {
-            terrainMap = new int[width, height];
-            InitPosition();
-        }
-
-        //Use automata algo to create cave
-        for(int i = 0;i < numberOfIteration;i++) {
-            terrainMap = GenTilePos(terrainMap);
-        }
-
-        //Assure a way between all big region
-        DigBetweenRegions(solidTilemap);
-
-        //Create spawn point region
-        //Select spawnPoint
-        int rule_SpawnWidthFromEdge = 5;
-        int rule_SpawnHeightFromEdge = 5;
-
-        List<Vector2Int> possibleSpawnPoint = new List<Vector2Int>();
+        mapTiles = new MapTile[width, height];
 
         for(int x = 0;x < width;x++) {
             for(int y = 0;y < height;y++) {
-                if((x >= 0 && x < -1 + rule_SpawnWidthFromEdge) || (x > width - rule_SpawnWidthFromEdge && x < width)) {
-                    if(terrainMap[x, y] == 0) {
-                        possibleSpawnPoint.Add(new Vector2Int(x, y));
-                    }
-                } else if((y >= 0 && y < -1 + rule_SpawnHeightFromEdge) || (y > height - rule_SpawnHeightFromEdge && x < height)) {
-                    if(terrainMap[x, y] == 0) {
-                        possibleSpawnPoint.Add(new Vector2Int(x, y));
-                    }
-                }
+                bool isSolid = Random.Range(1, 101) < rule_initialChance ? true : false;
+
+                mapTiles[x, y] = new MapTile(new Vector2Int(x, y), isSolid);
             }
         }
 
-        Vector2Int spawnPosition = possibleSpawnPoint[Random.Range(0, possibleSpawnPoint.Count)];
+        for(int i = 0; i < rule_numberOfIteration;i++) {
+            mapTiles = GenTilePos(mapTiles);
+        }
 
-        //if(debugTilemap != null) {
-        //    foreach(Vector2Int tile in spawnRegion.tiles) {
-        //        debugTilemap.SetTile(new Vector3Int(tile.x, tile.y, 0), debugTiles[0]);
+        //foreach(MapTile t in mapTiles) {
+        //    if(t.isSolid) {
+        //        debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[0]);
         //    }
         //}
 
-        //Create all other region
-
-        //Fill region with treasure
-
-        //Fill solide tile with treasure
-
-        //Associate visual tile
-        for(int x = 0;x < width;x++) {
-            for(int y = 0;y < height;y++) {
-                if(terrainMap[x, y] == 1) {
-                    solidTilemap.SetTile(new Vector3Int(x, y, 0), topTile);
-                } else {
-                    groundTilemap.SetTile(new Vector3Int(x, y, 0), botTile);
-                }
-            }
-        }
+        isGenerating = false;
+        return mapTiles;
     }
 
-    void DigBetweenRegions(Tilemap solidTilemap) {
-        int rule_minimumRegionSize = 20;
+    MapTile[,] GenTilePos(MapTile[,] previousMap) {
+        MapTile[,] newMap = new MapTile[width, height];
 
-        #region Get all region 
-
-        List<MapRegion> mapRegion = new List<MapRegion>();
-
-        List<Vector2Int> freeTiles = new List<Vector2Int>();
-
+        int nbOfNeighbor;
         BoundsInt bounds = new BoundsInt(-1, -1, 0, 3, 3, 1);
 
         for(int x = 0;x < width;x++) {
             for(int y = 0;y < height;y++) {
-                if(terrainMap[x, y] == 0) {
-                    freeTiles.Add(new Vector2Int(x, y));
-                }
-            }
-        }
-
-        //On selectionne toute les zones existante
-        while(freeTiles.Count > 0) {
-
-            List<Vector2Int> tilesForRegion = new List<Vector2Int>();
-
-            List<Vector2Int> tilesToCheck = new List<Vector2Int>();
-            tilesToCheck.Add(freeTiles.First());
-            freeTiles.Remove(freeTiles.First());
-
-            while(tilesToCheck.Count > 0) {
-                Vector2Int currentTile = tilesToCheck.First();
-                tilesToCheck.Remove(currentTile);
+                nbOfNeighbor = 0;
 
                 foreach(Vector3Int b in bounds.allPositionsWithin) {
                     if(b.x == 0 && b.y == 0) continue;
-                    if(currentTile.x + b.x >= 0 && currentTile.x + b.x < width && currentTile.y + b.y >= 0 && currentTile.y + b.y < height) { //Is in the map
-                        if(freeTiles.Contains(new Vector2Int(currentTile.x + b.x, currentTile.y + b.y))) { //Is a free tile
-                            if(freeTiles.Contains(new Vector2Int(currentTile.x, currentTile.y + b.y)) || freeTiles.Contains(new Vector2Int(currentTile.x + b.x, currentTile.y))) {
-                                freeTiles.Remove(new Vector2Int(currentTile.x + b.x, currentTile.y + b.y));
-                                tilesToCheck.Add(new Vector2Int(currentTile.x + b.x, currentTile.y + b.y));
-                            }
+                    if(x + b.x >= 0 && x + b.x < width && y + b.y >= 0 && y + b.y < height) {
+                        if(previousMap[x + b.x, y + b.y].isSolid) {
+                            nbOfNeighbor += 1;
                         }
+                    } else {
+                        nbOfNeighbor++;
                     }
                 }
 
-                tilesForRegion.Add(currentTile);
-            }
+                if(previousMap[x, y].isSolid) {
+                    bool isSolid;
+                    if(nbOfNeighbor < rule_deathLimit) {
+                        isSolid = false;
+                    } else {
+                        isSolid = true;
+                    }
+                    newMap[x, y] = new MapTile(new Vector2Int(x, y), isSolid);
+                }
 
-            mapRegion.Add(new MapRegion(tilesForRegion));
+                if(!previousMap[x, y].isSolid) {
+                    bool isSolid;
+                    if(nbOfNeighbor > rule_birthLimit) {
+                        isSolid = true;
+                    } else {
+                        isSolid = false;
+                    }
+                    newMap[x, y] = new MapTile(new Vector2Int(x, y), isSolid);
+                }
+            }
         }
 
-        #endregion
+        return newMap;
+    }
+
+    public MapTile[,] DigBetweenRegions(MapTile[,] mapTiles) {
+        isGenerating = true;
+        
+        //Get all region defined by solid tile
+        List<MapRegion> mapRegion = GetRegionBySolidTile(mapTiles);
 
         #region keep smalest region and get the bigger one
 
         //Keep smalest region
 
         for(int i = 0;i < mapRegion.Count;i++) {
-            if(mapRegion[i].listTiles.Count < rule_minimumRegionSize) {
-                ClosedRegion.Add(mapRegion[i]);
+            if(mapRegion[i].tiles.Count < rule_maximumTileForClosedRegion) {
                 mapRegion.Remove(mapRegion[i]);
                 i--;
             }
@@ -171,8 +141,8 @@ public class MapAutomata:MonoBehaviour {
         int maxTile = 0;
 
         foreach(MapRegion region in mapRegion) {
-            if(region.listTiles.Count > maxTile) {
-                maxTile = region.listTiles.Count;
+            if(region.tiles.Count > maxTile) {
+                maxTile = region.tiles.Count;
                 biggestRegion = region;
             }
         }
@@ -196,13 +166,13 @@ public class MapAutomata:MonoBehaviour {
             List<List<Vector2Int>> paths = new List<List<Vector2Int>>();
 
             foreach(MapRegion region in mapRegion) {
-                navigationGraph.GenerateNavigationGraph();
+                navigationGraph.GenerateNavigationGraph(mapTiles);
                 List<Vector2Int> path = new List<Vector2Int>();
 
                 path = aStart.GetPathFromTo(biggestRegion.centerOfRegion, region.centerOfRegion, true);
 
                 for(int i = 0;i < path.Count;i++) {
-                    if(terrainMap[path[i].x, path[i].y] == 0) {
+                    if(!mapTiles[path[i].x, path[i].y].isSolid) {
                         path.Remove(new Vector2Int(path[i].x, path[i].y));
                         i--;
                     }
@@ -226,70 +196,141 @@ public class MapAutomata:MonoBehaviour {
             mapRegion.RemoveAt(index);
 
             foreach(Vector2Int node in minimumPath) {
-                terrainMap[node.x, node.y] = 0;
+                debugTilemap.SetTile(new Vector3Int(node.x, node.y, 0), debugTiles[1]);
+                mapTiles[node.x, node.y].isSolid = false;
             }
-
-            solidTilemap.ClearAllTiles();
-
-            for(int x = 0;x < width;x++) {
-                for(int y = 0;y < height;y++) {
-                    if(terrainMap[x, y] == 1) {
-                        solidTilemap.SetTile(new Vector3Int(x, y, 0), topTile);
-                    }
-                }
-            }
+            
             count++;
-            navigationGraph.solidTilemap = solidTilemap;
         }
 
         #endregion
+        isGenerating = false;
+        return mapTiles;
     }
 
-    public int [,] GenTilePos(int[,] previousMap) {
-        int[,] newMap = new int[width, height];
+    public List<MapRegion> GetRegions(MapTile[,] mapTiles) {
+        isGenerating = true;
 
-        int nbOfNeighbor;
-        BoundsInt bounds = new BoundsInt(-1, -1, 0, 3, 3, 1);
+        List<MapRegion> regions = new List<MapRegion>();
 
-        for(int x = 0; x < width; x++) {
-            for(int y = 0; y < height;y++) {
-                nbOfNeighbor = 0;
+        //Get all region defined by solid tile
+        List<MapRegion> mainRegion = GetRegionBySolidTile(mapTiles);
+
+        //Keep closed one
+        for(int i = 0; i < mainRegion.Count; i++) {
+            MapRegion region = mainRegion[i];
+
+            if(region.tiles.Count < rule_maximumTileForClosedRegion) {
+                mainRegion.Remove(region);
+                if(region.type != MapRegion.TypeRegion.CLOSED) {
+                    region.SetType(MapRegion.TypeRegion.CLOSED);
+                }
+
+                regions.Add(region);
+
+                i--;
+            }
+        }
+        
+        //In the remeaning regions for create sub regions of a maximum size
+        while(mainRegion[0].tiles.Count > 0) {
+            BoundsInt bounds = new BoundsInt(-1, -1, 0, 3, 3, 1);
+            List<MapTile> tilesForNewRegion = new List<MapTile>();
+
+            List<MapTile> tilesToCheck = new List<MapTile>();
+
+            MapTile t = mainRegion[0].tiles.First();
+
+            tilesToCheck.Add(t);
+
+            mainRegion[0].tiles.Remove(t);
+
+            while(tilesForNewRegion.Count < rule_minimumTileForRegion && tilesToCheck.Count > 0) {
+
+                tilesToCheck.OrderBy(x => Vector2Int.Distance(x.position, t.position));
+
+                MapTile currentTile = tilesToCheck[0];
 
                 foreach(Vector3Int b in bounds.allPositionsWithin) {
                     if(b.x == 0 && b.y == 0) continue;
-                    if(x + b.x >= 0 && x + b.x < width && y + b.y >= 0 && y + b.y < height) {
-                        nbOfNeighbor += previousMap[x + b.x, y + b.y];
-                    } else {
-                        nbOfNeighbor++;
+                    if(b.x != 0 && b.y != 0) continue;
+                    
+                    if(currentTile.position.x + b.x >= 0 && currentTile.position.x + b.x < width && currentTile.position.y + b.y >= 0 && currentTile.position.y + b.y < height) { //Is in the map
+                    MapTile newTile = mapTiles[currentTile.position.x + b.x, currentTile.position.y + b.y];
+                        if(mainRegion[0].tiles.Contains(newTile)) {
+                            if(!tilesToCheck.Contains(newTile)) {
+                                if(!tilesForNewRegion.Contains(newTile)) {
+                                    tilesToCheck.Add(mapTiles[currentTile.position.x + b.x, currentTile.position.y + b.y]);
+                                }
+                            }
+                        }
                     }
                 }
 
-                if(previousMap[x, y] == 1) {
-                    if(nbOfNeighbor < deathLimit) {
-                        newMap[x, y] = 0;
-                    } else {
-                        newMap[x, y] = 1;
-                    }
-                }
+                tilesToCheck.Remove(currentTile);
+                mainRegion[0].tiles.Remove(currentTile);
+                tilesForNewRegion.Add(currentTile);
+            }
 
-                if(previousMap[x, y] == 0) {
-                    if(nbOfNeighbor > birthLimit) {
-                        newMap[x, y] = 1;
-                    } else {
-                        newMap[x, y] = 0;
-                    }
-                }
+            Tile d = debugTiles[Random.Range(0, debugTiles.Count)];  
+
+            regions.Add(new MapRegion(tilesForNewRegion, MapRegion.TypeRegion.NORMAL));
+        }
+
+        for(int i = 0; i < regions.Count;i++) {
+            foreach(MapTile t in regions[i].tiles) {
+                debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[i%debugTiles.Count]);
             }
         }
 
-        return newMap;
+        isGenerating = false;
+        return regions;
     }
 
-    public void InitPosition() {
-        for(int x = 0; x < width; x++) {
-            for(int y = 0; y < height; y++) {
-                terrainMap[x, y] = Random.Range(1, 101) < initialChance ? 1 : 0;
+    List<MapRegion> GetRegionBySolidTile(MapTile[,] mapTiles) {
+        List<MapRegion> regionsBySolidTile = new List<MapRegion>();
+        List<Vector2Int> freeTiles = new List<Vector2Int>();
+
+        BoundsInt bounds = new BoundsInt(-1, -1, 0, 3, 3, 1);
+
+        for(int x = 0;x < width;x++) {
+            for(int y = 0;y < height;y++) {
+                if(!mapTiles[x, y].isSolid) {
+                    freeTiles.Add(new Vector2Int(x, y));
+                }
             }
         }
+
+        while(freeTiles.Count > 0) {
+
+            List<MapTile> tilesForRegion = new List<MapTile>();
+
+            List<Vector2Int> tilesToCheck = new List<Vector2Int>();
+            tilesToCheck.Add(freeTiles.First());
+            freeTiles.Remove(freeTiles.First());
+
+            while(tilesToCheck.Count > 0) {
+                Vector2Int currentTile = tilesToCheck.First();
+                tilesToCheck.Remove(currentTile);
+
+                foreach(Vector3Int b in bounds.allPositionsWithin) {
+                    if(b.x == 0 && b.y == 0) continue;
+                    if(currentTile.x + b.x >= 0 && currentTile.x + b.x < width && currentTile.y + b.y >= 0 && currentTile.y + b.y < height) { //Is in the map
+                        if(freeTiles.Contains(new Vector2Int(currentTile.x + b.x, currentTile.y + b.y))) { //Is a free tile
+                            if(freeTiles.Contains(new Vector2Int(currentTile.x, currentTile.y + b.y)) || freeTiles.Contains(new Vector2Int(currentTile.x + b.x, currentTile.y))) {
+                                freeTiles.Remove(new Vector2Int(currentTile.x + b.x, currentTile.y + b.y));
+                                tilesToCheck.Add(new Vector2Int(currentTile.x + b.x, currentTile.y + b.y));
+                            }
+                        }
+                    }
+                }
+
+                tilesForRegion.Add(mapTiles[currentTile.x, currentTile.y]);
+            }
+
+            regionsBySolidTile.Add(new MapRegion(tilesForRegion));
+        }
+
+        return regionsBySolidTile;
     }
 }

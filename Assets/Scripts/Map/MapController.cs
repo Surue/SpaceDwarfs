@@ -5,8 +5,10 @@ using UnityEngine.Tilemaps;
 
 public class MapController : MonoBehaviour {
 
-    List<MapRegion> regions;
-    MapTile[,] tiles;
+    [HideInInspector]
+    public List<MapRegion> regions;
+    [HideInInspector]
+    public MapTile[,] tiles;
 
     PlayerController player;
 
@@ -19,12 +21,7 @@ public class MapController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
 	}
-
-    public void AddRegions(MapRegion region) {
-        regions.Add(region);
-    }
 
     public Vector2 GetPlayerSpawnPosition() {
         Vector2 spawnPosition = new Vector2();
@@ -35,26 +32,44 @@ public class MapController : MonoBehaviour {
             }
         }
 
+        //TO REMOVE
+        List<MapTile> freeTile = new List<MapTile>();
+
+        foreach(MapTile t in tiles) {
+            if(!t.isSolid) {
+                freeTile.Add(t);
+            }
+        }
+
+        spawnPosition = freeTile[Random.Range(0, freeTile.Count)].position;
+
         return spawnPosition;
     }
 }
 
 //Represents a tile of a map, does not take in count the layer of tilemap
 public class MapTile {
-    public MapTile(Vector2Int pos, float c, Tile t, int s = 0) {
-        position = pos;
-        cost = c;
-        tile = t;
-        score = s;
-    }
-
-    Vector2Int position;
+    public Vector2Int position;
 
     float cost;
 
     Tile tile;
 
     int score;
+
+    public bool isSolid;
+
+    public MapTile(Vector2Int pos, bool solid) {
+        position = pos;
+        isSolid = solid;
+    }
+
+    public MapTile(Vector2Int pos, float c, Tile t, int s = 0) {
+        position = pos;
+        cost = c;
+        tile = t;
+        score = s;
+    }
 }
 
 //Represents a region of a map with different rules
@@ -62,7 +77,7 @@ public class MapRegion {
 
     #region Variables
 
-    public List<Vector2Int> listTiles;
+    public List<MapTile> tiles;
     public Vector2Int centerOfRegion = new Vector2Int(0, 0);
 
     //Type of region
@@ -84,10 +99,20 @@ public class MapRegion {
 
     #region Constructor
 
-    public MapRegion(List<Vector2Int> tiles, TypeRegion type = TypeRegion.NORMAL) {
-        listTiles = tiles;
+    public MapRegion(List<MapTile> t, TypeRegion type = TypeRegion.CLOSED) {
+        tiles = t;
 
-        centerOfRegion = tiles[Random.Range(0, tiles.Count)];
+        centerOfRegion = tiles[Random.Range(0, tiles.Count)].position;
+
+        SetType(type);
+    }
+
+    #endregion
+
+    #region Public methods
+
+    public void SetType(TypeRegion t) {
+        type = t;
 
         switch(type) {
             case TypeRegion.PLAYER_SPAWN:
@@ -116,12 +141,8 @@ public class MapRegion {
         }
     }
 
-    #endregion
-
-    #region Public methods
-
     public Vector2Int GetRandomPoint() {
-        return listTiles[Random.Range(0, listTiles.Count)];
+        return tiles[Random.Range(0, tiles.Count)].position;
     }
 
     #endregion

@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4568594353253378}
   - component: {fileID: 114622845642960226}
+  - component: {fileID: 114785071601268756}
   - component: {fileID: 114053838154394198}
   m_Layer: 0
   m_Name: MapManager
@@ -52,10 +53,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7de9f21606cdfbe4c9db40c472674a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialChance: 45
-  birthLimit: 4
-  deathLimit: 3
-  numberOfIteration: 7
+  rule_initialChance: 45
+  rule_birthLimit: 4
+  rule_deathLimit: 3
+  rule_numberOfIteration: 7
+  rule_maximumTileForClosedRegion: 20
+  rule_minimumTileForRegion: 75
   tilemapSize: {x: 50, y: 50}
   topTile: {fileID: 11400000, guid: ba5bd530200a5a44696b0b415753edad, type: 2}
   botTile: {fileID: 11400000, guid: cd7c6aeaf1ab8a0489a0d79bd58e0529, type: 2}
@@ -77,6 +80,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4c27376f278010d4d8dac4e6be668627, type: 2}
   - {fileID: 11400000, guid: 518817c5fcadb6842afb30be105a4a17, type: 2}
   debugTilemap: {fileID: 0}
+  isGenerating: 0
 --- !u!114 &114622845642960226
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -89,5 +93,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapGenerator: {fileID: 114053838154394198}
+  mapController: {fileID: 114785071601268756}
   solidTilemap: {fileID: 0}
   groundTilemap: {fileID: 0}
+  step: 0
+--- !u!114 &114785071601268756
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1078750548559614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bdcb053853de894e836733887fac0f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

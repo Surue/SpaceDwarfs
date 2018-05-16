@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class LevelManager:MonoBehaviour {
 
     MapManager mapManager;
+    MapController mapController;
     NavigationAI navigationGraph;
 
     public Tilemap solidTilemap;
@@ -33,6 +34,7 @@ public class LevelManager:MonoBehaviour {
     GameObject player;
 
     public enum State {
+        MAP_GENERATION,
         LANDING,
         WAIT_FOR_EVACUATION,
         EVACUATION_READY,
@@ -45,10 +47,9 @@ public class LevelManager:MonoBehaviour {
     // Use this for initialization
     void Start() {
         //Get all object needed
+        mapController = FindObjectOfType<MapController>();
         mapManager = FindObjectOfType<MapManager>();
         navigationGraph = FindObjectOfType<NavigationAI>();
-
-        navigationGraph.solidTilemap = mapManager.solidTilemap;
 
         //Compute time before evacuation in level
         timeBeforeEvacuationInSeconds = Mathf.Floor(PlayerInfo.Instance.levelFinished / levelStepForTime) * timePerStepInSeconds + minimumTimeBeforeEvacInSeconds;
@@ -57,9 +58,19 @@ public class LevelManager:MonoBehaviour {
     // Update is called once per frame
     void Update() {
         switch(state) {
+            case State.MAP_GENERATION:
+                if(mapManager.step == MapManager.Step.IDLE) {
+                    mapManager.StartGeneratingMap();
+                }
+
+                if(mapManager.step == MapManager.Step.FINISH) {
+                    state = State.LANDING;
+                }
+                break;
+
             case State.LANDING:
                 if(!FindObjectOfType<PlayerController>()) {
-                    player = Instantiate(playerPrefab, mapManager.GetPositionForSpawn(), Quaternion.identity);
+                    player = Instantiate(playerPrefab, mapController.GetPlayerSpawnPosition(), Quaternion.identity);
                     player.GetComponent<PlayerController>().enabled = false;
                 } else {
                     player = GameObject.Find("Player");
@@ -71,7 +82,6 @@ public class LevelManager:MonoBehaviour {
                     state = State.WAIT_FOR_EVACUATION;
                     FindObjectOfType<PlayerController>().enabled = true; //TO CHANGE
                     FindObjectOfType<PlayerController>().state = PlayerController.State.NOT_BLOCKED; //TO CHANGE
-                    navigationGraph.GenerateNavigationGraph();
                     StartCoroutine(ClockAnimation());
                 }
                 break;
