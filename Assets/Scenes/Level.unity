@@ -502,6 +502,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
+        type: 2}
+      propertyPath: rulesForTilesSolid.Array.size
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 4568594353253378, guid: aee41a6de6d93944da228532c7e82d06, type: 2}
       propertyPath: m_LocalPosition.x
       value: -2.2851863
@@ -534,11 +539,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114785071601268756, guid: aee41a6de6d93944da228532c7e82d06,
+    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
         type: 2}
-      propertyPath: solidTilemap
+      propertyPath: debugTilemap
       value: 
-      objectReference: {fileID: 1340641926}
+      objectReference: {fileID: 59912087}
     - target: {fileID: 114622845642960226, guid: aee41a6de6d93944da228532c7e82d06,
         type: 2}
       propertyPath: solidTilemap
@@ -549,11 +554,17 @@ Prefab:
       propertyPath: groundTilemap
       value: 
       objectReference: {fileID: 1340641925}
+    - target: {fileID: 114785071601268756, guid: aee41a6de6d93944da228532c7e82d06,
+        type: 2}
+      propertyPath: solidTilemap
+      value: 
+      objectReference: {fileID: 1340641926}
     - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
         type: 2}
-      propertyPath: debugTilemap
+      propertyPath: rulesForTilesSolid.Array.data[12]
       value: 
-      objectReference: {fileID: 59912087}
+      objectReference: {fileID: 11400000, guid: 511c9c569a5431d46ba4f346da94ec93,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aee41a6de6d93944da228532c7e82d06, type: 2}
   m_IsPrefabParent: 0
@@ -1112,11 +1123,6 @@ Prefab:
       propertyPath: timeBeforeEvacText
       value: 
       objectReference: {fileID: 981245832}
-    - target: {fileID: 114062758954686084, guid: 575cffd5a56ae3e47816a388f41b9b1e,
-        type: 2}
-      propertyPath: state
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 575cffd5a56ae3e47816a388f41b9b1e, type: 2}
   m_IsPrefabParent: 0

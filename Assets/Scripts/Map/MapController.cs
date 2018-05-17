@@ -11,6 +11,7 @@ public class MapController : MonoBehaviour {
     public MapTile[,] tiles;
 
     PlayerController player;
+    
 
     [SerializeField]
     Tilemap solidTilemap;
@@ -66,7 +67,7 @@ public class MapController : MonoBehaviour {
 
         spawnPosition = possibleRegion[Random.Range(0, possibleRegion.Count)].GetRandomPoint();
 
-        return spawnPosition;
+        return spawnPosition + new Vector2(0.5f, 0.5f);
     }
 
     public Vector2 GetPlayerSpawnPosition() {

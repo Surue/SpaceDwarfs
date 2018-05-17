@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour {
 
     Vector2 moveVelocity;
 
+    Collider2D collider;
+
     //Animation
     Animator animatorController;
     [SerializeField]
@@ -42,7 +44,9 @@ public class PlayerController : MonoBehaviour {
         lifeBar = GameObject.Find("lifeBar").GetComponent<Image>();
 
         initialLife = life;
-	}
+
+        collider = GetComponent<Collider2D>();
+    }
 
     void FixedUpdate() {
         body.velocity = moveVelocity;
@@ -50,7 +54,13 @@ public class PlayerController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if(state == State.BLOCKED) return;
+        if(state == State.BLOCKED) {
+            Debug.Log("ICI");
+            collider.enabled = false;
+            return;
+        } else {
+            collider.enabled = true;
+        }
 
         moveVelocity = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * speed;
 

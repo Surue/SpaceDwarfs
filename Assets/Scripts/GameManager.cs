@@ -41,4 +41,8 @@ public class GameManager : MonoBehaviour {
     public void PlayerDeath() {
         SceneManager.LoadScene("Death");
     }
+
+    public void LoadNextLevel() {
+        SceneManager.LoadScene("Level");
+    }
 }

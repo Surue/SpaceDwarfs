@@ -56,6 +56,8 @@ MonoBehaviour:
   groundTilemap: {fileID: 0}
   playerPrefab: {fileID: 1382962530495482, guid: fb14668622f1cfe46b856a89425869cd,
     type: 2}
+  spaceshipPrefab: {fileID: 1998405713302818, guid: acb295bd960f17943a188b69182493a4,
+    type: 2}
   timeBeforeEvacText: {fileID: 0}
   state: 0
 --- !u!114 &114621955502261048

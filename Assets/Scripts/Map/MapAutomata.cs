@@ -464,32 +464,31 @@ public class MapAutomata : MonoBehaviour {
             GetComponent<MapController>().AddRegion(region);
         }
 
-        //for(int i = 0;i < regions.Count;i++) {
-        //    if(regions[i].type == MapRegion.TypeRegion.PLAYER_SPAWN) {
-        //        foreach(MapTile t in regions[i].tiles) {
-        //            debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[1]);
-        //        }
-        //    }
+        for(int i = 0;i < regions.Count;i++) {
+            if(regions[i].type == MapRegion.TypeRegion.PLAYER_SPAWN) {
+                foreach(MapTile t in regions[i].tiles) {
+                    debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[1]);
+                }
+            }
 
-        //    if(regions[i].type == MapRegion.TypeRegion.NEST) {
-        //        foreach(MapTile t in regions[i].tiles) {
-        //            debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[13]);
-        //        }
-        //    }
+            if(regions[i].type == MapRegion.TypeRegion.NEST) {
+                foreach(MapTile t in regions[i].tiles) {
+                    debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[13]);
+                }
+            }
 
-        //    if(regions[i].type == MapRegion.TypeRegion.NORMAL) {
-        //        foreach(MapTile t in regions[i].tiles) {
-        //            debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[7]);
-        //        }
-        //    }
-        //}
+            if(regions[i].type == MapRegion.TypeRegion.NORMAL) {
+                foreach(MapTile t in regions[i].tiles) {
+                    debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[7]);
+                }
+            }
+        }
 
         isGenerating = false;
     }
 
     public IEnumerator AssociateTiles(MapTile[,] mapTile) {
         isGenerating = true;
-        Debug.Log("Associate tiles");
         foreach(MapTile tile in mapTile) {
             tile.tile = debugTiles[0];
 
@@ -505,24 +504,6 @@ public class MapAutomata : MonoBehaviour {
                     tile.tile = rule.tile;
                     break;
                 }
-            }
-
-            //if(rulesForTilesFree[0].IsThisTile(tile, mapTile)) {
-            //    tile.tile = rulesForTilesFree[0].tile;
-            //}
-
-            //if(rulesForTilesSolid[0].IsThisTile(tile, mapTile)) {
-            //    tile.tile = rulesForTilesSolid[0].tile;
-            //}
-
-            //if(rulesForTilesSolid[1].IsThisTile(tile, mapTile)) {
-            //    tile.tile = rulesForTilesSolid[1].tile;
-            //}
-
-            if(tile.isSolid) {
-                debugTilemap.SetTile(new Vector3Int(tile.position.x, tile.position.y, 0), debugTiles[0]);
-            } else {
-                debugTilemap.SetTile(new Vector3Int(tile.position.x, tile.position.y, 0), debugTiles[1]);
             }
         }
 

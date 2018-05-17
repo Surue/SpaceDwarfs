@@ -85,6 +85,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0c5a4f6a1b4ebdd42ac667a5d3504454, type: 2}
   - {fileID: 11400000, guid: d147876e921f7ef428fa7acef3185d03, type: 2}
   - {fileID: 11400000, guid: 507ecf4bb8e2f554aafeee94be75a07b, type: 2}
+  - {fileID: 11400000, guid: 562a49299194e7c4e961a393bb3851c6, type: 2}
+  - {fileID: 11400000, guid: b40641dd476a84c4887970eada80f9eb, type: 2}
+  - {fileID: 11400000, guid: 3b61be996b471874b9ec5f2185c9b543, type: 2}
+  - {fileID: 11400000, guid: 49135960a3cc4c546b2331455eb3a6e1, type: 2}
+  - {fileID: 11400000, guid: 2cd2681ee0635bc4584ecb08d008da3d, type: 2}
+  - {fileID: 11400000, guid: c2f316b37cd960d41ad4dc2c8e61308e, type: 2}
+  - {fileID: 11400000, guid: 067745cd82e67b745ae63d24e5ea57b9, type: 2}
+  - {fileID: 11400000, guid: 3271b8c2280a2b24bb6b22638b8a4eff, type: 2}
   rulesForTilesFree:
   - {fileID: 11400000, guid: da9b83d04be1f164dab56aa5b246bfcf, type: 2}
   debugTilemap: {fileID: 0}

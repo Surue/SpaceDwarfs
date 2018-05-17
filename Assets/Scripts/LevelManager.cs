@@ -14,6 +14,7 @@ public class LevelManager:MonoBehaviour {
     public Tilemap groundTilemap;
 
     public GameObject playerPrefab;
+    public GameObject spaceshipPrefab;
 
     //Variables for landing
     float timeLanding = 5.0f;
@@ -32,6 +33,9 @@ public class LevelManager:MonoBehaviour {
 
     //Logic variables & player
     GameObject player;
+    SpaceshipController spaceship;
+
+    Vector2 spawnPosition;
 
     public enum State {
         MAP_GENERATION,
@@ -59,26 +63,32 @@ public class LevelManager:MonoBehaviour {
     void Update() {
         switch(state) {
             case State.MAP_GENERATION:
+
                 if(mapManager.step == MapManager.Step.IDLE) {
+                    player = Instantiate(playerPrefab, new Vector2(-10, -10), Quaternion.identity);
+                    player.GetComponent<PlayerController>().state = PlayerController.State.BLOCKED;
+
+                    spaceship = Instantiate(spaceshipPrefab, new Vector2(-10, -10), Quaternion.identity).GetComponent<SpaceshipController>();
                     mapManager.StartGeneratingMap();
                 }
 
                 if(mapManager.step == MapManager.Step.FINISH) {
+                    spawnPosition = mapController.GetPlayerSpawnPosition();
+                    player.transform.position = spawnPosition + new Vector2(0, 10);
+                    spaceship.transform.position = player.transform.position;
                     state = State.LANDING;
                 }
                 break;
 
             case State.LANDING:
-                if(!FindObjectOfType<PlayerController>()) {
-                    player = Instantiate(playerPrefab, mapController.GetPlayerSpawnPosition(), Quaternion.identity);
-                    player.GetComponent<PlayerController>().enabled = false;
-                } else {
-                    player = GameObject.Find("Player");
-                }
+                if(Vector2.Distance(player.transform.position, spawnPosition) > 0.1f) {
+                    Vector3 speed = new Vector3(0, -(Vector2.Distance(player.transform.position, spawnPosition)),0); 
 
-                if(timeLanding > 0) {
-                    timeLanding -= Time.deltaTime;
+                    player.transform.position += Time.deltaTime * speed;
+                    spaceship.transform.position += Time.deltaTime * speed;
                 } else {
+                    player.GetComponent<PlayerController>().state = PlayerController.State.NOT_BLOCKED;
+                    spaceship.state = SpaceshipController.State.OPENING;
                     state = State.WAIT_FOR_EVACUATION;
                     FindObjectOfType<PlayerController>().enabled = true; //TO CHANGE
                     FindObjectOfType<PlayerController>().state = PlayerController.State.NOT_BLOCKED; //TO CHANGE
@@ -90,17 +100,26 @@ public class LevelManager:MonoBehaviour {
                 if(evacuationAvailable) {
                     UpdateUIText("Evacuation");
                     state = State.EVACUATION_READY;
+                    spaceship.canTakeOff = true;
                 }
                 break;
 
             case State.EVACUATION_READY:
-                if(Vector2.Distance(player.transform.position, evacuationPosition) < 1.0f) {
+                if(spaceship.state == SpaceshipController.State.TAKING_OFF) {
+                    player.GetComponent<PlayerController>().state = PlayerController.State.BLOCKED;
                     state = State.EVACUATE;
-                    player.GetComponent<PlayerController>().enabled = false;
                 }
                 break;
 
             case State.EVACUATE:
+                if(Vector2.Distance(player.transform.position, spawnPosition) < 10f) {
+                    Vector3 speed = new Vector3(0, (Vector2.Distance(player.transform.position, spawnPosition)),0);
+
+                    player.transform.position += Time.deltaTime * speed;
+                    spaceship.transform.position += Time.deltaTime * speed;
+                } else {
+                    GameManager.Instance.LoadNextLevel();
+                }
                 break;
         }
     }
