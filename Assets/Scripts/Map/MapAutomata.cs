@@ -8,6 +8,8 @@ using System.Linq;
 
 public class MapAutomata : MonoBehaviour {
 
+    [Header("Map generation")]
+
     [Range(0, 100)]
     public int rule_initialChance;
 
@@ -37,8 +39,14 @@ public class MapAutomata : MonoBehaviour {
     public Tile botTile;
     public List<Tile> debugTiles;
 
+    [Header("Rule for tiles")]
+
     public List<Rule_TileSolid> rulesForTilesSolid;
     public List<Rule_TileFree> rulesForTilesFree;
+
+    [Header("Spawnable item & rules")]
+    public int maxItemPerRegion = 3;
+    public List<SO_Item> items;
 
     int width;
     int height;
@@ -557,5 +565,40 @@ public class MapAutomata : MonoBehaviour {
         }
 
         return regionsBySolidTile;
+    }
+
+    public IEnumerator AddItems(List<MapRegion> regions) {
+        isGenerating = true;
+
+        foreach(MapRegion region in regions) {
+
+            foreach(SO_Item item in items) {
+                int chance = Random.Range(1, 101);
+
+                if(item.CanBeInThisRegion(region)) {
+                    if(chance > item.apparitionRatePerRegion) {
+
+                        Vector2 pos = new Vector2();
+
+                        while(pos == new Vector2()) {
+                            MapTile t = region.tiles[Random.Range(0, region.tiles.Count)];
+
+                            if(!t.isOccuped) {
+                                Debug.Log("tmp pos = " + t.position);
+                                pos = t.position + new Vector2(0.5f, 0.5f);
+                            }
+                        }
+                        Debug.Log("Position = " + pos);
+                        GameObject instance = Instantiate(item.prefab);
+
+                        instance.transform.position = pos;
+                    }
+                }
+            }
+
+        }
+
+        isGenerating = false;
+        yield return null;
     }
 }

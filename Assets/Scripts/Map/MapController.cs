@@ -87,13 +87,14 @@ public class MapController : MonoBehaviour {
 public class MapTile {
     public Vector2Int position;
 
-    float cost;
+    public float cost = 1;
 
     public Tile tile;
 
     int score;
 
     public bool isSolid;
+    public bool isOccuped = false;
 
     public MapTile(Vector2Int pos, bool solid) {
         position = pos;
@@ -106,6 +107,11 @@ public class MapTile {
         cost = t.cost;
         tile = t.tile;
         score = t.score;
+    }
+
+    public void AddItem() {
+        isOccuped = true;
+        cost = Mathf.Infinity;
     }
 }
 

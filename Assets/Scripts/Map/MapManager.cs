@@ -25,7 +25,7 @@ public class MapManager : MonoBehaviour {
         REGION_GENERATION,
         REGION_ASSOCIATION,
         ADD_ORE,
-        ADD_TREASURE,
+        ADD_ITEMS,
         ASSOCIATE_TILES,
         FINISH
     }
@@ -103,6 +103,19 @@ public class MapManager : MonoBehaviour {
                 if(!stepStarted) {
                     stepStarted = true;
                     StartCoroutine(mapGenerator.AssociateTiles(mapController.tiles));
+                }
+
+                if(!mapGenerator.isGenerating) {
+                    mapController.DrawAll();
+                    stepStarted = false;
+                    step = Step.ADD_ITEMS;
+                }
+                break;
+
+            case Step.ADD_ITEMS:
+                if(!stepStarted) {
+                    stepStarted = true;
+                    StartCoroutine(mapGenerator.AddItems(mapController.regions));
                 }
 
                 if(!mapGenerator.isGenerating) {

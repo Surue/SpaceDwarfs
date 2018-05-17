@@ -93,8 +93,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c2f316b37cd960d41ad4dc2c8e61308e, type: 2}
   - {fileID: 11400000, guid: 067745cd82e67b745ae63d24e5ea57b9, type: 2}
   - {fileID: 11400000, guid: 3271b8c2280a2b24bb6b22638b8a4eff, type: 2}
+  - {fileID: 11400000, guid: 511c9c569a5431d46ba4f346da94ec93, type: 2}
   rulesForTilesFree:
   - {fileID: 11400000, guid: da9b83d04be1f164dab56aa5b246bfcf, type: 2}
+  maxItemPerRegion: 3
+  items:
+  - {fileID: 11400000, guid: 9cfb537ae410fd94484fb3e556e58e2d, type: 2}
   debugTilemap: {fileID: 0}
   isGenerating: 0
 --- !u!114 &114622845642960226

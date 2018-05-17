@@ -225,6 +225,11 @@ public class CrawlerController : MonoBehaviour {
             bullet.energy -= diff;
 
             if(life <= 0) {
+                Score s = GetComponent<Score>();
+                if(s != null) {
+                    s.DisplayScore();
+                }
+
                 Destroy(gameObject);
             }
         }
@@ -233,21 +238,22 @@ public class CrawlerController : MonoBehaviour {
     private void OnCollisionStay2D(Collision2D collision) {
         if(collision.gameObject.GetComponent<Bullet>()) {
 
-            Instantiate(bloodSplasherPrefab, collision.transform.position, Quaternion.identity);
+            //Instantiate(bloodSplasherPrefab, collision.transform.position, Quaternion.identity);
 
-            Bullet bullet = collision.gameObject.GetComponent<Bullet>();
+            //Bullet bullet = collision.gameObject.GetComponent<Bullet>();
 
-            float diff = Mathf.Abs(life - bullet.energy);
+            //float diff = Mathf.Abs(life - bullet.energy);
 
-            if(bullet.energy > 0) {
-                life -= bullet.energy;
-            }
+            //if(bullet.energy > 0) {
+            //    life -= bullet.energy;
+            //}
 
-            bullet.energy -= diff;
+            //bullet.energy -= diff;
 
-            if(life <= 0) {
-                Destroy(gameObject);
-            }
+            //if(life <= 0) {
+
+            //    Destroy(gameObject);
+            //}
         }
     }
 }

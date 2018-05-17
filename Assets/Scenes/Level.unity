@@ -421,6 +421,28 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 544396402}
+--- !u!1 &978808351 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1362508113473130, guid: 69748ec2059b946468e84c479f2d55c5,
+    type: 2}
+  m_PrefabInternal: {fileID: 1333824737}
+--- !u!95 &978808352
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 978808351}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3f2cce7c1d122b84393bd57d38b23559, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &981245830
 GameObject:
   m_ObjectHideFlags: 0
@@ -502,11 +524,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
-        type: 2}
-      propertyPath: rulesForTilesSolid.Array.size
-      value: 13
-      objectReference: {fileID: 0}
     - target: {fileID: 4568594353253378, guid: aee41a6de6d93944da228532c7e82d06, type: 2}
       propertyPath: m_LocalPosition.x
       value: -2.2851863
@@ -559,12 +576,6 @@ Prefab:
       propertyPath: solidTilemap
       value: 
       objectReference: {fileID: 1340641926}
-    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
-        type: 2}
-      propertyPath: rulesForTilesSolid.Array.data[12]
-      value: 
-      objectReference: {fileID: 11400000, guid: 511c9c569a5431d46ba4f346da94ec93,
-        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aee41a6de6d93944da228532c7e82d06, type: 2}
   m_IsPrefabParent: 0
@@ -810,6 +821,10 @@ Prefab:
         type: 2}
       propertyPath: m_LocalPosition.y
       value: -454
+      objectReference: {fileID: 0}
+    - target: {fileID: 1362508113473130, guid: 69748ec2059b946468e84c479f2d55c5, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 69748ec2059b946468e84c479f2d55c5, type: 2}
@@ -1108,6 +1123,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 114890842179222376, guid: 575cffd5a56ae3e47816a388f41b9b1e,
+        type: 2}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 978808351}
     - target: {fileID: 114062758954686084, guid: 575cffd5a56ae3e47816a388f41b9b1e,
         type: 2}
       propertyPath: solidTilemap

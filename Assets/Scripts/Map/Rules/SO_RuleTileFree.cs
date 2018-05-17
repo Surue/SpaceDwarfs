@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEditor;
 
-[CreateAssetMenu(fileName = "ruleTile_name", menuName = "Tilemape / Rule Tile Free")]
+[CreateAssetMenu(fileName = "ruleTile_name", menuName = "Tilemap / Rule Tile Free")]
 [System.Serializable]
 public class Rule_TileFree : SO_RuleTile {
 

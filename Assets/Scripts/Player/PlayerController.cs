@@ -55,7 +55,6 @@ public class PlayerController : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if(state == State.BLOCKED) {
-            Debug.Log("ICI");
             collider.enabled = false;
             return;
         } else {
@@ -84,6 +83,11 @@ public class PlayerController : MonoBehaviour {
         if(lookingRight) {
 
         }
+    }
+
+    public void AddLife(float l) {
+        life += l;
+        UpdateLifeBar();
     }
 
     public void TakeDamage(float d) {

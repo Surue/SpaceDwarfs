@@ -73,12 +73,20 @@ public class NavigationAI : MonoBehaviour {
         for(int x = 0; x < width; x++) {
             for(int y = 0; y < height; y++) {
 
-                if(!mapTiles[x,y].isSolid) {
+                if(!mapTiles[x,y].isSolid && !mapTiles[x,y].isOccuped) {
                     graph[x, y] = new Node {
-                        tileCost = 1,
+                        tileCost = mapTiles[x, y].cost,
                         neighbors = new List<Node>(),
                         position = new Vector2(x + cellSize / 2.0f, y + cellSize / 2.0f),
                         positionInt = new Vector2Int(x, y)
+                    };
+                } else if(mapTiles[x, y].isOccuped) {
+                    graph[x, y] = new Node {
+                        tileCost = mapTiles[x,y].cost,
+                        neighbors = new List<Node>(),
+                        position = new Vector2(x + cellSize / 2.0f, y + cellSize / 2.0f),
+                        positionInt = new Vector2Int(x, y),
+                        isSolid = true
                     };
                 } else {
                     graph[x, y] = new Node {
