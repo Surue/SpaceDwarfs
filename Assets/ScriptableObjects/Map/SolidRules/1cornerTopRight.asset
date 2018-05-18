@@ -8,9 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 2768c7f501f05b04ea38731cd22fe780, type: 3}
   m_Name: 1cornerTopRight
-  m_EditorClassIdentifier: Assembly-CSharp::Rule_TileSolid
+  m_EditorClassIdentifier: 
   tile: {fileID: 11400000, guid: 18d84ea3f31b40d48be5b5af8dd72bb9, type: 2}
   rules:
-  - array: 010101010101000101
+  - array: 010101010101010100

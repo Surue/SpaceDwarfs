@@ -9,11 +9,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2768c7f501f05b04ea38731cd22fe780, type: 3}
-  m_Name: 2edgeBottomLeft
+  m_Name: 0edge
   m_EditorClassIdentifier: 
-  tile: {fileID: 11400000, guid: d771e2ba0987c0742b43a82007e1aaa4, type: 2}
+  tile: {fileID: 11400000, guid: ba5bd530200a5a44696b0b415753edad, type: 2}
   rules:
-  - array: 000000000101000101
-  - array: 000001000101000101
-  - array: 000000000101010101
-  - array: 000001000101010101
+  - array: 010101010101010101

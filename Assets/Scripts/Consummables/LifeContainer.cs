@@ -23,13 +23,10 @@ public class LifeContainer : MonoBehaviour {
 
             Bullet bullet = collision.gameObject.GetComponent<Bullet>();
 
-            float diff = Mathf.Abs(life - bullet.energy);
+            
+            life -= bullet.energy;
 
-            if(bullet.energy > 0) {
-                life -= bullet.energy;
-            }
-
-            bullet.energy -= diff;
+            Destroy(bullet.gameObject);
 
             if(life <= 0) {
                 player.AddLife(lifePoint);

@@ -8,12 +8,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 2egdeTopLeft
-  m_EditorClassIdentifier: Assembly-CSharp::Rule_TileSolid
+  m_Script: {fileID: 11500000, guid: 2768c7f501f05b04ea38731cd22fe780, type: 3}
+  m_Name: 2edgeTopLeft
+  m_EditorClassIdentifier: 
   tile: {fileID: 11400000, guid: 96914a4f4efc05c46825e4fae7d87505, type: 2}
   rules:
   - array: 000101000101000000
-  - array: 000101000101000001
   - array: 010101000101000000
+  - array: 000101000101000001
   - array: 010101000101000001

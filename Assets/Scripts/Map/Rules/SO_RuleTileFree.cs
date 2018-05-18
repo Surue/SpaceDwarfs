@@ -6,13 +6,14 @@ using UnityEditor;
 
 [CreateAssetMenu(fileName = "ruleTile_name", menuName = "Tilemap / Rule Tile Free")]
 [System.Serializable]
-public class Rule_TileFree : SO_RuleTile {
-
+public class SO_RuleTileFree : ScriptableObject{
+    [SerializeField]
     public Tile tile;
 
+    [SerializeField]
     public bool[] rules = new bool[9];
 
-    public override bool IsThisTile(MapTile tile, MapTile[,] mapTile) {
+    public bool IsThisTile(MapTile tile, MapTile[,] mapTile) {
         if(tile.isSolid) {
             return false; //TO CHANGE
         }

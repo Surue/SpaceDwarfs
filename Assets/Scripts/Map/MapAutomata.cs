@@ -41,8 +41,9 @@ public class MapAutomata : MonoBehaviour {
 
     [Header("Rule for tiles")]
 
-    public List<Rule_TileSolid> rulesForTilesSolid;
-    public List<Rule_TileFree> rulesForTilesFree;
+    public List<SO_RuleTileSolid> rulesForTilesSolid;
+    public List<SO_RuleTileFree> rulesForTilesFree;
+    public List<SO_RuleTile> rulesForTiles;
 
     [Header("Spawnable item & rules")]
     public int maxItemPerRegion = 3;
@@ -500,14 +501,21 @@ public class MapAutomata : MonoBehaviour {
         foreach(MapTile tile in mapTile) {
             tile.tile = debugTiles[0];
 
-            foreach(Rule_TileFree rule in rulesForTilesFree) {
+            foreach(SO_RuleTileFree rule in rulesForTilesFree) {
                 if(rule.IsThisTile(tile, mapTile)) {
                     tile.tile = rule.tile;
                     break;
                 }
             }
 
-            foreach(Rule_TileSolid rule in rulesForTilesSolid) {
+            //foreach(SO_RuleTileSolid rule in rulesForTilesSolid) {
+            //    if(rule.IsThisTile(tile, mapTile)) {
+            //        tile.tile = rule.tile;
+            //        break;
+            //    }
+            //}
+
+            foreach(SO_RuleTile rule in rulesForTiles) {
                 if(rule.IsThisTile(tile, mapTile)) {
                     tile.tile = rule.tile;
                     break;
@@ -584,11 +592,11 @@ public class MapAutomata : MonoBehaviour {
                             MapTile t = region.tiles[Random.Range(0, region.tiles.Count)];
 
                             if(!t.isOccuped) {
-                                Debug.Log("tmp pos = " + t.position);
                                 pos = t.position + new Vector2(0.5f, 0.5f);
+                                t.AddItem();
                             }
                         }
-                        Debug.Log("Position = " + pos);
+
                         GameObject instance = Instantiate(item.prefab);
 
                         instance.transform.position = pos;

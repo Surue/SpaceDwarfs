@@ -18,6 +18,9 @@ public class MapManager : MonoBehaviour {
 
     CompositeCollider2D colliderSolideTilemap;
 
+    int difficultyLevel = 0;
+    int miniumTilemapSize = 30;
+
     public enum Step {
         IDLE,
         GENERATING_MAP,
@@ -27,6 +30,7 @@ public class MapManager : MonoBehaviour {
         ADD_ORE,
         ADD_ITEMS,
         ASSOCIATE_TILES,
+        GENERATE_NAVIGATION_GRAPH,
         FINISH
     }
 
@@ -35,7 +39,8 @@ public class MapManager : MonoBehaviour {
     bool stepStarted = false;
 
     void Start () {
-
+        difficultyLevel = PlayerInfo.Instance.levelFinished;
+        mapGenerator.tilemapSize = new Vector2Int(miniumTilemapSize + difficultyLevel, miniumTilemapSize + difficultyLevel);
     }
 	
 	// Update is called once per frame
@@ -121,8 +126,13 @@ public class MapManager : MonoBehaviour {
                 if(!mapGenerator.isGenerating) {
                     mapController.DrawAll();
                     stepStarted = false;
-                    step = Step.FINISH;
+                    step = Step.GENERATE_NAVIGATION_GRAPH;
                 }
+                break;
+
+            case Step.GENERATE_NAVIGATION_GRAPH:
+                FindObjectOfType<NavigationAI>().GenerateNavigationGraph(mapController.tiles);
+                step = Step.FINISH;
                 break;
 
             case Step.FINISH:

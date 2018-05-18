@@ -14,7 +14,6 @@ public class Score : MonoBehaviour {
 
     public void DisplayScore() {
         PlayerInfo.Instance.AddScore(score);
-        Debug.Log(transform.gameObject.name);
         manager.CreateText(score.ToString(), transform);
     }
 }

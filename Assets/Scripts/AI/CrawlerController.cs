@@ -6,6 +6,10 @@ public class CrawlerController : MonoBehaviour {
 
     float life = 50;
 
+    [Header("Movements")]
+    float speed = 2.5f;
+    float maxSpeed = 2.5f;
+
     CircleCollider2D zoneDetection;
 
     Rigidbody2D body;
@@ -90,11 +94,15 @@ public class CrawlerController : MonoBehaviour {
                     }
                 }
 
-                Vector2 movement = path[0] - (Vector2)transform.position;
+                Vector2 direction = path[0] - (Vector2)transform.position;
 
-                movement = movement.normalized;
+                direction.Normalize();
 
-                body.velocity = movement * 2.5f;
+                body.AddForce(speed * direction);
+
+                if(body.velocity.magnitude > maxSpeed) {
+                    body.velocity = body.velocity.normalized * maxSpeed;
+                }
 
                 lastsPosition.Add(transform.position);
 
@@ -148,9 +156,9 @@ public class CrawlerController : MonoBehaviour {
 
                 Vector2 movement2 = (Vector2)target.position - (Vector2)transform.position;
 
-                movement = movement2.normalized;
+                direction = movement2.normalized;
 
-                body.velocity = movement * 2.5f;
+                body.velocity = direction * 2.5f;
                 break;
         }
 

@@ -81,6 +81,7 @@ public class NavigationAI : MonoBehaviour {
                         positionInt = new Vector2Int(x, y)
                     };
                 } else if(mapTiles[x, y].isOccuped) {
+                    Debug.Log("Est occupé");
                     graph[x, y] = new Node {
                         tileCost = mapTiles[x,y].cost,
                         neighbors = new List<Node>(),

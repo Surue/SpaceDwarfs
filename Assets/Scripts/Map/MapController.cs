@@ -112,6 +112,7 @@ public class MapTile {
     public void AddItem() {
         isOccuped = true;
         cost = Mathf.Infinity;
+        Debug.Log("Item added");
     }
 }
 
@@ -193,7 +194,15 @@ public class MapRegion {
     }
 
     public Vector2Int GetRandomPoint() {
-        return tiles[Random.Range(0, tiles.Count)].position;
+        MapTile randomTile = null;
+
+        while(randomTile == null) {
+            randomTile = tiles[Random.Range(0, tiles.Count)];
+
+            if(!HasNeighborDown(randomTile)) randomTile = null;
+        }
+
+        return randomTile.position;
     }
 
     public void Fusion(MapRegion region) {
@@ -203,4 +212,14 @@ public class MapRegion {
     }
 
     #endregion
+
+    private bool HasNeighborDown(MapTile tile) {
+        foreach(MapTile t in tiles) {
+            if(t.position.x == tile.position.x && t.position.y == tile.position.y - 1) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
