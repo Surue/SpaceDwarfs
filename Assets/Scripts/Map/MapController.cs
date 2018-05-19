@@ -40,6 +40,34 @@ public class MapController : MonoBehaviour {
         }
     }
 
+    public MapTile GetTile(Vector2Int pos) {
+        if(pos.x >= 0 && pos.x < tiles.GetLength(0) && pos.y >= 0 && pos.y < tiles.GetLength(1)) {
+            return tiles[pos.x, pos.y];
+        }
+
+        return null;
+    }
+
+    public void AttackTile(MapTile t, float damage) {
+        if(t.Attack(damage)) {
+            UpdateTile(t);
+        }
+    }
+
+    void UpdateTile(MapTile t) {
+        GetComponent<MapAutomata>().UpdateTile(tiles, t);
+        FindObjectOfType<NavigationAI>().GenerateNavigationGraph(tiles);
+
+        BoundsInt bounds = new BoundsInt(-1, -1, 0, 3, 3, 1);
+
+        foreach(Vector3Int b in bounds.allPositionsWithin) {
+            if(t.position.x + b.x >= 0 && t.position.x + b.x < tiles.GetLength(0) && t.position.y + b.y >= 0 && t.position.y + b.y < tiles.GetLength(1)) {
+                MapTile tile = tiles[t.position.x + b.x, t.position.y + b.y];
+                solidTilemap.SetTile(new Vector3Int(tile.position.x, tile.position.y, 0), tile.tile);
+            }
+        }
+    }
+
     public void DrawAll() {
         foreach(MapTile tile in tiles) {
             solidTilemap.SetTile(new Vector3Int(tile.position.x, tile.position.y, 0), tile.tile);
@@ -96,9 +124,15 @@ public class MapTile {
     public bool isSolid;
     public bool isOccuped = false;
 
+    float lifePoint;
+
     public MapTile(Vector2Int pos, bool solid) {
         position = pos;
         isSolid = solid;
+
+        if(isSolid){
+            lifePoint = 1000;
+        }
     }
 
     public MapTile(MapTile t) {
@@ -107,12 +141,31 @@ public class MapTile {
         cost = t.cost;
         tile = t.tile;
         score = t.score;
+
+        if(isSolid) {
+            lifePoint = 1000;
+        }
     }
 
     public void AddItem() {
         isOccuped = true;
         cost = Mathf.Infinity;
-        Debug.Log("Item added");
+    }
+
+    public bool Attack(float d) {
+        if(!isSolid) {
+            return false;
+        }
+
+        lifePoint -= d;
+        if(lifePoint <= 0) {
+            isSolid = false;
+            tile = null;
+
+            return true;
+        } else{
+            return false;
+        }
     }
 }
 

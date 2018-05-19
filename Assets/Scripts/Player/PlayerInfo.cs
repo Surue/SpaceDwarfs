@@ -41,6 +41,9 @@ public class PlayerInfo : MonoBehaviour {
 
     public void NewLevel() {
         monsterKilledCurrentLevel = 0;
+        scoreCurrentLevel = 0;
+
+        levelFinished++;
     }
 
     public void AddScore(int s) {
@@ -51,9 +54,5 @@ public class PlayerInfo : MonoBehaviour {
     public void MonsterKilled() {
         monsterKilledTotal++;
         monsterKilledCurrentLevel++;
-    }
-
-    public void LevelFinised() {
-        levelFinished++;
     }
 }

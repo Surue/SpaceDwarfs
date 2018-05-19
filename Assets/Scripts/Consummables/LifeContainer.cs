@@ -18,6 +18,31 @@ public class LifeContainer : MonoBehaviour {
         player = FindObjectOfType<PlayerController>();
 	}
 
+    public float TakeDamage(float d) {
+        if(life - d < 0) {
+            Destroy(this.gameObject);
+
+            player.AddLife(lifePoint);
+            Score s = GetComponent<Score>();
+
+            Instantiate(lifeUpPrefabs, player.transform.position, Quaternion.identity);
+
+            if(s != null) {
+                s.DisplayScore();
+            }
+
+            animator.SetTrigger("Breaking");
+
+            GetComponent<Collider2D>().enabled = false;
+
+            Destroy(gameObject, animator.GetCurrentAnimatorClipInfo(0).Length);
+        }
+
+        life -= d;
+
+        return 0;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision) {
         if(collision.gameObject.GetComponent<Bullet>()) {
 

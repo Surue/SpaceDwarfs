@@ -1071,6 +1071,10 @@ Prefab:
       propertyPath: m_TileMatrixArray.Array.data[0].m_Data.e31
       value: NaN
       objectReference: {fileID: 0}
+    - target: {fileID: 1915614662372476, guid: 235bea848b846c74bba1b2b1d5c947b7, type: 2}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 235bea848b846c74bba1b2b1d5c947b7, type: 2}
   m_IsPrefabParent: 0

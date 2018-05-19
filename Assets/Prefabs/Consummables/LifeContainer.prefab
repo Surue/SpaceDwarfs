@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114174081356596204}
   - component: {fileID: 61653278895870036}
   - component: {fileID: 114726110157914402}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: LifeContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1730624062721956}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35.733578, y: 41.805355, z: 0}
+  m_LocalPosition: {x: 9.692228, y: 13.684217, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

@@ -56,16 +56,14 @@ public class NavigationAI : MonoBehaviour {
         isGenerated = false;
 
         //Get width and height of tilemap
-        int width = mapTiles.GetLength(0); 
+        int width = mapTiles.GetLength(0);
         int height = mapTiles.GetLength(1);
 
         //If graph does not existe -> instanciate it
-        if(graph == null) {
-            graph = new Node[width, height];
-            for(int x = 0;x < width;x++) {
-                for(int y = 0;y < height;y++) {
-                    graph[x, y] = null;
-                }
+        graph = new Node[width, height];
+        for(int x = 0;x < width;x++) {
+            for(int y = 0;y < height;y++) {
+                graph[x, y] = null;
             }
         }
         
@@ -81,7 +79,6 @@ public class NavigationAI : MonoBehaviour {
                         positionInt = new Vector2Int(x, y)
                     };
                 } else if(mapTiles[x, y].isOccuped) {
-                    Debug.Log("Est occupé");
                     graph[x, y] = new Node {
                         tileCost = mapTiles[x,y].cost,
                         neighbors = new List<Node>(),

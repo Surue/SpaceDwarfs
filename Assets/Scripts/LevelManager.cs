@@ -21,7 +21,7 @@ public class LevelManager:MonoBehaviour {
 
     //Variables related to time before evacuation
     float timeBeforeEvacuationInSeconds = 0;
-    float minimumTimeBeforeEvacInSeconds = 60;
+    float minimumTimeBeforeEvacInSeconds = 30;
     float levelStepForTime = 5.0f;
     float timePerStepInSeconds = 30;
     [SerializeField]
@@ -106,6 +106,7 @@ public class LevelManager:MonoBehaviour {
 
             case State.EVACUATION_READY:
                 if(spaceship.state == SpaceshipController.State.TAKING_OFF) {
+                    player.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
                     player.GetComponent<PlayerController>().state = PlayerController.State.BLOCKED;
                     state = State.EVACUATE;
                 }
@@ -114,9 +115,9 @@ public class LevelManager:MonoBehaviour {
             case State.EVACUATE:
                 if(Vector2.Distance(player.transform.position, spawnPosition) < 10f) {
                     Vector3 speed = new Vector3(0, (Vector2.Distance(player.transform.position, spawnPosition)),0);
-
-                    player.transform.position += Time.deltaTime * speed;
+                    
                     spaceship.transform.position += Time.deltaTime * speed;
+                    player.transform.position = spaceship.transform.position;
                 } else {
                     GameManager.Instance.LoadNextLevel();
                 }

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14078e4bfe636bf418f16260dfd092c4, type: 3}
+  m_Name: MiningTool
+  m_EditorClassIdentifier: 
+  spriteRight: {fileID: 21300016, guid: dedcc9d25f860ff4e94088f4a0554536, type: 3}
+  spriteLeft: {fileID: 21300024, guid: dedcc9d25f860ff4e94088f4a0554536, type: 3}
+  animator: {fileID: 9100000, guid: eb8353707f140904896b63ab51204ce6, type: 2}
+  delayBetweenShots: 0
+  efficiencyAgainstMonster: 0.1
+  efficiencyAgainstTiles: 1
+  attackType: 0
+  bullet: {fileID: 0}
+  range: 0.4
+  damage: 10
+  speed: 0

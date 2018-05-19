@@ -528,6 +528,35 @@ public class MapAutomata : MonoBehaviour {
         isGenerating = false;
     }
 
+    public void UpdateTile(MapTile[,] mapTile, MapTile tileToUpdate) {
+        isGenerating = true;
+
+        BoundsInt bounds = new BoundsInt(-1, -1, 0, 3, 3, 1);
+
+        foreach(Vector3Int b in bounds.allPositionsWithin) {
+            if(tileToUpdate.position.x + b.x >= 0 && tileToUpdate.position.x + b.x < width && tileToUpdate.position.y + b.y >= 0 && tileToUpdate.position.y + b.y < height) {
+                MapTile tile = mapTile[tileToUpdate.position.x + b.x, tileToUpdate.position.y + b.y];
+                tile.tile = debugTiles[1];
+
+                foreach(SO_RuleTileFree rule in rulesForTilesFree) {
+                    if(rule.IsThisTile(tile, mapTile)) {
+                        tile.tile = rule.tile;
+                        break;
+                    }
+                }
+
+                foreach(SO_RuleTile rule in rulesForTiles) {
+                    if(rule.IsThisTile(tile, mapTile)) {
+                        tile.tile = rule.tile;
+                        break;
+                    }
+                }
+            }
+        }
+
+        isGenerating = false;
+    }
+
     List<MapRegion> GetRegionBySolidTile(MapTile[,] mapTiles) {
         List<MapRegion> regionsBySolidTile = new List<MapRegion>();
         List<Vector2Int> freeTiles = new List<Vector2Int>();

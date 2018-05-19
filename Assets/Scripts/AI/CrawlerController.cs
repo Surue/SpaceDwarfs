@@ -200,7 +200,7 @@ public class CrawlerController : MonoBehaviour {
 
     public float TakeDamage(float d) {
         if(life - d < 0) {
-            Destroy(this);
+            Destroy(this.gameObject);
             return Mathf.Abs(life-d);
         }
 

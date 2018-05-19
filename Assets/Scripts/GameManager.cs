@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void LoadNextLevel() {
+        PlayerInfo.Instance.NewLevel();
         SceneManager.LoadScene("Level");
     }
 }
