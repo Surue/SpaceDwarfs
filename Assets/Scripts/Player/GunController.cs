@@ -8,8 +8,12 @@ public class GunController : MonoBehaviour {
     SpriteRenderer hands;
 
     [SerializeField]
+    SO_Gun primaryGun;
+    [SerializeField]
+    SO_Gun miningTool;
+
     SO_Gun activeGun;
-    
+
     float delay = 0.0f;
 
     SpriteRenderer spriteRenderer;
@@ -24,6 +28,8 @@ public class GunController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        activeGun = primaryGun;
+
         animator = GetComponent<Animator>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -53,6 +59,38 @@ public class GunController : MonoBehaviour {
         if(delay > 0) {
             delay -= Time.deltaTime;
         }
+
+        //Change active weapon
+        if(Input.GetAxis("Mouse ScrollWheel") > 0f) {
+            if(activeGun != primaryGun) {
+                activeGun = primaryGun;
+
+                animator.runtimeAnimatorController = activeGun.animator;
+
+                if(lookingRight) {
+                    spriteRenderer.sprite = activeGun.spriteRight;
+                } else {
+                    spriteRenderer.sprite = activeGun.spriteLeft;
+                }
+            }
+        } else if(Input.GetAxis("Mouse ScrollWheel") < 0f){
+            if(activeGun != miningTool) {
+                activeGun = miningTool;
+
+                animator.runtimeAnimatorController = activeGun.animator;
+
+                if(lookingRight) {
+                    spriteRenderer.sprite = activeGun.spriteRight;
+
+                    animator.SetBool("lookingRight", true);
+                } else {
+                    spriteRenderer.sprite = activeGun.spriteLeft;
+
+                    animator.SetBool("lookingRight", false);
+                }
+            }
+        }
+
 
         if(Input.GetButtonDown("Fire1")) {
             animator.SetTrigger("fireing");

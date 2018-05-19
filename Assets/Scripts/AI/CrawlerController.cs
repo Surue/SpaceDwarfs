@@ -98,7 +98,7 @@ public class CrawlerController : MonoBehaviour {
 
                 direction.Normalize();
 
-                body.AddForce(speed * direction);
+                body.velocity = speed * direction;
 
                 if(body.velocity.magnitude > maxSpeed) {
                     body.velocity = body.velocity.normalized * maxSpeed;

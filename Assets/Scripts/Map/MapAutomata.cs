@@ -31,6 +31,9 @@ public class MapAutomata : MonoBehaviour {
     [Range(1, 50)]
     public int rule_maximumTileToBefusionned;
 
+    [Range(1, 20)]
+    public int rule_numberTileForClosing;
+
     private int[,] terrainMap;
 
     public Vector2Int tilemapSize;
@@ -49,9 +52,6 @@ public class MapAutomata : MonoBehaviour {
     public int maxItemPerRegion = 3;
     public List<SO_Item> items;
 
-    int width;
-    int height;
-
     public Tilemap debugTilemap;
 
     public bool isGenerating = false;
@@ -59,8 +59,8 @@ public class MapAutomata : MonoBehaviour {
     public IEnumerator GenerateMap(MapTile[,] mapTiles) {
         isGenerating = true;
 
-        width = tilemapSize.x;
-        height = tilemapSize.y;
+        int width = tilemapSize.x;
+        int height = tilemapSize.y;
 
         mapTiles = new MapTile[width, height];
 
@@ -77,18 +77,14 @@ public class MapAutomata : MonoBehaviour {
             yield return null;
         }
 
-        //foreach(MapTile t in mapTiles) {
-        //    if(t.isSolid) {
-        //        debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[0]);
-        //    }
-        //}
-
         isGenerating = false;
 
         GetComponent<MapController>().SetTiles(mapTiles);
     }
 
     MapTile[,] GenTilePos(MapTile[,] previousMap) {
+        int width = previousMap.GetLength(0);
+        int height = previousMap.GetLength(1);
         MapTile[,] newMap = new MapTile[width, height];
 
         int nbOfNeighbor;
@@ -227,6 +223,9 @@ public class MapAutomata : MonoBehaviour {
     public IEnumerator GetRegions(MapTile[,] mapTiles) {
         isGenerating = true;
 
+        int width = mapTiles.GetLength(0);
+        int height = mapTiles.GetLength(1);
+
         List<MapRegion> regions = new List<MapRegion>();
 
         //Get all region defined by solid tile
@@ -311,6 +310,10 @@ public class MapAutomata : MonoBehaviour {
 
     public IEnumerator AssociateRegions(MapTile[,] mapTile, List<MapRegion> previousRegions) {
         isGenerating = true;
+
+        int width = mapTile.GetLength(0);
+        int height = mapTile.GetLength(1);
+
         List<MapRegion> regionTooSmall = new List<MapRegion>();
         List<MapRegion> regions = new List<MapRegion>();
 
@@ -449,9 +452,9 @@ public class MapAutomata : MonoBehaviour {
         }
 
         possibleTile = possibleTile.OrderBy(x => Vector2Int.Distance(x.position, closestPoint)).ToList();
-
+        Debug.Log("possibleFirst.Count = " + possibleTile.Count);
         while(regionToFoundForNest > 0) {
-            MapTile currentTile = possibleTile.First();
+            MapTile currentTile = possibleTile[0];
             possibleTile.Remove(currentTile);
 
             if(!currentTile.isSolid) { 
@@ -473,51 +476,52 @@ public class MapAutomata : MonoBehaviour {
             GetComponent<MapController>().AddRegion(region);
         }
 
-        for(int i = 0;i < regions.Count;i++) {
-            if(regions[i].type == MapRegion.TypeRegion.PLAYER_SPAWN) {
-                foreach(MapTile t in regions[i].tiles) {
-                    debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[1]);
-                }
-            }
+        isGenerating = false;
+    }
 
-            if(regions[i].type == MapRegion.TypeRegion.NEST) {
-                foreach(MapTile t in regions[i].tiles) {
-                    debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[13]);
-                }
+    public IEnumerator CloseMap(MapTile[,] previousMapTile) {
+        foreach(MapTile tile in previousMapTile) {
+            if(tile.isSolid) {
+                tile.SetType(MapTile.TileType.SOLID);
+            } else {
+                tile.SetType(MapTile.TileType.FREE);
             }
+        }
 
-            if(regions[i].type == MapRegion.TypeRegion.NORMAL) {
-                foreach(MapTile t in regions[i].tiles) {
-                    debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[7]);
+        MapTile[,] newMap = new MapTile[previousMapTile.GetLength(0) + (2 * rule_numberTileForClosing), previousMapTile.GetLength(1) + (2 * rule_numberTileForClosing)];
+
+        for(int x = 0; x < newMap.GetLength(0);x++) {
+            for(int y = 0;y < newMap.GetLength(1);y++) {
+                if(x >= 0 + rule_numberTileForClosing && x < newMap.GetLength(0) - rule_numberTileForClosing && y >= 0 + rule_numberTileForClosing && y < newMap.GetLength(1) - rule_numberTileForClosing) { //in the old map
+                    MapTile t = previousMapTile[x - rule_numberTileForClosing, y - rule_numberTileForClosing];
+                    t.position = new Vector2Int(x, y);
+                    if(t.isSolid) {
+                        t.SetType(MapTile.TileType.SOLID);
+                    } else {
+                        t.SetType(MapTile.TileType.FREE);
+                    }
+
+                    newMap[x, y] = t;
+                } else {
+                    MapTile t = new MapTile(new Vector2Int(x, y), true);
+                    t.SetType(MapTile.TileType.INVULNERABLE);
+                    newMap[x, y] = t;
                 }
             }
         }
 
-        isGenerating = false;
+        GetComponent<MapController>().SetTiles(newMap);
+
+        yield return null;
     }
 
     public IEnumerator AssociateTiles(MapTile[,] mapTile) {
         isGenerating = true;
         foreach(MapTile tile in mapTile) {
-            tile.tile = debugTiles[0];
-
-            foreach(SO_RuleTileFree rule in rulesForTilesFree) {
-                if(rule.IsThisTile(tile, mapTile)) {
-                    tile.tile = rule.tile;
-                    break;
-                }
-            }
-
-            //foreach(SO_RuleTileSolid rule in rulesForTilesSolid) {
-            //    if(rule.IsThisTile(tile, mapTile)) {
-            //        tile.tile = rule.tile;
-            //        break;
-            //    }
-            //}
-
             foreach(SO_RuleTile rule in rulesForTiles) {
                 if(rule.IsThisTile(tile, mapTile)) {
                     tile.tile = rule.tile;
+                    tile.groundTile = rule.groundTile;
                     break;
                 }
             }
@@ -531,6 +535,9 @@ public class MapAutomata : MonoBehaviour {
     public void UpdateTile(MapTile[,] mapTile, MapTile tileToUpdate) {
         isGenerating = true;
 
+        int width = mapTile.GetLength(0);
+        int height = mapTile.GetLength(1);
+
         BoundsInt bounds = new BoundsInt(-1, -1, 0, 3, 3, 1);
 
         foreach(Vector3Int b in bounds.allPositionsWithin) {
@@ -540,7 +547,7 @@ public class MapAutomata : MonoBehaviour {
 
                 foreach(SO_RuleTileFree rule in rulesForTilesFree) {
                     if(rule.IsThisTile(tile, mapTile)) {
-                        tile.tile = rule.tile;
+                        tile.groundTile = rule.tile;
                         break;
                     }
                 }
@@ -558,6 +565,10 @@ public class MapAutomata : MonoBehaviour {
     }
 
     List<MapRegion> GetRegionBySolidTile(MapTile[,] mapTiles) {
+
+        int width = mapTiles.GetLength(0);
+        int height = mapTiles.GetLength(1);
+
         List<MapRegion> regionsBySolidTile = new List<MapRegion>();
         List<Vector2Int> freeTiles = new List<Vector2Int>();
 
@@ -600,6 +611,13 @@ public class MapAutomata : MonoBehaviour {
 
             regionsBySolidTile.Add(new MapRegion(tilesForRegion));
         }
+
+        //foreach(MapRegion region in regionsBySolidTile) {
+        //    Tile d = debugTiles[Random.Range(0, debugTiles.Count)];
+        //    foreach(MapTile t in region.tiles) {
+        //        debugTilemap.SetTile(new Vector3Int(t.position.x, t.position.y, 0), debugTiles[0]);
+        //    }
+        //}
 
         return regionsBySolidTile;
     }

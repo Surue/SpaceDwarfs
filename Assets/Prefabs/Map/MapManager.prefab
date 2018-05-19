@@ -60,6 +60,7 @@ MonoBehaviour:
   rule_maximumTileForClosedRegion: 20
   rule_minimumTileForRegion: 75
   rule_maximumTileToBefusionned: 10
+  rule_numberTileForClosing: 5
   tilemapSize: {x: 50, y: 50}
   topTile: {fileID: 11400000, guid: ba5bd530200a5a44696b0b415753edad, type: 2}
   botTile: {fileID: 11400000, guid: cd7c6aeaf1ab8a0489a0d79bd58e0529, type: 2}
@@ -98,6 +99,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8fb83dcc148941f4fb880690557b2a35, type: 2}
   rulesForTiles:
   - {fileID: 11400000, guid: 284e0d54bd07f604ea59026acefd82a4, type: 2}
+  - {fileID: 11400000, guid: 2c337aaa7a1e82244a409b8b463940b0, type: 2}
+  - {fileID: 11400000, guid: cc3041e7a49b9384b93c15367bbd0b0a, type: 2}
+  - {fileID: 11400000, guid: 63146b6745e6bab4fbdb930cd8c1d78c, type: 2}
   maxItemPerRegion: 3
   items:
   - {fileID: 11400000, guid: 9cfb537ae410fd94484fb3e556e58e2d, type: 2}
@@ -131,3 +135,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   solidTilemap: {fileID: 0}
+  groundTilemap: {fileID: 0}

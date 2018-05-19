@@ -27,6 +27,7 @@ public class MapManager : MonoBehaviour {
         DIGGING_TUNNEL,
         REGION_GENERATION,
         REGION_ASSOCIATION,
+        CLOSE_MAP,
         ADD_ORE,
         ADD_ITEMS,
         ASSOCIATE_TILES,
@@ -72,6 +73,18 @@ public class MapManager : MonoBehaviour {
                 if(!stepStarted) {
                     stepStarted = true;
                     StartCoroutine(mapGenerator.DigBetweenRegions(mapController.tiles));
+                }
+
+                if(!mapGenerator.isGenerating) {
+                    stepStarted = false;
+                    step = Step.CLOSE_MAP;
+                }
+                break;
+
+            case Step.CLOSE_MAP:
+                if(!stepStarted) {
+                    stepStarted = true;
+                    StartCoroutine(mapGenerator.CloseMap(mapController.tiles));
                 }
 
                 if(!mapGenerator.isGenerating) {

@@ -71,6 +71,7 @@ public class NavigationAI : MonoBehaviour {
         for(int x = 0; x < width; x++) {
             for(int y = 0; y < height; y++) {
 
+
                 if(!mapTiles[x,y].isSolid && !mapTiles[x,y].isOccuped) {
                     graph[x, y] = new Node {
                         tileCost = mapTiles[x, y].cost,

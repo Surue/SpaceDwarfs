@@ -134,7 +134,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1382962530495482}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.011236, y: -8.835454, z: 0}
+  m_LocalPosition: {x: 10.856667, y: 13.787524, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4572787743077008}
@@ -316,7 +316,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hands: {fileID: 212713133722925448}
-  activeGun: {fileID: 11400000, guid: fd13863bf3e6c4541aa494e8be42c9b8, type: 2}
+  primaryGun: {fileID: 11400000, guid: 185eeba085ef30646a1f5f5c5f2d6166, type: 2}
+  miningTool: {fileID: 11400000, guid: fd13863bf3e6c4541aa494e8be42c9b8, type: 2}
 --- !u!114 &114681024220186678
 MonoBehaviour:
   m_ObjectHideFlags: 1

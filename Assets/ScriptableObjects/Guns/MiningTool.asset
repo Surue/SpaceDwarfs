@@ -15,7 +15,7 @@ MonoBehaviour:
   spriteLeft: {fileID: 21300024, guid: dedcc9d25f860ff4e94088f4a0554536, type: 3}
   animator: {fileID: 9100000, guid: eb8353707f140904896b63ab51204ce6, type: 2}
   delayBetweenShots: 0
-  efficiencyAgainstMonster: 0.1
+  efficiencyAgainstMonster: 0.01
   efficiencyAgainstTiles: 1
   attackType: 0
   bullet: {fileID: 0}

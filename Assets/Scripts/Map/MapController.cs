@@ -15,9 +15,11 @@ public class MapController : MonoBehaviour {
 
     [SerializeField]
     Tilemap solidTilemap;
+    [SerializeField]
+    Tilemap groundTilemap;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         regions = new List<MapRegion>();
 
         player = FindObjectOfType<PlayerController>();
@@ -35,7 +37,7 @@ public class MapController : MonoBehaviour {
 
         for(int x = 0; x < width;x++) {
             for(int y = 0; y < height; y++) {
-                tiles[x, y] = new MapTile(mapTiles[x, y]);
+                tiles[x, y] = mapTiles[x, y];
             }
         }
     }
@@ -64,6 +66,7 @@ public class MapController : MonoBehaviour {
             if(t.position.x + b.x >= 0 && t.position.x + b.x < tiles.GetLength(0) && t.position.y + b.y >= 0 && t.position.y + b.y < tiles.GetLength(1)) {
                 MapTile tile = tiles[t.position.x + b.x, t.position.y + b.y];
                 solidTilemap.SetTile(new Vector3Int(tile.position.x, tile.position.y, 0), tile.tile);
+                groundTilemap.SetTile(new Vector3Int(tile.position.x, tile.position.y, 0), tile.groundTile);
             }
         }
     }
@@ -71,6 +74,7 @@ public class MapController : MonoBehaviour {
     public void DrawAll() {
         foreach(MapTile tile in tiles) {
             solidTilemap.SetTile(new Vector3Int(tile.position.x, tile.position.y, 0), tile.tile);
+            groundTilemap.SetTile(new Vector3Int(tile.position.x, tile.position.y, 0), tile.groundTile);
         }
     }
 
@@ -113,15 +117,28 @@ public class MapController : MonoBehaviour {
 
 //Represents a tile of a map, does not take in count the layer of tilemap
 public class MapTile {
+
+    [System.Serializable]
+    public enum TileType {
+        FREE,
+        SOLID,
+        INVULNERABLE,
+        ANY //Used to draw them
+    }
+
+    public TileType type;
+
     public Vector2Int position;
 
     public float cost = 1;
 
     public Tile tile;
+    public Tile groundTile;
 
     int score;
 
     public bool isSolid;
+    public bool isInvulnerable;
     public bool isOccuped = false;
 
     float lifePoint;
@@ -141,9 +158,32 @@ public class MapTile {
         cost = t.cost;
         tile = t.tile;
         score = t.score;
+        type = t.type;
 
         if(isSolid) {
             lifePoint = 1000;
+        }
+    }
+
+    public void SetType(TileType t) {
+        type = t;
+
+        switch(type) {
+            case TileType.FREE:
+                isInvulnerable = false;
+                isSolid = false;
+                break;
+
+            case TileType.SOLID:
+                isInvulnerable = false;
+                isSolid = true;
+                break;
+
+            case TileType.INVULNERABLE:
+                isInvulnerable = true;
+                isSolid = true;
+                cost = Mathf.Infinity;
+                break;
         }
     }
 
