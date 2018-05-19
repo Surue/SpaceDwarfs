@@ -133,10 +133,6 @@ public class LevelEditor:Editor {
         }
 
         previousSize = firstDimensionSize;
-
-        //for(int i = 0;i < firstDimensionSize;i++) {
-        //    levels.rules.Add(new SO_RuleTile.Rule(9));
-        //}
     }
 
     void CreateNewArray(SO_RuleTile levels) {
@@ -162,11 +158,13 @@ public class LevelEditor:Editor {
     }
 
     public override void OnInspectorGUI() {
-
+        serializedObject.Update();
 
         SO_RuleTile levels = (SO_RuleTile)target;
 
         if(CanCreateNewArray()) CreateNewArray(levels);
+
+        EditorGUI.BeginChangeCheck();
 
         levels.tile = EditorGUILayout.ObjectField("Tile associated : ", levels.tile, typeof(Object), false) as Tile;
 
@@ -182,9 +180,10 @@ public class LevelEditor:Editor {
         EditorGUILayout.LabelField("Number of rules");
 
         SetUpArray(levels);
+      
 
-        serializedObject.Update();
-        
+        if(EditorGUI.EndChangeCheck())
+            serializedObject.ApplyModifiedProperties();
     }
 }
 

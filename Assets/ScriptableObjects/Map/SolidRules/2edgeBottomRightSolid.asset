@@ -8,8 +8,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4aed6a4359c854e459337bcb57e289f4, type: 3}
-  m_Name: dirt
+  m_Script: {fileID: 11500000, guid: 9a4824d4cbe48624c91098eb3ecff358, type: 3}
+  m_Name: 2edgeBottomRightSolid
   m_EditorClassIdentifier: 
-  tile: {fileID: 11400000, guid: cd7c6aeaf1ab8a0489a0d79bd58e0529, type: 2}
-  rules: 000000000000000000
+  tile: {fileID: 0}
+  groundTile: {fileID: 0}
+  tileType: 0
+  rules: []
