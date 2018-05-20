@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEditor;
 
 using System.Linq;
 
@@ -34,23 +33,28 @@ public class MapAutomata : MonoBehaviour {
     [Range(1, 20)]
     public int rule_numberTileForClosing;
 
-    private int[,] terrainMap;
+    [Header("Ore generation")]
+    [Range(1,10)]
+    public int rule_maxOrePerVein;
 
-    public Vector2Int tilemapSize;
+    [Range(1, 20)]
+    public int rule_chunkSize;
 
-    public Tile topTile;
-    public Tile botTile;
-    public List<Tile> debugTiles;
+    [Range(1,10)]
+    public int rule_veinPerChunk;
+
+    public List<SO_Ore> ores;
 
     [Header("Rule for tiles")]
-
-    public List<SO_RuleTileSolid> rulesForTilesSolid;
-    public List<SO_RuleTileFree> rulesForTilesFree;
     public List<SO_RuleTile> rulesForTiles;
 
     [Header("Spawnable item & rules")]
     public int maxItemPerRegion = 3;
     public List<SO_Item> items;
+
+    public Vector2Int tilemapSize;
+
+    public List<Tile> debugTiles;
 
     public Tilemap debugTilemap;
 
@@ -441,7 +445,7 @@ public class MapAutomata : MonoBehaviour {
                 break;
         }
 
-        int regionToFoundForNest = 3; // TO CHANGE
+        int regionToFoundForNest = 1; // TO CHANGE
 
         possibleTile = new List<MapTile>();
 
@@ -454,6 +458,7 @@ public class MapAutomata : MonoBehaviour {
         possibleTile = possibleTile.OrderBy(x => Vector2Int.Distance(x.position, closestPoint)).ToList();
         Debug.Log("possibleFirst.Count = " + possibleTile.Count);
         while(regionToFoundForNest > 0) {
+            Debug.Log("nb regions" + regions.Count);
             MapTile currentTile = possibleTile[0];
             possibleTile.Remove(currentTile);
 
@@ -544,13 +549,6 @@ public class MapAutomata : MonoBehaviour {
             if(tileToUpdate.position.x + b.x >= 0 && tileToUpdate.position.x + b.x < width && tileToUpdate.position.y + b.y >= 0 && tileToUpdate.position.y + b.y < height) {
                 MapTile tile = mapTile[tileToUpdate.position.x + b.x, tileToUpdate.position.y + b.y];
                 tile.tile = debugTiles[1];
-
-                foreach(SO_RuleTileFree rule in rulesForTilesFree) {
-                    if(rule.IsThisTile(tile, mapTile)) {
-                        tile.groundTile = rule.tile;
-                        break;
-                    }
-                }
 
                 foreach(SO_RuleTile rule in rulesForTiles) {
                     if(rule.IsThisTile(tile, mapTile)) {
@@ -655,5 +653,107 @@ public class MapAutomata : MonoBehaviour {
 
         isGenerating = false;
         yield return null;
+    }
+
+    public IEnumerator AddOre(MapTile[,] map) {
+        isGenerating = true;
+
+        int width = map.GetLength(0);
+        int height = map.GetLength(1);
+
+        BoundsInt bounds = new BoundsInt(-1, -1, 0, 3, 3, 1);
+
+        int nbChunk = map.GetLength(0) / rule_chunkSize;
+
+        for(int i = 0; i < nbChunk;i++) {
+            for(int j = 0; j < nbChunk;j++) {
+                #region Get solid tiles in chunk
+                List<MapTile> solidTiles = new List<MapTile>();
+
+                for(int x = 0; x < rule_chunkSize;x++) {
+                    for(int y = 0; y < rule_chunkSize;y++) {
+                        Vector2Int pos = new Vector2Int(x + i*rule_chunkSize, y + j*rule_chunkSize);
+                        if(pos.x >= 0 && pos.x < width && pos.y >= 0 && pos.y < height) {
+                            MapTile t = map[x + i * rule_chunkSize, y + j * rule_chunkSize];
+                            if(t.type == MapTile.TileType.SOLID) {
+                                solidTiles.Add(t);
+                            }
+                        }
+                    }
+                }
+
+                #endregion
+
+                #region Create vein
+
+                int nbVein = Random.Range(1, rule_veinPerChunk);
+
+                while(nbVein > 0) {
+
+                    MapTile currentTile = solidTiles[Random.Range(0, solidTiles.Count)];
+
+                    solidTiles.Remove(currentTile);
+
+                    if(!currentTile.isOccuped) {
+                        SO_Ore selectedOre = GetRandomOre();
+                        int veinSize = Random.Range(0, rule_maxOrePerVein + 1);
+
+                        List<MapTile> possibleTile = new List<MapTile>();
+
+                        possibleTile.Add(currentTile);
+
+                        while(possibleTile.Count > 0 && veinSize > 0) {
+
+                            MapTile t = possibleTile[Random.Range(0, possibleTile.Count)];
+
+                            foreach(Vector3Int b in bounds.allPositionsWithin) {
+                                if(t.position.x + b.x >= 0 && t.position.x + b.x < width && t.position.y + b.y >= 0 && t.position.y + b.y < height) {
+                                    if(solidTiles.Contains(map[t.position.x + b.x, t.position.y + b.y])) {
+                                        if(!map[t.position.x + b.x, t.position.y + b.y].isOccuped) {
+                                            possibleTile.Add(map[t.position.x + b.x, t.position.y + b.y]);
+                                        }
+                                    }
+                                }
+                            }
+
+                            possibleTile.Remove(t);
+                            t.AddOre(selectedOre);
+                            veinSize--;
+                        }
+                        nbVein--;
+                    }
+
+                }
+
+                #endregion
+
+            }
+        }
+
+        isGenerating = false;
+        yield return null;
+    }
+
+    SO_Ore GetRandomOre() {
+        int maxRate = 0;
+
+        foreach(SO_Ore ore in ores) {
+            maxRate += ore.apparitionRate;
+        }
+
+        int rate = Random.Range(0, maxRate + 1);
+
+        int value = 0;
+        int index = 0;
+
+        while(true) {
+            value += ores[index].apparitionRate;
+
+            if(rate < value) {
+                return ores[index];
+            }
+
+            index++;
+        }
     }
 }

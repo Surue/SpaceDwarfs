@@ -61,9 +61,30 @@ MonoBehaviour:
   rule_minimumTileForRegion: 75
   rule_maximumTileToBefusionned: 10
   rule_numberTileForClosing: 5
+  rule_maxOrePerVein: 6
+  rule_chunkSize: 20
+  rule_veinPerChunk: 3
+  ores:
+  - {fileID: 11400000, guid: 7e9409790b7a5d84687b22eaec8d1dc1, type: 2}
+  - {fileID: 11400000, guid: 6c36cbd16eca0514da030fa83f2e38f5, type: 2}
+  - {fileID: 11400000, guid: 8adfd7e067c23a74dbb71ac3d494c1ff, type: 2}
+  - {fileID: 11400000, guid: 0dd14d10ffabff24fafa91783dd955cc, type: 2}
+  rulesForTiles:
+  - {fileID: 11400000, guid: b6fff8e6ff6d5494189c3169f5d511ba, type: 2}
+  - {fileID: 11400000, guid: 083e250b920c0fe45bcd31148ce5a3df, type: 2}
+  - {fileID: 11400000, guid: e0eb5173ef162f842b3beb76af49248d, type: 2}
+  - {fileID: 11400000, guid: d18de06ca51ae124e8861c698e19ff18, type: 2}
+  - {fileID: 11400000, guid: 31f6265a1ae52c3489f0ae3f2cef6980, type: 2}
+  - {fileID: 11400000, guid: 7117aa9b4bf94dd489f3d68adbda35fa, type: 2}
+  - {fileID: 11400000, guid: 2c337aaa7a1e82244a409b8b463940b0, type: 2}
+  - {fileID: 11400000, guid: 7faa1b0de6e1af14c82bb51e5e8be865, type: 2}
+  - {fileID: 11400000, guid: ed625148c1ace2242a27e0f3a7ea5a4f, type: 2}
+  - {fileID: 11400000, guid: 8ce4775c431fa4c499d678b131b3fcfa, type: 2}
+  - {fileID: 11400000, guid: d996346652ef7e141b9a1daf5a906f0c, type: 2}
+  maxItemPerRegion: 3
+  items:
+  - {fileID: 11400000, guid: 9cfb537ae410fd94484fb3e556e58e2d, type: 2}
   tilemapSize: {x: 50, y: 50}
-  topTile: {fileID: 11400000, guid: ba5bd530200a5a44696b0b415753edad, type: 2}
-  botTile: {fileID: 11400000, guid: cd7c6aeaf1ab8a0489a0d79bd58e0529, type: 2}
   debugTiles:
   - {fileID: 11400000, guid: 9df36baa68088284587247d5a34c3f90, type: 2}
   - {fileID: 11400000, guid: b90cd5303f93c2546bda5006f72e0a3b, type: 2}
@@ -81,37 +102,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fb7495a16af31a847900217674b40edb, type: 2}
   - {fileID: 11400000, guid: 4c27376f278010d4d8dac4e6be668627, type: 2}
   - {fileID: 11400000, guid: 518817c5fcadb6842afb30be105a4a17, type: 2}
-  rulesForTilesSolid:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  rulesForTilesFree:
-  - {fileID: 0}
-  rulesForTiles:
-  - {fileID: 11400000, guid: b6fff8e6ff6d5494189c3169f5d511ba, type: 2}
-  - {fileID: 11400000, guid: 083e250b920c0fe45bcd31148ce5a3df, type: 2}
-  - {fileID: 11400000, guid: e0eb5173ef162f842b3beb76af49248d, type: 2}
-  - {fileID: 11400000, guid: d18de06ca51ae124e8861c698e19ff18, type: 2}
-  - {fileID: 11400000, guid: 31f6265a1ae52c3489f0ae3f2cef6980, type: 2}
-  - {fileID: 11400000, guid: 7117aa9b4bf94dd489f3d68adbda35fa, type: 2}
-  - {fileID: 11400000, guid: 2c337aaa7a1e82244a409b8b463940b0, type: 2}
-  - {fileID: 11400000, guid: 7faa1b0de6e1af14c82bb51e5e8be865, type: 2}
-  - {fileID: 11400000, guid: ed625148c1ace2242a27e0f3a7ea5a4f, type: 2}
-  - {fileID: 11400000, guid: 8ce4775c431fa4c499d678b131b3fcfa, type: 2}
-  - {fileID: 11400000, guid: d996346652ef7e141b9a1daf5a906f0c, type: 2}
-  maxItemPerRegion: 3
-  items:
-  - {fileID: 11400000, guid: 9cfb537ae410fd94484fb3e556e58e2d, type: 2}
   debugTilemap: {fileID: 0}
   isGenerating: 0
 --- !u!114 &114622845642960226
@@ -143,3 +133,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   solidTilemap: {fileID: 0}
   groundTilemap: {fileID: 0}
+  decalTilemap: {fileID: 0}

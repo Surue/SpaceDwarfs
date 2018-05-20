@@ -17,6 +17,8 @@ public class MapController : MonoBehaviour {
     Tilemap solidTilemap;
     [SerializeField]
     Tilemap groundTilemap;
+    [SerializeField]
+    Tilemap decalTilemap;
 
     // Use this for initialization
     void Start () {
@@ -52,6 +54,11 @@ public class MapController : MonoBehaviour {
 
     public void AttackTile(MapTile t, float damage) {
         if(t.Attack(damage)) {
+            if(GetComponent<Score>()) {
+                Vector3 location = new Vector3(t.position.x, t.position.y, 0);
+
+                FindObjectOfType<ScoreManager>().DisplayScore(t.score, location + new Vector3(0.5f, 0.5f, 0));
+            }
             UpdateTile(t);
         }
     }
@@ -65,17 +72,23 @@ public class MapController : MonoBehaviour {
         foreach(Vector3Int b in bounds.allPositionsWithin) {
             if(t.position.x + b.x >= 0 && t.position.x + b.x < tiles.GetLength(0) && t.position.y + b.y >= 0 && t.position.y + b.y < tiles.GetLength(1)) {
                 MapTile tile = tiles[t.position.x + b.x, t.position.y + b.y];
-                solidTilemap.SetTile(new Vector3Int(tile.position.x, tile.position.y, 0), tile.tile);
-                groundTilemap.SetTile(new Vector3Int(tile.position.x, tile.position.y, 0), tile.groundTile);
+                Vector3Int pos = new Vector3Int(tile.position.x, tile.position.y, 0);
+                solidTilemap.SetTile(pos, tile.tile);
+                groundTilemap.SetTile(pos, tile.groundTile);
+                decalTilemap.SetTile(pos, tile.decalTile);
             }
         }
     }
 
     public void DrawAll() {
         foreach(MapTile tile in tiles) {
-            solidTilemap.SetTile(new Vector3Int(tile.position.x, tile.position.y, 0), tile.tile);
-            groundTilemap.SetTile(new Vector3Int(tile.position.x, tile.position.y, 0), tile.groundTile);
+            Vector3Int pos = new Vector3Int(tile.position.x, tile.position.y, 0);
+            solidTilemap.SetTile(pos, tile.tile);
+            groundTilemap.SetTile(pos, tile.groundTile);
+            decalTilemap.SetTile(pos, tile.decalTile);
         }
+
+        solidTilemap.GetComponent<CompositeCollider2D>().GenerateGeometry();
     }
 
     public void ClearRegions() {
@@ -134,8 +147,9 @@ public class MapTile {
 
     public Tile tile;
     public Tile groundTile;
+    public Tile decalTile;
 
-    int score;
+    public int score = 5;
 
     public bool isSolid;
     public bool isInvulnerable;
@@ -187,6 +201,13 @@ public class MapTile {
         }
     }
 
+    public void AddOre(SO_Ore ore) {
+        decalTile = ore.oreTile;
+        score = ore.oreScore;
+
+        isOccuped = true;
+    }
+
     public void AddItem() {
         isOccuped = true;
         cost = Mathf.Infinity;
@@ -199,7 +220,10 @@ public class MapTile {
 
         lifePoint -= d;
         if(lifePoint <= 0) {
-            isSolid = false;
+            SetType(TileType.FREE);
+
+            decalTile = null;
+
             tile = null;
 
             return true;

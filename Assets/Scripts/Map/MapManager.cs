@@ -126,6 +126,19 @@ public class MapManager : MonoBehaviour {
                 if(!mapGenerator.isGenerating) {
                     mapController.DrawAll();
                     stepStarted = false;
+                    step = Step.ADD_ORE;
+                }
+                break;
+
+            case Step.ADD_ORE:
+                if(!stepStarted) {
+                    stepStarted = true;
+                    StartCoroutine(mapGenerator.AddOre(mapController.tiles));
+                }
+
+                if(!mapGenerator.isGenerating) {
+                    mapController.DrawAll();
+                    stepStarted = false;
                     step = Step.ADD_ITEMS;
                 }
                 break;

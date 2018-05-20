@@ -18,4 +18,8 @@ public class ScorePopup : MonoBehaviour {
 	public void SetText(string t) {
         scoreText.text = t;
     }
+
+    public void SetSize(int size) {
+        scoreText.fontSize = size;
+    }
 }

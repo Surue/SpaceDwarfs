@@ -16,9 +16,6 @@ public class LevelManager:MonoBehaviour {
     public GameObject playerPrefab;
     public GameObject spaceshipPrefab;
 
-    //Variables for landing
-    float timeLanding = 5.0f;
-
     //Variables related to time before evacuation
     float timeBeforeEvacuationInSeconds = 0;
     float minimumTimeBeforeEvacInSeconds = 30;

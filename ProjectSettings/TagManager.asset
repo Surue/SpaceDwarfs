@@ -47,6 +47,9 @@ TagManager:
   - name: TilemapSolid
     uniqueID: 3206879761
     locked: 0
+  - name: TilemapDecals
+    uniqueID: 996452591
+    locked: 0
   - name: Monster
     uniqueID: 1808756615
     locked: 0

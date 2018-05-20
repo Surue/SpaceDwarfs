@@ -11,7 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a4824d4cbe48624c91098eb3ecff358, type: 3}
   m_Name: 0egde
   m_EditorClassIdentifier: 
-  tile: {fileID: 0}
-  groundTile: {fileID: 0}
-  tileType: 0
-  rules: []
+  tile: {fileID: 11400000, guid: b4e23443c2a3a884e85fb44db4e4abeb, type: 2}
+  groundTile: {fileID: 11400000, guid: fa254bc9307764043b16f9fd3c88716d, type: 2}
+  tileType: 2
+  rules:
+  - array: 020000000200000002000000020000000200000002000000020000000200000002000000
