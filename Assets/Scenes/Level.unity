@@ -596,6 +596,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114879908977606144, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864,
+        type: 2}
+      propertyPath: debugTiles.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4196192251138606, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864, type: 2}
       propertyPath: m_LocalPosition.x
       value: -2.2851863
@@ -628,6 +633,23 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114879908977606144, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864,
+        type: 2}
+      propertyPath: debugTilemap
+      value: 
+      objectReference: {fileID: 59912087}
+    - target: {fileID: 114879908977606144, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864,
+        type: 2}
+      propertyPath: debugTiles.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: b90cd5303f93c2546bda5006f72e0a3b,
+        type: 2}
+    - target: {fileID: 114879908977606144, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864,
+        type: 2}
+      propertyPath: debugTiles.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: fb7495a16af31a847900217674b40edb,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0f1b5c58b22d98d43b7e2ca18bdb5864, type: 2}
   m_IsPrefabParent: 0
