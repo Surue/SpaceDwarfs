@@ -82,6 +82,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ed625148c1ace2242a27e0f3a7ea5a4f, type: 2}
   - {fileID: 11400000, guid: 8ce4775c431fa4c499d678b131b3fcfa, type: 2}
   - {fileID: 11400000, guid: d996346652ef7e141b9a1daf5a906f0c, type: 2}
+  - {fileID: 11400000, guid: 8d6bb5e90e940854eb3bdd072b461a3d, type: 2}
+  - {fileID: 11400000, guid: a7c06c6d4f14a324793729f24a6cb9f6, type: 2}
+  - {fileID: 11400000, guid: 0ce2346d254415c489bc2720451d93e2, type: 2}
+  - {fileID: 11400000, guid: 620cd60ff3a771744a338f1b879ccaec, type: 2}
   maxItemPerRegion: 3
   items:
   - {fileID: 11400000, guid: 9cfb537ae410fd94484fb3e556e58e2d, type: 2}

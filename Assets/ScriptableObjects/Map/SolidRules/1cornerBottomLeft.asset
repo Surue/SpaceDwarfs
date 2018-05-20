@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a4824d4cbe48624c91098eb3ecff358, type: 3}
+  m_Name: 1cornerBottomLeft
+  m_EditorClassIdentifier: 
+  tile: {fileID: 11400000, guid: 7fa66efce1679ef45ac98eef98680057, type: 2}
+  groundTile: {fileID: 11400000, guid: 40091f66f5e38ab42ab9a68da0b0c233, type: 2}
+  tileType: 1
+  rules:
+  - array: 000000000100000001000000010000000100000001000000010000000100000001000000
+  - array: 000000000100000001000000010000000100000001000000020000000200000002000000
+  - array: 000000000100000002000000010000000100000002000000010000000100000002000000

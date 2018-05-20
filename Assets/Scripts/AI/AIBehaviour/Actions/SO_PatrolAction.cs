@@ -15,7 +15,6 @@ public class SO_PatrolAction : SO_Action {
             controller.wayPointList = FindObjectOfType<MapController>().GetPatrolsPointForRegion(controller.transform);
             if(controller.wayPointList.Count != 0) {
                 controller.path = controller.aStart.GetPathFromTo(controller.transform.position, controller.wayPointList[controller.nextWayPoint]);
-                //controller.path.Add(controller.wayPointList[controller.nextWayPoint] + new Vector2(0.5f, 0.5f));
             }
         } else {
 

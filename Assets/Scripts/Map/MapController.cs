@@ -142,17 +142,10 @@ public class MapController : MonoBehaviour {
     Vector2Int Transform2TilePos(Transform pos) {
         int x = 0;
         int y = 0;
-        if(pos.position.x % 1 != 0.5f) {
-            x = Mathf.RoundToInt(pos.position.x);
-        } else {
-            x = Mathf.FloorToInt(pos.position.x);
-        }
 
-        if(pos.position.y % 1 != 0.5f) {
-            y = Mathf.RoundToInt(pos.position.y);
-        } else {
-            y = Mathf.FloorToInt(pos.position.y);
-        }
+        x = Mathf.FloorToInt(pos.position.x);
+        y = Mathf.FloorToInt(pos.position.y);
+
         return new Vector2Int(x, y);
     }
 
@@ -161,7 +154,6 @@ public class MapController : MonoBehaviour {
         int y = 0;
 
         x = Mathf.FloorToInt(pos.x);
-
         y = Mathf.FloorToInt(pos.y);
 
         return new Vector2Int(x, y);

@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Name: Crawler
   m_EditorClassIdentifier: 
   speed: 2.5
-  stopingDistance: 0.5
+  stopingDistance: 0.1
   lookRange: 40
   lookShpereCastRadius: 5
   attackRange: 1.2
   attackRate: 1.2
   attackPoint: 5
   searchDuration: 4
+  minDifficulty: 0
