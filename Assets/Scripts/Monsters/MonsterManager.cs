@@ -6,7 +6,7 @@ public class MonsterManager : MonoBehaviour {
 
     [Header("Monsters prefabs")]
     [SerializeField]
-    GameObject crawlerPrefab;
+    List<GameObject> monstersPrefab;
 
     GameObject player;
 
@@ -49,7 +49,7 @@ public class MonsterManager : MonoBehaviour {
 
         difficultyLevel = Mathf.FloorToInt(levelFinised / 2.0f) + 1;
 
-        minMonsterForSearching = difficultyLevel + 4; minMonsterForSearching = 1;
+        minMonsterForSearching = difficultyLevel + 4;
 
         mapController = FindObjectOfType<MapController>();
     }
@@ -77,7 +77,7 @@ public class MonsterManager : MonoBehaviour {
                 }
 
                 if(activeMonstersList.Count < minMonsterForSearching) {
-                    activeMonstersList.Add(Instantiate(crawlerPrefab, mapController.GetMonsterSpawnPosition(), Quaternion.identity)); //TO CHANGE
+                    SpawnMonster();
                 }
                 break;
 
@@ -88,4 +88,16 @@ public class MonsterManager : MonoBehaviour {
                 break;
         }
 	}
+
+    void SpawnMonster() {
+        while(true) {
+            GameObject monster = monstersPrefab[Random.Range(0, monstersPrefab.Count)];
+
+            if(monster.GetComponent<MonsterController>().stats.minDifficulty <= difficultyLevel) {
+                GameObject instace = Instantiate(monster, mapController.GetMonsterSpawnPosition(), Quaternion.identity);
+                activeMonstersList.Add(instace);
+                return;
+            }
+        }
+    }
 }

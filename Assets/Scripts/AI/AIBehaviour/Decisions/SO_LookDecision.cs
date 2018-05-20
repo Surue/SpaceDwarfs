@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu (menuName ="AI Behaviour/Decisions/Look")]
+[System.Serializable]
 public class SO_LookDecision : SO_Decision {
 
-    public override bool Decide(StateController controller) {
+    public override bool Decide(MonsterController controller) {
         bool targetVisible = Look(controller);
         return targetVisible;
     }
 
-    bool Look(StateController controller) {
+    bool Look(MonsterController controller) {
         Collider2D[] colliders;
 
         colliders = Physics2D.OverlapCircleAll(controller.transform.position, controller.stats.lookShpereCastRadius);

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateController : MonoBehaviour {
+public class MonsterController : MonoBehaviour {
 
     public SO_MonsterStats stats;
 
@@ -11,6 +11,15 @@ public class StateController : MonoBehaviour {
     public SO_State currentState;
 
     public SO_State defaultState;
+
+    Animator animator;
+
+    bool lookingRight = true;
+
+    [SerializeField]
+    GameObject bloodSplasherPrefab;
+    [SerializeField]
+    float life = 50;
 
     [HideInInspector]
     public NavigationAI graph;
@@ -44,12 +53,28 @@ public class StateController : MonoBehaviour {
         body = GetComponent<Rigidbody2D>();
 
         player = FindObjectOfType<PlayerController>();
+
+        animator = GetComponentInChildren<Animator>();
     }
 
     void Update() {
         if(!aiActive) return;
 
         currentState.UpdateState(this);
+
+        if(animator != null) {
+            if(lookingRight && body.velocity.x < 0) {
+                animator.SetBool("lookingRight", false);
+                lookingRight = false;
+            }
+
+            if(!lookingRight && body.velocity.x > 0) {
+                animator.SetBool("lookingRight", true);
+                lookingRight = true;
+            }
+
+            animator.SetFloat("speed", body.velocity.x);
+        }
     }
 
     private void OnDrawGizmos() {
@@ -93,4 +118,31 @@ public class StateController : MonoBehaviour {
     public void Attack(float damagePoint) {
         player.TakeDamage(damagePoint);
     }
+
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if(collision.gameObject.GetComponent<Bullet>()) {
+
+            Instantiate(bloodSplasherPrefab, collision.transform.position, Quaternion.identity);
+
+            Bullet bullet = collision.gameObject.GetComponent<Bullet>();
+
+            float diff = Mathf.Abs(life - bullet.energy);
+
+            if(bullet.energy > 0) {
+                life -= bullet.energy;
+            }
+
+            bullet.energy -= diff;
+
+            if(life <= 0) {
+                Score s = GetComponent<Score>();
+                if(s != null) {
+                    s.DisplayScore();
+                }
+
+                Destroy(gameObject);
+            }
+        }
+    }
+
 }

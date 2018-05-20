@@ -5,5 +5,5 @@ using UnityEngine;
 [System.Serializable]
 public abstract class SO_Action : ScriptableObject {
 
-    public abstract void Act(StateController controller);
+    public abstract void Act(MonsterController controller);
 }

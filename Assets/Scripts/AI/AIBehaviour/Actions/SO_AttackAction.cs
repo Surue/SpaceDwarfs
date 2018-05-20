@@ -6,11 +6,11 @@ using UnityEngine;
 [System.Serializable]
 public class SO_AttackAction : SO_Action {
 
-    public override void Act(StateController controller) {
+    public override void Act(MonsterController controller) {
         Attack(controller);
     }
 
-    void Attack(StateController controller) {
+    void Attack(MonsterController controller) {
         Collider2D[] colliders;
 
         colliders = Physics2D.OverlapCircleAll(controller.transform.position, controller.stats.attackRange);

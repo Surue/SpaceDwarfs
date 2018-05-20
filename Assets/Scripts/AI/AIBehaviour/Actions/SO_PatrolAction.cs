@@ -6,11 +6,11 @@ using UnityEngine;
 [System.Serializable]
 public class SO_PatrolAction : SO_Action {
 
-    public override void Act(StateController controller) {
+    public override void Act(MonsterController controller) {
         Patrol(controller);
     }
 
-    private void Patrol(StateController controller) {
+    private void Patrol(MonsterController controller) {
         if(controller.wayPointList.Count == 0) {
             controller.wayPointList = FindObjectOfType<MapController>().GetPatrolsPointForRegion(controller.transform);
             if(controller.wayPointList.Count != 0) {

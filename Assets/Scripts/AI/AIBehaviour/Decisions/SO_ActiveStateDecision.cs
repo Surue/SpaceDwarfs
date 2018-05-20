@@ -6,7 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class SO_ActiveStateDecision : SO_Decision {
 
-    public override bool Decide(StateController controller) {
+    public override bool Decide(MonsterController controller) {
         bool chaseTargetIsActive = controller.chaseTarget.gameObject.activeSelf;
         return chaseTargetIsActive;
     }

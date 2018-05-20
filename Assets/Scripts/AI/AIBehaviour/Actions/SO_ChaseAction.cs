@@ -6,11 +6,11 @@ using UnityEngine;
 [System.Serializable]
 public class SO_ChaseAction : SO_Action {
 
-    public override void Act(StateController controller) {
+    public override void Act(MonsterController controller) {
         Chase(controller);
     }
 
-    void Chase(StateController controller) {
+    void Chase(MonsterController controller) {
         if(controller.path.Count == 0) {
             controller.path = controller.aStart.GetPathFromTo(controller.transform.position, controller.chaseTarget.position);
         }

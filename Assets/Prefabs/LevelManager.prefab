@@ -72,8 +72,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a87bc74871131a94c84b5d92fb78495e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crawlerPrefab: {fileID: 1809102639305056, guid: 49d5143b2d34339488f38cc014c821a4,
-    type: 2}
+  monstersPrefab:
+  - {fileID: 1628909761367082, guid: e4b6c440735434d4cb61e6db339a89ea, type: 2}
+  - {fileID: 1932950884486632, guid: 060ed9c5832aa504989ccc41ae33cc1e, type: 2}
   rule_minDifficultyToGoBackToNest: 0
   rule_monDifficultyToGoBerserker: 0
 --- !u!114 &114890842179222376

@@ -27,4 +27,8 @@ public class SO_MonsterStats : ScriptableObject {
     public float attackPoint = 15f;
     [SerializeField]
     public float searchDuration = 4f;
+
+    [Header("difficulty")]
+    [SerializeField]
+    public int minDifficulty = 0;
 }

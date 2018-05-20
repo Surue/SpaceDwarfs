@@ -346,7 +346,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &527196990 stripped
 Transform:
@@ -1185,8 +1185,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4491640228672160, guid: 575cffd5a56ae3e47816a388f41b9b1e, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114621955502261048, guid: 575cffd5a56ae3e47816a388f41b9b1e,
+        type: 2}
+      propertyPath: crawlerPrefab
+      value: 
+      objectReference: {fileID: 1628909761367082, guid: e4b6c440735434d4cb61e6db339a89ea,
+        type: 2}
+    - target: {fileID: 114890842179222376, guid: 575cffd5a56ae3e47816a388f41b9b1e,
+        type: 2}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 978808351}
     - target: {fileID: 114062758954686084, guid: 575cffd5a56ae3e47816a388f41b9b1e,
         type: 2}
       propertyPath: solidTilemap
@@ -1202,11 +1213,6 @@ Prefab:
       propertyPath: timeBeforeEvacText
       value: 
       objectReference: {fileID: 981245832}
-    - target: {fileID: 114890842179222376, guid: 575cffd5a56ae3e47816a388f41b9b1e,
-        type: 2}
-      propertyPath: canvas
-      value: 
-      objectReference: {fileID: 978808351}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 575cffd5a56ae3e47816a388f41b9b1e, type: 2}
   m_IsPrefabParent: 0

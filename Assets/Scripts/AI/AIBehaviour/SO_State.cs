@@ -10,18 +10,18 @@ public class SO_State : ScriptableObject {
     [SerializeField]
     public Transition[] transitions;
 
-    public void UpdateState(StateController controller) {
+    public void UpdateState(MonsterController controller) {
         DoAction(controller);
         CheckTransition(controller);
     }
 
-    void DoAction(StateController controller) {
+    void DoAction(MonsterController controller) {
         for(int i = 0; i < actions.Length;i++) {
             actions[i].Act(controller);
         }
     }
 
-    void CheckTransition(StateController controller) {
+    void CheckTransition(MonsterController controller) {
         for(int i = 0;i < transitions.Length;i++) {
             bool decisionIsTrue = transitions[i].decision.Decide(controller);
 
