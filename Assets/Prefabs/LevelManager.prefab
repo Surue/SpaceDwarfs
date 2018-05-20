@@ -72,8 +72,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a87bc74871131a94c84b5d92fb78495e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crawlerPrefab: {fileID: 1932950884486632, guid: 060ed9c5832aa504989ccc41ae33cc1e,
+  crawlerPrefab: {fileID: 1809102639305056, guid: 49d5143b2d34339488f38cc014c821a4,
     type: 2}
+  rule_minDifficultyToGoBackToNest: 0
+  rule_monDifficultyToGoBerserker: 0
 --- !u!114 &114890842179222376
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -88,3 +90,7 @@ MonoBehaviour:
   floatingScorePrefab: {fileID: 1483137243842314, guid: b43cdc25dece39740aa93c71d84d4ad2,
     type: 2}
   canvas: {fileID: 0}
+  minSizeFont: 24
+  maxSizeFont: 34
+  lowestScore: 1
+  heighestScore: 1000

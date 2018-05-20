@@ -456,9 +456,9 @@ public class MapAutomata : MonoBehaviour {
         }
 
         possibleTile = possibleTile.OrderBy(x => Vector2Int.Distance(x.position, closestPoint)).ToList();
-        Debug.Log("possibleFirst.Count = " + possibleTile.Count);
+        
         while(regionToFoundForNest > 0) {
-            Debug.Log("nb regions" + regions.Count);
+            
             MapTile currentTile = possibleTile[0];
             possibleTile.Remove(currentTile);
 

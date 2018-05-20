@@ -27,7 +27,6 @@ public class ScoreManager : MonoBehaviour {
 
         float size = (maxSizeFont - minSizeFont) * (percent / 100);
         size += minSizeFont;
-        Debug.Log(size);
         instance.SetSize((int)size);
 
     }

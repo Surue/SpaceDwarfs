@@ -126,6 +126,46 @@ public class MapController : MonoBehaviour {
 
         return spawnPosition + new Vector2(0.5f, 0.5f);
     }
+
+    public List<Vector2> GetPatrolsPointForRegion(Transform pos) {
+        Vector2Int tilePos = Transform2TilePos(pos);
+        foreach(MapRegion region in regions) {
+           foreach(MapTile tile in region.tiles) {
+                if(tile.position == tilePos) {
+                    return region.GetPatrolsPoint();
+                }
+            }
+        }
+        return null;
+    }
+
+    Vector2Int Transform2TilePos(Transform pos) {
+        int x = 0;
+        int y = 0;
+        if(pos.position.x % 1 != 0.5f) {
+            x = Mathf.RoundToInt(pos.position.x);
+        } else {
+            x = Mathf.FloorToInt(pos.position.x);
+        }
+
+        if(pos.position.y % 1 != 0.5f) {
+            y = Mathf.RoundToInt(pos.position.y);
+        } else {
+            y = Mathf.FloorToInt(pos.position.y);
+        }
+        return new Vector2Int(x, y);
+    }
+
+    public static Vector2Int Vector2TilePos(Vector2 pos) {
+        int x = 0;
+        int y = 0;
+
+        x = Mathf.FloorToInt(pos.x);
+
+        y = Mathf.FloorToInt(pos.y);
+
+        return new Vector2Int(x, y);
+    }
 }
 
 //Represents a tile of a map, does not take in count the layer of tilemap
@@ -326,6 +366,21 @@ public class MapRegion {
         foreach(MapTile t in region.tiles) {
             tiles.Add(new MapTile(t));
         }
+    }
+
+    public List<Vector2> GetPatrolsPoint() {
+        List<Vector2> patrolsPoint = new List<Vector2>();
+
+        List<MapTile> possibleTiles = tiles;
+        while(patrolsPoint.Count < 3) {
+            MapTile t = possibleTiles[Random.Range(0, possibleTiles.Count)];
+            if(!t.isOccuped) {
+                patrolsPoint.Add(t.position + new Vector2(0.5f, 0.5f));
+                possibleTiles.Remove(t);
+            }
+        }
+
+        return patrolsPoint;
     }
 
     #endregion
