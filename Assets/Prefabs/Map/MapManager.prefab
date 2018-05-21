@@ -97,6 +97,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 159e6c9ec1f42504d93a1528bbd1eb1c, type: 2}
   - {fileID: 11400000, guid: 7a4f53fb4a0c6d64b9cd87d55a03ca52, type: 2}
   - {fileID: 11400000, guid: 90f263095a0039e4db7706275d26a1ab, type: 2}
+  - {fileID: 11400000, guid: 605760ff49e55314d8cdb9f0f91b658a, type: 2}
+  - {fileID: 11400000, guid: 8be3615dfd4072849ad7f4b40026bcc0, type: 2}
+  - {fileID: 11400000, guid: 24b2a7b2f37f4b44aa5484306c8637e9, type: 2}
+  - {fileID: 11400000, guid: 5e2178f6e0414fa4394c6550c9090d80, type: 2}
+  - {fileID: 11400000, guid: afd8f887b90c3304ab4eca8f1db77c19, type: 2}
+  - {fileID: 11400000, guid: ec72e7265ddfe114699f19caf1640bc7, type: 2}
+  - {fileID: 11400000, guid: 4496f943ca84db84a993343a48ac5ff8, type: 2}
+  - {fileID: 11400000, guid: f75e61523568bce4ab9f61dfa998ca9c, type: 2}
   maxItemPerRegion: 3
   items:
   - {fileID: 11400000, guid: 9cfb537ae410fd94484fb3e556e58e2d, type: 2}

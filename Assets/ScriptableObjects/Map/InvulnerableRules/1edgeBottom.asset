@@ -9,11 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a4824d4cbe48624c91098eb3ecff358, type: 3}
-  m_Name: 1edgeBottomSolid
+  m_Name: 1edgeBottom
   m_EditorClassIdentifier: 
-  tile: {fileID: 11400000, guid: 1b3f45c083961e449ab88abd44a6adb7, type: 2}
+  tile: {fileID: 11400000, guid: 140b1f11b58efb2448273b7c43907ad5, type: 2}
   groundTile: {fileID: 11400000, guid: 20c7b0d1f9ef59d4f925c033c1f83fb7, type: 2}
-  tileType: 1
+  tileType: 2
   rules:
-  - array: 030000000000000003000000010000000100000001000000010000000100000001000000
-  - array: 030000000000000003000000010000000100000001000000020000000200000002000000
+  - array: 030000000000000003000000020000000200000002000000020000000200000002000000
