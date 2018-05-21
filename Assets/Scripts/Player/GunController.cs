@@ -61,7 +61,7 @@ public class GunController : MonoBehaviour {
         }
 
         //Change active weapon
-        if(Input.GetAxis("Mouse ScrollWheel") > 0f) {
+        if(Input.GetAxis("Mouse ScrollWheel") > 0f || Input.GetKeyDown(KeyCode.Alpha1)) {
             if(activeGun != primaryGun) {
                 activeGun = primaryGun;
 
@@ -73,7 +73,7 @@ public class GunController : MonoBehaviour {
                     spriteRenderer.sprite = activeGun.spriteLeft;
                 }
             }
-        } else if(Input.GetAxis("Mouse ScrollWheel") < 0f){
+        } else if(Input.GetAxis("Mouse ScrollWheel") < 0f || Input.GetKeyDown(KeyCode.Alpha2)) {
             if(activeGun != miningTool) {
                 activeGun = miningTool;
 

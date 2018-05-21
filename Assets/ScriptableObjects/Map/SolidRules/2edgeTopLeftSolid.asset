@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: 2edgeTopLeftSolid
   m_EditorClassIdentifier: 
   tile: {fileID: 11400000, guid: 96914a4f4efc05c46825e4fae7d87505, type: 2}
-  groundTile: {fileID: 0}
+  groundTile: {fileID: 11400000, guid: d91ea9bf9ca733442a4b5aaa85c4c93f, type: 2}
   tileType: 1
   rules:
   - array: 030000000100000001000000000000000100000001000000000000000000000003000000
