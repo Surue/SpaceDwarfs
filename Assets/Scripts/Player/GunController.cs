@@ -8,17 +8,15 @@ public class GunController : MonoBehaviour {
     SpriteRenderer hands;
 
     [SerializeField]
-    SO_Gun primaryGun;
+    Weapon primaryGun;
     [SerializeField]
-    SO_Gun miningTool;
+    Weapon miningTool;
 
-    SO_Gun activeGun;
+    Weapon activeGun;
 
     float delay = 0.0f;
 
     SpriteRenderer spriteRenderer;
-
-    Animator animator;
 
     PlayerController player;
 
@@ -28,15 +26,15 @@ public class GunController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        activeGun = primaryGun;
+        if(primaryGun == null) {
+            primaryGun = WeaponGenerator.Instance.GenerateWeapon();
+        }
 
-        animator = GetComponent<Animator>();
+        activeGun = primaryGun;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = activeGun.spriteRight;
         player = transform.parent.parent.GetComponent<PlayerController>();
-
-        animator.runtimeAnimatorController = activeGun.animator;
 	}
 
     // Update is called once per frame
@@ -65,8 +63,6 @@ public class GunController : MonoBehaviour {
             if(activeGun != primaryGun) {
                 activeGun = primaryGun;
 
-                animator.runtimeAnimatorController = activeGun.animator;
-
                 if(lookingRight) {
                     spriteRenderer.sprite = activeGun.spriteRight;
                 } else {
@@ -77,23 +73,16 @@ public class GunController : MonoBehaviour {
             if(activeGun != miningTool) {
                 activeGun = miningTool;
 
-                animator.runtimeAnimatorController = activeGun.animator;
-
                 if(lookingRight) {
                     spriteRenderer.sprite = activeGun.spriteRight;
-
-                    animator.SetBool("lookingRight", true);
                 } else {
                     spriteRenderer.sprite = activeGun.spriteLeft;
-
-                    animator.SetBool("lookingRight", false);
                 }
             }
         }
 
 
         if(Input.GetButtonDown("Fire1")) {
-            animator.SetTrigger("fireing");
             isFireing = true;
         }
 
@@ -107,7 +96,6 @@ public class GunController : MonoBehaviour {
         }
 
         if(Input.GetButtonUp("Fire1")) {
-            animator.SetTrigger("notFireing");
             isFireing = false;
         }
     }
@@ -115,18 +103,10 @@ public class GunController : MonoBehaviour {
     public void FlipSprite(bool flip) {
         if(!flip) {
             spriteRenderer.sprite = activeGun.spriteRight;
-            animator.SetBool("lookingRight", true);
             lookingRight = true;
         } else {
             spriteRenderer.sprite = activeGun.spriteLeft;
-            animator.SetBool("lookingRight", false);
             lookingRight = false;
-        }
-
-        if(isFireing) {
-            animator.SetTrigger("fireing");
-        } else {
-            animator.SetTrigger("notFireing");
         }
     }
 }

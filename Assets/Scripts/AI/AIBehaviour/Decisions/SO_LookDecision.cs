@@ -18,7 +18,7 @@ public class SO_LookDecision : SO_Decision {
 
         foreach(Collider2D collider in colliders) {
             if(collider.tag == "Player") {
-                RaycastHit2D hitPlayer = Physics2D.Raycast(controller.transform.position, collider.transform.position - controller.transform.position, Mathf.Infinity, ~(1 << LayerMask.NameToLayer("Monster")));
+                RaycastHit2D hitPlayer = Physics2D.Raycast(controller.transform.position, collider.transform.position - controller.transform.position, Mathf.Infinity, ~(1 << LayerMask.NameToLayer("Monster") | 1 << LayerMask.NameToLayer("Bullet")));
                 if(hitPlayer.collider.tag == "Player") {
                     Debug.DrawRay(controller.transform.position, collider.transform.position - controller.transform.position, Color.green);
                     controller.chaseTarget = collider.transform;

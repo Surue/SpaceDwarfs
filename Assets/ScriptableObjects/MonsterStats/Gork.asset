@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1407f3c848959b442b66caa228b55957, type: 3}
+  m_Name: Gork
+  m_EditorClassIdentifier: 
+  speed: 2.5
+  stopingDistance: 0.1
+  lookRange: 40
+  lookShpereCastRadius: 1
+  attackRange: 1.2
+  attackRate: 1
+  attackPoint: 7
+  searchDuration: 4
+  minDifficulty: 0

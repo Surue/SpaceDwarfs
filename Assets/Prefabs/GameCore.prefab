@@ -23,6 +23,8 @@ GameObject:
   - component: {fileID: 114375099477542878}
   - component: {fileID: 114879908977606144}
   - component: {fileID: 114398017622646028}
+  - component: {fileID: 114645187304183414}
+  - component: {fileID: 114273033409439314}
   m_Layer: 0
   m_Name: GameCore
   m_TagString: Untagged
@@ -43,6 +45,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114273033409439314
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1904651168231480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 785dca57aad955840b9f0a19ed407f56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponSprite:
+  - spriteRight: {fileID: 21300000, guid: dedcc9d25f860ff4e94088f4a0554536, type: 3}
+    spriteLeft: {fileID: 21300002, guid: dedcc9d25f860ff4e94088f4a0554536, type: 3}
+  bulletPrefab:
+  - {fileID: 1704994280838652, guid: 0de9fd99cc17e18478ad4a63c53736bc, type: 2}
 --- !u!114 &114375099477542878
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -68,6 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelFinished: 0
+  currentWeapon: {fileID: 0}
 --- !u!114 &114641151316666250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -77,6 +96,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4902a65fbdb445a45895844244ac29be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114645187304183414
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1904651168231480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8c40abe2473de640a7ecb9915954aac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114879908977606144

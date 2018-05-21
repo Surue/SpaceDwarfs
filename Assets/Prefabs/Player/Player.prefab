@@ -134,7 +134,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1382962530495482}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.856667, y: 13.787524, z: 0}
+  m_LocalPosition: {x: 1045.9392, y: 54.578766, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4572787743077008}
@@ -316,8 +316,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hands: {fileID: 212713133722925448}
-  primaryGun: {fileID: 11400000, guid: 185eeba085ef30646a1f5f5c5f2d6166, type: 2}
-  miningTool: {fileID: 11400000, guid: fd13863bf3e6c4541aa494e8be42c9b8, type: 2}
+  primaryGun: {fileID: 0}
+  miningTool: {fileID: 114302538177375936, guid: 94aaa44fa1cd3e74c85a5430d27b2784,
+    type: 2}
 --- !u!114 &114681024220186678
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -370,7 +371,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1737825145
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -414,7 +415,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1737825145
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6f1bfe1454febdc429e2a8ce16b40eae, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -458,7 +459,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1737825145
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300006, guid: 6f1bfe1454febdc429e2a8ce16b40eae, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

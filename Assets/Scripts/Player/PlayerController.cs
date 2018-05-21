@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour {
 
     Vector2 moveVelocity;
 
-    Collider2D collider;
+    Collider2D selfCollier;
 
     //Animation
     Animator animatorController;
@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour {
 
         initialLife = life;
 
-        collider = GetComponent<Collider2D>();
+        selfCollier = GetComponent<Collider2D>();
     }
 
     void FixedUpdate() {
@@ -55,10 +55,10 @@ public class PlayerController : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if(state == State.BLOCKED) {
-            collider.enabled = false;
+            selfCollier.enabled = false;
             return;
         } else {
-            collider.enabled = true;
+            selfCollier.enabled = true;
         }
 
         moveVelocity = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * speed;

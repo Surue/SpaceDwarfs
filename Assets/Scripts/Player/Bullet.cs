@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
-    public float energy = 2;
+    public float damage = 2;
 
     private void Update() {
-        if(energy <= 0) {
+        if(damage <= 0) {
             Destroy(gameObject);
         }
     }

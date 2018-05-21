@@ -17,6 +17,9 @@ public class SO_PatrolAction : SO_Action {
                 controller.path = controller.aStart.GetPathFromTo(controller.transform.position, controller.wayPointList[controller.nextWayPoint]);
             }
         } else {
+            if(controller.path == null) {
+                controller.path = controller.aStart.GetPathFromTo(controller.transform.position, controller.wayPointList[controller.nextWayPoint]);
+            }
 
             Vector2 direction = controller.path[0] - (Vector2)controller.transform.position;
 

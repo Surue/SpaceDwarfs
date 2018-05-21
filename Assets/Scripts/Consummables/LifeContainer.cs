@@ -49,7 +49,7 @@ public class LifeContainer : MonoBehaviour {
             Bullet bullet = collision.gameObject.GetComponent<Bullet>();
 
             
-            life -= bullet.energy;
+            life -= bullet.damage;
 
             Destroy(bullet.gameObject);
 

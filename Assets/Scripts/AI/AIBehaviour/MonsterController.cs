@@ -112,6 +112,7 @@ public class MonsterController : MonoBehaviour {
     }
 
     private void OnExistState() {
+        path = null;
         stateTimeElapsed = 0;
     }
 
@@ -126,13 +127,13 @@ public class MonsterController : MonoBehaviour {
 
             Bullet bullet = collision.gameObject.GetComponent<Bullet>();
 
-            float diff = Mathf.Abs(life - bullet.energy);
+            float diff = Mathf.Abs(life - bullet.damage);
 
-            if(bullet.energy > 0) {
-                life -= bullet.energy;
+            if(bullet.damage > 0) {
+                life -= bullet.damage;
             }
 
-            bullet.energy -= diff;
+            bullet.damage -= diff;
 
             if(life <= 0) {
                 Score s = GetComponent<Score>();

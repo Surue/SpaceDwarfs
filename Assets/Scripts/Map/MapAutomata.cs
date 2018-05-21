@@ -688,7 +688,7 @@ public class MapAutomata : MonoBehaviour {
 
                 int nbVein = Random.Range(1, rule_veinPerChunk);
 
-                while(nbVein > 0) {
+                while(nbVein > 0 && solidTiles.Count > 0) {
 
                     MapTile currentTile = solidTiles[Random.Range(0, solidTiles.Count)];
 

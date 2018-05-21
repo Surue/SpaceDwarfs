@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 168848e204720494884a5b87b3c0ccc9, type: 3}
+  m_Name: ChaseToDeath
+  m_EditorClassIdentifier: 
+  actions:
+  - {fileID: 11400000, guid: f47b69c5e7ec58941bdeb6757a3a036d, type: 2}
+  - {fileID: 11400000, guid: dc7276dcd26e36c4bbb945ceeb683960, type: 2}
+  transitions:
+  - decision: {fileID: 11400000, guid: d1e671398a39b3047872069eb6e3566d, type: 2}
+    trueState: {fileID: 11400000, guid: 020a076b353305642a1cc75bab7e61f3, type: 2}
+    falseState: {fileID: 11400000, guid: 37683e5694b27044d9756a59e552a2f5, type: 2}

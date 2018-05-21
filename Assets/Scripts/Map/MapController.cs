@@ -127,6 +127,22 @@ public class MapController : MonoBehaviour {
         return spawnPosition + new Vector2(0.5f, 0.5f);
     }
 
+    public Vector2 GetPatrolPoint() {
+        while(true) {
+            MapTile t = tiles[Random.Range(0, tiles.GetLength(0)), Random.Range(0, tiles.GetLength(1))];
+
+            if(!t.isSolid && !t.isOccuped && !t.isInvulnerable) {
+                foreach(MapRegion region in regions) {
+                    if(region.tiles.Contains(t)) {
+                        if(region.type != MapRegion.TypeRegion.CLOSED) {
+                            return t.position;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public List<Vector2> GetPatrolsPointForRegion(Transform pos) {
         Vector2Int tilePos = Transform2TilePos(pos);
         foreach(MapRegion region in regions) {

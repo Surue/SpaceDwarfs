@@ -11,7 +11,7 @@ public class SO_ChaseAction : SO_Action {
     }
 
     void Chase(MonsterController controller) {
-        if(controller.path.Count == 0) {
+        if(controller.path == null || controller.path.Count == 0) {
             controller.path = controller.aStart.GetPathFromTo(controller.transform.position, controller.chaseTarget.position);
         }
 
