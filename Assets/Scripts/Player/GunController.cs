@@ -88,7 +88,11 @@ public class GunController : MonoBehaviour {
 
         if(Input.GetButton("Fire1")) {
             if(delay <= 0) {
-                CameraShake.Instance.ShakeOnce(2, 2, 0.1f, 0.1f);
+                if(activeGun != miningTool) {
+                    CameraShake.Instance.ShakeOnce(2, 2, 0.1f, 0.1f);
+                } else {
+                    CameraShake.Instance.ShakeOnce(1, 1, 0.1f, 0.1f);
+                }
 
                 activeGun.Attack(transform.position + (lookPos.normalized * 0.55f), lookPos.normalized) ;
                 delay = activeGun.delayBetweenShots;

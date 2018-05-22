@@ -16,11 +16,17 @@ public class MonsterManager : MonoBehaviour {
 
     MapController mapController;
 
+    [SerializeField]
+    SO_State playerFound;
+
     int levelFinised;
 
     int minMonsterForSearching;
 
     int difficultyLevel = 0;
+
+    float timer = 0;
+    float timeBetweenSpawn = 5.0f;
 
     [Header("Rules")]
     public int rule_minDifficultyToGoBackToNest;
@@ -82,6 +88,14 @@ public class MonsterManager : MonoBehaviour {
                 break;
 
             case State.PLAYER_FOUNDED:
+                if(timer > timeBetweenSpawn) {
+                    SpawnMonster();
+
+                    timer = 0;
+                } else {
+                    timer += Time.deltaTime;
+                }
+                Debug.Log("founded");
                 break;
 
             case State.BERSERKER:
@@ -99,5 +113,21 @@ public class MonsterManager : MonoBehaviour {
                 return;
             }
         }
+    }
+
+    void SpawnMonsterFromNest() {
+        while(true) {
+            GameObject monster = monstersPrefab[Random.Range(0, monstersPrefab.Count)];
+
+            if(monster.GetComponent<MonsterController>().stats.minDifficulty <= difficultyLevel) {
+                GameObject instace = Instantiate(monster, mapController.GetNestPosition(), Quaternion.identity);
+                instace.GetComponent<MonsterController>().currentState = playerFound;
+                return;
+            }
+        }
+    }
+
+    public void PlayerFounded() {
+        state = State.PLAYER_FOUNDED;
     }
 }

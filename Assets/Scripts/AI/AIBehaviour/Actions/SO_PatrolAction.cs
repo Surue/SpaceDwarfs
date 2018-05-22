@@ -17,7 +17,7 @@ public class SO_PatrolAction : SO_Action {
                 controller.path = controller.aStart.GetPathFromTo(controller.transform.position, controller.wayPointList[controller.nextWayPoint]);
             }
         } else {
-            if(controller.path == null) {
+            if(controller.path == null || controller.path.Count == 0) {
                 controller.path = controller.aStart.GetPathFromTo(controller.transform.position, controller.wayPointList[controller.nextWayPoint]);
             }
 

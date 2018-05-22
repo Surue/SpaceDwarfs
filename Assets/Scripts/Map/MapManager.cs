@@ -46,7 +46,6 @@ public class MapManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log(step);
 
         switch(step) {
             case Step.IDLE:

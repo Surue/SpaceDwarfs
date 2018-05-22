@@ -132,6 +132,16 @@ public class MapController : MonoBehaviour {
         return spawnPosition + new Vector2(0.5f, 0.5f);
     }
 
+    public Vector2 GetNestPosition() {
+        foreach(MapRegion region in regions) {
+            if(region.type == MapRegion.TypeRegion.NEST) {
+                return region.GetNestPosition() + new Vector2(0.5f, 0.5f);
+            }
+        }
+
+        return new Vector2();
+    }
+
     public Vector2 GetPatrolPoint() {
         while(true) {
             MapTile t = tiles[Random.Range(0, tiles.GetLength(0)), Random.Range(0, tiles.GetLength(1))];
@@ -369,7 +379,7 @@ public class MapRegion {
         while(randomTile == null) {
             randomTile = tiles[Random.Range(0, tiles.Count)];
 
-            if(!HasNeighborDown(randomTile)) randomTile = null;
+            if(!HasNeighborDown(randomTile) || randomTile.isOccuped) randomTile = null;
         }
 
         return randomTile.position;
@@ -379,6 +389,16 @@ public class MapRegion {
         foreach(MapTile t in region.tiles) {
             tiles.Add(new MapTile(t));
         }
+    }
+
+    public Vector2Int GetNestPosition() {
+        foreach(MapTile t in tiles) {
+            if(t.isOccuped) {
+                return t.position;
+            }
+        }
+
+        return new Vector2Int();
     }
 
     public List<Vector2> GetPatrolsPoint() {

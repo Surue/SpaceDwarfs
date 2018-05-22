@@ -629,7 +629,7 @@ public class MapAutomata : MonoBehaviour {
                 int chance = Random.Range(1, 101);
 
                 if(item.CanBeInThisRegion(region)) {
-                    if(chance > item.apparitionRatePerRegion) {
+                    if(chance < item.apparitionRatePerRegion) {
 
                         Vector2 pos = new Vector2();
 
@@ -741,7 +741,7 @@ public class MapAutomata : MonoBehaviour {
             maxRate += ore.apparitionRate;
         }
 
-        int rate = Random.Range(0, maxRate + 1);
+        int rate = Random.Range(0, maxRate);
 
         int value = 0;
         int index = 0;

@@ -129,9 +129,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8cb37e7fc4e44db4b9df161a2da22203, type: 2}
   - {fileID: 11400000, guid: 37101a8632efed74ca72d1ef413d60f4, type: 2}
   - {fileID: 11400000, guid: d135b0afad5c01d45ad2042d1c20d981, type: 2}
+  - {fileID: 11400000, guid: 50b6f130c1edf524d93c65dcc945965e, type: 2}
+  - {fileID: 11400000, guid: d0457d11273a43e48b798b4bd82632d3, type: 2}
+  - {fileID: 11400000, guid: 3e0f1a1a62161034399d230c0ae68162, type: 2}
+  - {fileID: 11400000, guid: 4f43dc3a9cb22b844be9605834706e50, type: 2}
+  - {fileID: 11400000, guid: 55a432f947eb2874cb5303287c3fce16, type: 2}
+  - {fileID: 11400000, guid: ab53f04f0af035f499ed484b249f7d04, type: 2}
   maxItemPerRegion: 3
   items:
   - {fileID: 11400000, guid: 9cfb537ae410fd94484fb3e556e58e2d, type: 2}
+  - {fileID: 11400000, guid: a2eb9afd2894ce240bd0fdead9e23b60, type: 2}
   tilemapSize: {x: 50, y: 50}
   debugTiles:
   - {fileID: 11400000, guid: 9df36baa68088284587247d5a34c3f90, type: 2}

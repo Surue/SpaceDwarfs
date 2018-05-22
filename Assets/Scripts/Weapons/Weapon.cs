@@ -79,11 +79,12 @@ public class Weapon : MonoBehaviour {
                 break;
 
             case AttackType.FIRING:
-                if(nbBullet == 1) {
+                for(int i = 0; i < nbBullet;i++) {
                     GameObject instance = (GameObject)Instantiate(this.bulletPrefab, pos + new Vector3(0, -0.1f, 0), Quaternion.identity);
                     instance.GetComponent<Rigidbody2D>().velocity = dir.normalized * speed;
                     instance.GetComponent<SpriteRenderer>().color = colorBullet;
                     instance.GetComponent<Bullet>().bounce = bounceBullet;
+                    instance.GetComponent<Bullet>().damage = damagePerBullet;
 
                     instance.transform.position += new Vector3(dir.normalized.y, -dir.normalized.x) * Random.Range(-0.1f, 0.1f);
                 }

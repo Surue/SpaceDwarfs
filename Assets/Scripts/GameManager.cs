@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour {
 
     public void LoadNextLevel() {
         PlayerInfo.Instance.NewLevel();
+        PersistantMusic.Instance.UpVolume();
+        PersistantMusic.Instance.ResetLowPass();
         SceneManager.LoadScene("Level");
     }
 }

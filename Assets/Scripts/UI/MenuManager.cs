@@ -15,4 +15,8 @@ public class MenuManager : MonoBehaviour {
     public void LoadNextLevel() {
         FindObjectOfType<GameManager>().LoadNextLevel();
     }
+
+    public void Quit() {
+        FindObjectOfType<GameManager>().Quit();
+    }
 }

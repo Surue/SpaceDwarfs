@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: item_LifeContainer
   m_EditorClassIdentifier: 
   prefab: {fileID: 1730624062721956, guid: a0ad41b1cb4913d418cc3b2f27fba07c, type: 2}
-  apparitionRatePerRegion: 33
+  apparitionRatePerRegion: 66
   closedRegion: 0
-  nestRegion: 1
+  nestRegion: 0
   normalRegion: 1
-  spawnPlayerRegion: 0
+  spawnPlayerRegion: 1

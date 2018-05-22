@@ -77,6 +77,8 @@ MonoBehaviour:
   - {fileID: 1932950884486632, guid: 060ed9c5832aa504989ccc41ae33cc1e, type: 2}
   - {fileID: 1628909761367082, guid: e4b6c440735434d4cb61e6db339a89ea, type: 2}
   - {fileID: 1511903585074032, guid: 0e3d13be2ad75b240bde8759ac01220a, type: 2}
+  - {fileID: 1148755303723278, guid: d2f5868c4f3c82d4a81faef782982c1e, type: 2}
+  playerFound: {fileID: 11400000, guid: 37683e5694b27044d9756a59e552a2f5, type: 2}
   rule_minDifficultyToGoBackToNest: 0
   rule_monDifficultyToGoBerserker: 0
 --- !u!114 &114890842179222376

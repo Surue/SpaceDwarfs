@@ -54,7 +54,7 @@ public class MonsterController : MonoBehaviour {
 
         player = FindObjectOfType<PlayerController>();
 
-        animator = GetComponentInChildren<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     void Update() {
@@ -72,8 +72,6 @@ public class MonsterController : MonoBehaviour {
                 animator.SetBool("lookingRight", true);
                 lookingRight = true;
             }
-
-            animator.SetFloat("speed", body.velocity.x);
         }
     }
 
@@ -140,6 +138,7 @@ public class MonsterController : MonoBehaviour {
                 if(s != null) {
                     s.DisplayScore();
                 }
+                PersistantMusic.Instance.AddLowPass(1000);
 
                 Destroy(gameObject);
             }

@@ -15,7 +15,8 @@ MonoBehaviour:
   stopingDistance: 0.1
   lookRange: 40
   lookShpereCastRadius: 7
-  attackRange: 1
+  attackRange: 1.5
   attackRate: 1
   attackPoint: 15
   searchDuration: 4
+  minDifficulty: 0
