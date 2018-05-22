@@ -262,7 +262,7 @@ public class MapTile {
     }
 
     public bool Attack(float d) {
-        if(!isSolid) {
+        if(!isSolid || isInvulnerable) {
             return false;
         }
 
