@@ -61,7 +61,7 @@ MonoBehaviour:
   rule_maximumTileForClosedRegion: 20
   rule_minimumTileForRegion: 75
   rule_maximumTileToBefusionned: 10
-  rule_numberTileForClosing: 5
+  rule_numberTileForClosing: 20
   rule_maxOrePerVein: 6
   rule_chunkSize: 20
   rule_veinPerChunk: 3
@@ -105,6 +105,30 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ec72e7265ddfe114699f19caf1640bc7, type: 2}
   - {fileID: 11400000, guid: 4496f943ca84db84a993343a48ac5ff8, type: 2}
   - {fileID: 11400000, guid: f75e61523568bce4ab9f61dfa998ca9c, type: 2}
+  - {fileID: 11400000, guid: 76b975dbfe4cd6b4fa4b3ef8e9a30337, type: 2}
+  - {fileID: 11400000, guid: 07e5604158688594292e6b7c4d3d2a0d, type: 2}
+  - {fileID: 11400000, guid: d86cacf75ab663f4f81099f9a5412134, type: 2}
+  - {fileID: 11400000, guid: f42578df49c78944eb2280955d37d23e, type: 2}
+  - {fileID: 11400000, guid: 275e6a225302b6342a8e264942149e24, type: 2}
+  - {fileID: 11400000, guid: fd0841b1c88a767458cadca56f1983a4, type: 2}
+  - {fileID: 11400000, guid: a170b59e83daa294691be66ecda239e0, type: 2}
+  - {fileID: 11400000, guid: 2f6c7be390a75db4d8bbce94d7b14d85, type: 2}
+  - {fileID: 11400000, guid: d26acc77cb8ee1d44a93d7d685ca353f, type: 2}
+  - {fileID: 11400000, guid: 919e5efebd850a94abcf9b56b7f59e32, type: 2}
+  - {fileID: 11400000, guid: f62e26a5867af5a4a941720e2871409e, type: 2}
+  - {fileID: 11400000, guid: a6b1f64a289ace3439a50ad0507e7cdb, type: 2}
+  - {fileID: 11400000, guid: 32a8cad690fbf8a46886a979a5bfb01b, type: 2}
+  - {fileID: 11400000, guid: 9ec77bf2a1d80ac4ba177ab9aa8614d5, type: 2}
+  - {fileID: 11400000, guid: 9e25c83c9ee979a4cba7b920ad422c69, type: 2}
+  - {fileID: 11400000, guid: 6c9d797ac0abad243bcbf52eaf2221be, type: 2}
+  - {fileID: 11400000, guid: dbb71486094593b4a9957fc5160b5bb4, type: 2}
+  - {fileID: 11400000, guid: da3cb879cfe33c848bd47cb8aa3f12e3, type: 2}
+  - {fileID: 11400000, guid: bc434c99cb2a9a840a6182fd3379674d, type: 2}
+  - {fileID: 11400000, guid: 2f8180c62b1a6304b997899e70dc9f45, type: 2}
+  - {fileID: 11400000, guid: 8a7f82fa719050c4e8264948e18d540f, type: 2}
+  - {fileID: 11400000, guid: 8cb37e7fc4e44db4b9df161a2da22203, type: 2}
+  - {fileID: 11400000, guid: 37101a8632efed74ca72d1ef413d60f4, type: 2}
+  - {fileID: 11400000, guid: d135b0afad5c01d45ad2042d1c20d981, type: 2}
   maxItemPerRegion: 3
   items:
   - {fileID: 11400000, guid: 9cfb537ae410fd94484fb3e556e58e2d, type: 2}

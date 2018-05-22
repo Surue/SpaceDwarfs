@@ -524,11 +524,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
-        type: 2}
-      propertyPath: rulesForTiles.Array.size
-      value: 38
-      objectReference: {fileID: 0}
     - target: {fileID: 4568594353253378, guid: aee41a6de6d93944da228532c7e82d06, type: 2}
       propertyPath: m_LocalPosition.x
       value: -2.2851863
@@ -561,21 +556,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
-        type: 2}
-      propertyPath: debugTilemap
-      value: 
-      objectReference: {fileID: 59912087}
-    - target: {fileID: 114622845642960226, guid: aee41a6de6d93944da228532c7e82d06,
-        type: 2}
-      propertyPath: solidTilemap
-      value: 
-      objectReference: {fileID: 1340641926}
-    - target: {fileID: 114622845642960226, guid: aee41a6de6d93944da228532c7e82d06,
-        type: 2}
-      propertyPath: groundTilemap
-      value: 
-      objectReference: {fileID: 1340641925}
     - target: {fileID: 114785071601268756, guid: aee41a6de6d93944da228532c7e82d06,
         type: 2}
       propertyPath: solidTilemap
@@ -591,35 +571,21 @@ Prefab:
       propertyPath: decalTilemap
       value: 
       objectReference: {fileID: 1878400019}
-    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
+    - target: {fileID: 114622845642960226, guid: aee41a6de6d93944da228532c7e82d06,
         type: 2}
-      propertyPath: rule_numberTileForClosing
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
-        type: 2}
-      propertyPath: rulesForTiles.Array.data[34]
+      propertyPath: solidTilemap
       value: 
-      objectReference: {fileID: 11400000, guid: 76b975dbfe4cd6b4fa4b3ef8e9a30337,
+      objectReference: {fileID: 1340641926}
+    - target: {fileID: 114622845642960226, guid: aee41a6de6d93944da228532c7e82d06,
         type: 2}
+      propertyPath: groundTilemap
+      value: 
+      objectReference: {fileID: 1340641925}
     - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
         type: 2}
-      propertyPath: rulesForTiles.Array.data[35]
+      propertyPath: debugTilemap
       value: 
-      objectReference: {fileID: 11400000, guid: 07e5604158688594292e6b7c4d3d2a0d,
-        type: 2}
-    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
-        type: 2}
-      propertyPath: rulesForTiles.Array.data[36]
-      value: 
-      objectReference: {fileID: 11400000, guid: d86cacf75ab663f4f81099f9a5412134,
-        type: 2}
-    - target: {fileID: 114053838154394198, guid: aee41a6de6d93944da228532c7e82d06,
-        type: 2}
-      propertyPath: rulesForTiles.Array.data[37]
-      value: 
-      objectReference: {fileID: 11400000, guid: f42578df49c78944eb2280955d37d23e,
-        type: 2}
+      objectReference: {fileID: 59912087}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aee41a6de6d93944da228532c7e82d06, type: 2}
   m_IsPrefabParent: 0

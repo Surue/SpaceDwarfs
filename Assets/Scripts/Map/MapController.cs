@@ -121,6 +121,11 @@ public class MapController : MonoBehaviour {
         foreach(MapRegion region in regions) {
             if(region.canSpawnPlayer) {
                 spawnPosition = region.GetRandomPoint();
+                foreach(MapTile t in region.tiles) {
+                    if(t.position == spawnPosition) {
+                        t.AddItem();
+                    }
+                }
             }
         }
 
