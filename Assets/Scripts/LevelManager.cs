@@ -24,6 +24,9 @@ public class LevelManager:MonoBehaviour {
     [SerializeField]
     Text timeBeforeEvacText;
 
+    [SerializeField]
+    Image backgroundImage;
+
     //Variables for evacuation
     Vector3 evacuationPosition;
     bool evacuationAvailable = false;
@@ -74,6 +77,7 @@ public class LevelManager:MonoBehaviour {
                     player.transform.position = spawnPosition + new Vector2(0, 10);
                     spaceship.transform.position = player.transform.position;
                     state = State.LANDING;
+                    StartCoroutine(FadeIn());
                 }
                 break;
 
@@ -106,6 +110,7 @@ public class LevelManager:MonoBehaviour {
                     player.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
                     player.GetComponent<PlayerController>().state = PlayerController.State.BLOCKED;
                     state = State.EVACUATE;
+                    StartCoroutine(FadeOut());
                 }
                 break;
 
@@ -119,6 +124,20 @@ public class LevelManager:MonoBehaviour {
                     GameManager.Instance.LoadNextLevel();
                 }
                 break;
+        }
+    }
+
+    IEnumerator FadeIn() {
+        while(backgroundImage.color.a > 0) {
+            backgroundImage.color = new Color(backgroundImage.color.r, backgroundImage.color.g, backgroundImage.color.b, backgroundImage.color.a - Time.deltaTime);
+            yield return new WaitForFixedUpdate();
+        }
+    }
+
+    IEnumerator FadeOut() {
+        while(backgroundImage.color.a < 1) {
+            backgroundImage.color = new Color(backgroundImage.color.r, backgroundImage.color.g, backgroundImage.color.b, backgroundImage.color.a + Time.deltaTime);
+            yield return new WaitForFixedUpdate();
         }
     }
 

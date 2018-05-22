@@ -6,13 +6,12 @@ public class MapCollider : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision) {
         if(collision.gameObject.GetComponent<Bullet>()) {
-            Destroy(collision.gameObject);
-        }
-    }
-
-    private void OnCollisionStay2D(Collision2D collision) {
-        if(collision.gameObject.GetComponent<Bullet>()) {
-            Destroy(collision.gameObject);
+            if(!collision.gameObject.GetComponent<Bullet>().bounce) {
+                collision.gameObject.GetComponent<Bullet>().damage = 0;
+            }
+            else{
+                collision.gameObject.GetComponent<Bullet>().damage /= 2f;
+            }
         }
     }
 }

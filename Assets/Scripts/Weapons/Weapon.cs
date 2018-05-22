@@ -27,6 +27,10 @@ public class Weapon : MonoBehaviour {
     [SerializeField]
     public float damagePerBullet;
 
+    public bool bounceBullet;
+
+    public int nbBullet;
+
     public Color colorBullet;
 
     [System.Serializable]
@@ -75,9 +79,14 @@ public class Weapon : MonoBehaviour {
                 break;
 
             case AttackType.FIRING:
-                GameObject instance = (GameObject)Instantiate(this.bulletPrefab, pos + new Vector3(0, -0.1f, 0), Quaternion.identity);
-                instance.GetComponent<Rigidbody2D>().velocity = dir.normalized * speed;
-                instance.GetComponent<SpriteRenderer>().color = colorBullet;
+                if(nbBullet == 1) {
+                    GameObject instance = (GameObject)Instantiate(this.bulletPrefab, pos + new Vector3(0, -0.1f, 0), Quaternion.identity);
+                    instance.GetComponent<Rigidbody2D>().velocity = dir.normalized * speed;
+                    instance.GetComponent<SpriteRenderer>().color = colorBullet;
+                    instance.GetComponent<Bullet>().bounce = bounceBullet;
+
+                    instance.transform.position += new Vector3(dir.normalized.y, -dir.normalized.x) * Random.Range(-0.1f, 0.1f);
+                }
                 break;
         }
     }

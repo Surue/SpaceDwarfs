@@ -60,6 +60,7 @@ MonoBehaviour:
   spaceshipPrefab: {fileID: 1998405713302818, guid: acb295bd960f17943a188b69182493a4,
     type: 2}
   timeBeforeEvacText: {fileID: 0}
+  backgroundImage: {fileID: 0}
   state: 0
 --- !u!114 &114621955502261048
 MonoBehaviour:

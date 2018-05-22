@@ -674,7 +674,7 @@ public class MapAutomata : MonoBehaviour {
                     for(int y = 0; y < rule_chunkSize;y++) {
                         Vector2Int pos = new Vector2Int(x + i*rule_chunkSize, y + j*rule_chunkSize);
                         if(pos.x >= 0 && pos.x < width && pos.y >= 0 && pos.y < height) {
-                            MapTile t = map[x + i * rule_chunkSize, y + j * rule_chunkSize];
+                            MapTile t = map[pos.x, pos.y];
                             if(t.type == MapTile.TileType.SOLID) {
                                 solidTiles.Add(t);
                             }

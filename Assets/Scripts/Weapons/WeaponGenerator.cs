@@ -56,6 +56,24 @@ public class WeaponGenerator : MonoBehaviour {
         while(weapon.damagePerBullet <= 0) {
             weapon.damagePerBullet = difficulty + Random.Range(-1f, 2f);
         }
+
+        int canBounce = Random.Range(0, 4);
+
+        if(canBounce > 3) {
+            weapon.bounceBullet = true;
+        } else {
+            weapon.bounceBullet = false;
+        }
+
+        int nbBullet = Random.Range(0, 101);
+
+        if(nbBullet < 75) {
+            weapon.nbBullet = 1;
+        }else if(nbBullet < 90) {
+            weapon.nbBullet = 2;
+        } else {
+            weapon.nbBullet = 3;
+        }
         
         weapon.speed = Random.Range(3f, 7f) + difficulty % 5;
 
